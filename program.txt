@@ -1,0 +1,11 @@
+Class
+	Default Constructor{
+		string Name
+		bool Gender
+		int DoB
+		int DoD
+	}
+	getInfo{
+		
+	}
+
