@@ -6,6 +6,28 @@ Class
 		int DoD
 	}
 	getInfo{
-		
+		vector<string>Name;
+		vector<bool>Gender;
+		vector<int>DoB;
+		vector<int>DoD;
+		string name;
+		cout << "Enter full name: ";
+		cin >> 	name;
+		Name.pushback(name);
+
+		bool gender;
+		cout << "Input gender: " ;
+		cin >> gender;
+		Gender.pushback(gender);
+
+		int dob;
+		cout << "Input year of birth: ";
+		cin >> dob;
+		DoB.pushback(dob);
+
+		int dod;
+		cout << "Input year of death: ";
+		cin >> dod;
+		DoD.pushback(dod);
 	}
 
