@@ -3,24 +3,22 @@
 scientist::scientist(){
 
 }
-void scientist::getInfo()
-{
+
+void scientist::getInfo(){
     char gender;
     bool valid = false;
     cout << "Enter name: ";
     cin >> this->name;
     do{
-        valid=false;
+        valid = false;
         cout << "Enter gender(m/f): ";
         cin >> gender;
-        if (gender == 'm')
-        {
-            this->gender=false;
+        if(gender == 'm'){
+            this->gender = false;
             valid = true;
         }
-        else if(gender == 'f')
-        {
-            this->gender=true;
+        else if(gender == 'f'){
+            this->gender = true;
             valid = true;
         }
         else

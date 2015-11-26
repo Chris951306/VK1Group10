@@ -1,9 +1,11 @@
+#include "scientist.h"
 #include <iostream>
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    scientist s1;
+    s1.getInfo();
     return 0;
 }

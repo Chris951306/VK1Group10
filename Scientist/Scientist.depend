@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1448543506 source:c:\users\kristinvala\vn1group10\scientist\main.cpp
+	"scientist.h"
+	<iostream>
+
+1448543349 c:\users\kristinvala\vn1group10\scientist\include\scientist.h
+	<iostream>
+
