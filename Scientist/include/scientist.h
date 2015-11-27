@@ -23,6 +23,7 @@ class scientist
         friend bool operator<(scientist &s1, scientist &s2);
         friend void saveInfo(vector<scientist> &s);
         friend void loadInfo(vector<scientist> &s);
+        friend void delInfo(vector<scientist> &s);
     private:
         string name;
         bool gender;

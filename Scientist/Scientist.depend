@@ -17,14 +17,15 @@
 1448630653 source:c:\users\Şórmundursmári\vn1group10\scientist\src\scientist.cpp
 	"scientist.h"
 
-1448629245 source:c:\users\hekla\vn1group10\scientist\src\scientist.cpp
+1448644579 source:c:\users\hekla\vn1group10\scientist\src\scientist.cpp
 	"scientist.h"
 
-1448626594 c:\users\hekla\vn1group10\scientist\include\scientist.h
+1448644547 c:\users\hekla\vn1group10\scientist\include\scientist.h
 	<iostream>
 	<vector>
 	<string>
+	<fstream>
 
-1448626594 source:c:\users\hekla\vn1group10\scientist\main.cpp
+1448644599 source:c:\users\hekla\vn1group10\scientist\main.cpp
 	"scientist.h"
 

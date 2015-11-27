@@ -152,7 +152,7 @@ void viewInfo(vector<scientist> &s){
         cout << "Enter a number for your choice. Any other inputs return you to menu." << endl;
         cout << endl;
         if(s.size() == 0){
-            cout << "There are no scientists stored!";
+            cout << "There are no scientists stored!" << endl;
         }
         else{
             for(unsigned int i = 0; i<s.size(); i++)
@@ -249,4 +249,33 @@ void loadInfo(vector<scientist> &s){
     }
     if(s.size() > 0)
         cout << endl << "!All entries are loaded from database!" << endl;
+}
+
+void delInfo(vector<scientist> &s){
+    unsigned int choice;
+    bool go = false;
+    for(unsigned int i=0; i<s.size(); i++){
+        cout << i+1 << ": " << s[i] << endl;
+    }
+    cout << "Enter scientist number to delete(To return to menu, type \'0\'): ";
+    cin >> choice;
+    do{
+        go = false;
+        if(choice > (s.size()+1)){
+            cout << "Invalid input! Enter again: ";
+            cin >> choice;
+            go = true;
+        }
+        else{
+            if(choice != 0){
+                for(unsigned int i=0; i<s.size(); i++){
+                    if(choice == i+1)
+                    {
+                        s.erase(s.begin()+i);
+                    }
+
+                }
+            }
+        }
+    }while(go);
 }

@@ -24,7 +24,7 @@ void core(vector<scientist> &s)
         char choice;
         cout << endl << "Enter a number for your choice. Any other inputs quit the program." << endl;
         cout << endl;
-        cout << "1. Add scientist\t2. Edit scientist\n3. Display all scientists" << endl;
+        cout << "1. Add scientist\t\t2. Edit scientist\n3. Display all scientists\t4. Delete scientist" << endl;
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
@@ -61,6 +61,12 @@ void core(vector<scientist> &s)
         {
             cout << endl;
             viewInfo(s);
+            go = true;
+        }
+        else if(choice == '4')
+        {
+            cout << endl;
+            delInfo(s);
             go = true;
         }
     }while(go);
