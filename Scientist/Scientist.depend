@@ -6,3 +6,13 @@
 1448543349 c:\users\kristinvala\vn1group10\scientist\include\scientist.h
 	<iostream>
 
+1448618008 source:c:\users\Þórmundursmári\vn1group10\scientist\main.cpp
+	"scientist.h"
+
+1448618253 c:\users\Þórmundursmári\vn1group10\scientist\include\scientist.h
+	<iostream>
+	<vector>
+
+1448617367 source:c:\users\Þórmundursmári\vn1group10\scientist\src\scientist.cpp
+	"scientist.h"
+
