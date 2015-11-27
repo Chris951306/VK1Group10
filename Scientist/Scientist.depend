@@ -6,14 +6,15 @@
 1448543349 c:\users\kristinvala\vn1group10\scientist\include\scientist.h
 	<iostream>
 
-1448618008 source:c:\users\Þórmundursmári\vn1group10\scientist\main.cpp
+1448629988 source:c:\users\Þórmundursmári\vn1group10\scientist\main.cpp
 	"scientist.h"
 
-1448618253 c:\users\Þórmundursmári\vn1group10\scientist\include\scientist.h
+1448630623 c:\users\Þórmundursmári\vn1group10\scientist\include\scientist.h
 	<iostream>
 	<vector>
+	<string>
 
-1448617367 source:c:\users\Þórmundursmári\vn1group10\scientist\src\scientist.cpp
+1448630653 source:c:\users\Þórmundursmári\vn1group10\scientist\src\scientist.cpp
 	"scientist.h"
 
 1448629245 source:c:\users\hekla\vn1group10\scientist\src\scientist.cpp

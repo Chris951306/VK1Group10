@@ -13,6 +13,7 @@ unsigned int scientist::size(){
 
 void scientist::readInfo(){
     char gender;
+    char alive;
     bool valid = false;
     cout << "Enter name: ";
     cin >> this->name;
@@ -41,12 +42,20 @@ void scientist::readInfo(){
     }while(!valid);
 
     do{
-        valid = false;
-        cout << "Enter year of death(yyyy): ";
-        cin >> this->yod;
-        valid = legalDeath(yob, yod);
-    }while(!valid);
-
+        cout << "Is this amazing person alive(y/n):";
+        cin  >> alive;
+        if(alive != 'n' && alive != 'y'){
+            cout << "Invalid input!" << endl;
+        }
+    }while(alive != 'n' && alive != 'y');
+    if(alive == 'n'){
+        do{
+            valid = false;
+            cout << "Ohhhh I'm sorry, please enter year of death(yyyy): ";
+            cin >> this->yod;
+            valid = legalDeath(yob, yod);
+        }while(!valid);
+    }
     cout << endl;
 }
 
@@ -191,4 +200,24 @@ void viewInfo(vector<scientist> &s){
             go = true;
         }
     }while(go);
+}
+
+bool operator<(scientist &s1, scientist &s2){
+    if(s1.name.size() <= s2.name.size()){
+        for(unsigned int i = 0; i < s1.name.size(); i++){
+            if(s1.name[i] > s2.name[i]){
+                swap(s1, s2);
+                return true;
+            }
+        }
+    }
+    if(s1.name.size() > s2.name.size()){
+        for(unsigned int i = 0; i < s2.name.size(); i++){
+            if(s1.name[i] > s2.name[i]){
+                swap(s1, s2);
+                return true;
+            }
+        }
+    }
+    return false;
 }
