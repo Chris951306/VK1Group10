@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -20,6 +21,8 @@ class scientist
         friend string retName(scientist &s);
         friend void viewInfo(vector<scientist> &s);
         friend bool operator<(scientist &s1, scientist &s2);
+        friend void saveInfo(vector<scientist> &s);
+        friend void loadInfo(vector<scientist> &s);
     private:
         string name;
         bool gender;

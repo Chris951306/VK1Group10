@@ -48,6 +48,7 @@ void scientist::readInfo(){
             cout << "Invalid input!" << endl;
         }
     }while(alive != 'n' && alive != 'y');
+    this->yod = 0;
     if(alive == 'n'){
         do{
             valid = false;
@@ -56,7 +57,6 @@ void scientist::readInfo(){
             valid = legalDeath(yob, yod);
         }while(!valid);
     }
-    cout << endl;
 }
 
 void scientist::editInfo(){
@@ -71,21 +71,18 @@ void scientist::editInfo(){
         cout << "1. Name\t\t\t2. Gender\n3. Date of birth\t4. Date of death" << endl;
         cout << "Your choice: ";
         cin >> choice;
-        if(choice == '1')
-        {
+        if(choice == '1'){
             cin >> this->name;
             go = true;
         }
-        else if(choice == '2')
-        {
+        else if(choice == '2'){
             if(this->gender)
                 this->gender = false;
             else
                 this->gender = true;
             go = true;
         }
-        else if(choice == '3')
-        {
+        else if(choice == '3'){
             bool valid = false;
             do{
                 valid = false;
@@ -94,8 +91,7 @@ void scientist::editInfo(){
             }while(!valid);
             go = true;
         }
-        else if(choice == '4')
-        {
+        else if(choice == '4'){
             bool valid = false;
             do{
                 valid = false;
@@ -132,7 +128,15 @@ ostream& operator<<(ostream& stream, const scientist &s){
     else
         stream << "Male" << "\t";
     stream << s.yob << "\t";
-    stream << s.yod << endl;
+    if(s.yod == 0){
+        for(int i = 0; i < 4; i++){
+            cout << "?";
+        }
+    }
+    else{
+        stream << s.yod;
+    }
+    stream << endl;
     return stream;
 }
 
@@ -145,30 +149,27 @@ void viewInfo(vector<scientist> &s){
     bool go = false;
     do{
         go = false;
+        cout << "Enter a number for your choice. Any other inputs return you to menu." << endl;
         cout << endl;
-        for(unsigned int i = 0; i<s.size(); i++)
-            cout << s[i] << endl;
-        cout << "1. Sort by name\t2. Sort by gender\n3. Sort by year of birth" << endl;
-        cout << "Enter choice: ";
-        cin >> choice;
-        if(choice == '1')
-        {
-            cout << "Not valid!" << endl;
-            go = true;
+        if(s.size() == 0){
+            cout << "There are no scientists stored!" << endl;
+            cout << endl;
         }
-        else if(choice == '2')
-        {
-            if(s.size() < 2)
-            {
-                cout << "Add more scientists!" << endl;
+        else{
+            for(unsigned int i = 0; i<s.size(); i++)
+                cout << s[i] << endl;
+            cout << "1. Sort by name\t2. Sort by gender\n3. Sort by year of birth" << endl;
+            cout << "Enter choice: ";
+            cin >> choice;
+            if(choice == '1'){
+                cout << "Not valid!" << endl;
+                go = true;
             }
-            else
-            {
+            else if(choice == '2'){
                 bool swapped = false;
                 do{
                     swapped = false;
-                    for(unsigned int i=1; i < s.size(); i++)
-                    {
+                    for(unsigned int i=1; i < s.size(); i++){
                         if(!s[i-1].gender && s[i].gender){
                             swap(s[i-1].name, s[i].name);
                             swap(s[i-1].gender, s[i].gender);
@@ -178,26 +179,24 @@ void viewInfo(vector<scientist> &s){
                         }
                     }
                 }while(swapped);
+                go = true;
             }
-            go = true;
-        }
-        else if(choice == '3')
-        {
-            bool swapped = false;
-            do{
-                swapped = false;
-                for(unsigned int i=1; i < s.size(); i++)
-                {
-                    if(s[i-1].yob > s[i].yob){
-                        swap(s[i-1].name, s[i].name);
-                        swap(s[i-1].gender, s[i].gender);
-                        swap(s[i-1].yob, s[i].yob);
-                        swap(s[i-1].yod, s[i].yod);
-                        swapped = true;
+            else if(choice == '3'){
+                bool swapped = false;
+                do{
+                    swapped = false;
+                    for(unsigned int i=1; i < s.size(); i++){
+                        if(s[i-1].yob > s[i].yob){
+                            swap(s[i-1].name, s[i].name);
+                            swap(s[i-1].gender, s[i].gender);
+                            swap(s[i-1].yob, s[i].yob);
+                            swap(s[i-1].yod, s[i].yod);
+                            swapped = true;
+                        }
                     }
-                }
-            }while(swapped);
-            go = true;
+                }while(swapped);
+                go = true;
+            }
         }
     }while(go);
 }
@@ -220,4 +219,35 @@ bool operator<(scientist &s1, scientist &s2){
         }
     }
     return false;
+}
+
+void saveInfo(vector<scientist> &s){
+    ofstream save("scientists.txt", ofstream::out);
+    for(unsigned int i = 0; i < s.size(); i++){
+        save << s[i].name << endl;
+        save << s[i].gender << endl;
+        save << s[i].yob << endl;
+        save << s[i].yod << endl;
+    }
+    save.close();
+    cout << endl;
+    cout << "!Scientist saved to database!" << endl;
+}
+
+void loadInfo(vector<scientist> &s){
+    scientist temp;
+    ifstream load("scientists.txt");
+    string a;
+    bool b;
+    int c;
+    int d;
+    while(load >> a >> b >> c >> d){
+        temp.name = a;
+        temp.gender = b;
+        temp.yob = c;
+        temp.yod = d;
+        s.push_back(temp);
+    }
+    if(s.size() > 0)
+        cout << endl << "!All entries are loaded from database!" << endl;
 }
