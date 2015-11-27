@@ -1,5 +1,8 @@
 #include "scientist.h"
 
+const int MinYear = 1800;
+const int MaxYear = 2015;
+
 scientist::scientist(){
 
 }
@@ -13,6 +16,7 @@ void scientist::readInfo(){
     bool valid = false;
     cout << "Enter name: ";
     cin >> this->name;
+
     do{
         valid = false;
         cout << "Enter gender(m/f): ";
@@ -28,27 +32,85 @@ void scientist::readInfo(){
         else
             cout << "Invalid input!" << endl;
     }while(!valid);
-    cout << "Enter date of birth(ddmmyyyy): ";
-    cin >> this->dob;
-    cout << "Enter date of death(ddmmyyyy): ";
-    cin >> this->dod;
+
+    do{
+        valid = false;
+        cout << "Enter year of birth(yyyy): ";
+        cin >> this->yob;
+        valid = legalBirth(yob);
+    }while(!valid);
+
+    do{
+        valid = false;
+        cout << "Enter year of death(yyyy): ";
+        cin >> this->yod;
+        valid = legalDeath(yob, yod);
+    }while(!valid);
+
+    cout << endl;
 }
 
 void scientist::editInfo(){
-    char choice;
     bool go = false;
+    char choice;
     do{
-        cout << "Currently stored scientists:" << endl;
+        go = false;
+        cout << "Enter a number for your choice. Any other inputs return you to menu." << endl;
+        cout << endl;
         cout << *this;
-        cout << "Print again(y/n): ";
+        cout << "1. Name\t2. Gender\n3. Date of birth\t4. Date of death" << endl;
+        cout << "Your choice: ";
         cin >> choice;
-        if(choice == 'y')
+        if(choice == '1')
+        {
+            cin >> this->name;
             go = true;
-        else if(choice == 'n')
-            go = false;
-        else
-            cout << "Invalid input!" << endl;
+        }
+        else if(choice == '2')
+        {
+            if(this->gender)
+                this->gender = false;
+            else
+                this->gender = true;
+            go = true;
+        }
+        else if(choice == '3')
+        {
+            bool valid = false;
+            do{
+                valid = false;
+                cin >> this->yob;
+                valid = legalBirth(yob);
+            }while(!valid);
+        }
+        else if(choice == '4')
+        {
+            bool valid = false;
+            do{
+                valid = false;
+                cin >> this->yod;
+                valid = legalDeath(yob, yod);
+            }while(!valid);
+        }
     }while(go);
+}
+
+bool scientist::legalBirth(int yob){
+    if(MinYear < yob && yob <= MaxYear){
+        return true;
+    }
+    cout << "Invalid input!" << endl;
+    return false;
+}
+
+bool scientist::legalDeath(int yob, int yod){
+    if(MinYear < yod && yod <= MaxYear){
+        if(yob <= yod){
+        return true;
+        }
+    }
+    cout << "Invalid input!" << endl;
+    return false;
 }
 
 ostream& operator<<(ostream& stream, const scientist &s){
@@ -57,15 +119,12 @@ ostream& operator<<(ostream& stream, const scientist &s){
         stream << "Female" << endl;
     else
         stream << "Male" << endl;
-    stream << s.dob << endl;
-    stream << s.dod << endl;
+    stream << s.yob << endl;
+    stream << s.yod << endl;
     stream << endl;
     return stream;
 }
 
-void temp(scientist &s1, vector<scientist> &s2){
-    s1.name = s2[0].name;
-    s1.gender = s2[0].gender;
-    s1.dob = s2[0].dob;
-    s1.dod = s2[0].dod;
+string retName(scientist &s){
+    return s.name;
 }
