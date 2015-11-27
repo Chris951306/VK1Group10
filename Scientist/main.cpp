@@ -33,6 +33,8 @@ void core(vector<scientist> &s)
             temp.readInfo();
             s.push_back(temp);
             saveInfo(s);
+            cout << endl;
+            cout << "!Scientist saved to database!" << endl;
             go = true;
         }
         else if(choice == '2'){
@@ -51,6 +53,7 @@ void core(vector<scientist> &s)
             if(check){
                 cout << endl;
                 s[choice].editInfo();
+                saveInfo(s);
             }
             else{
                 cout << endl << "No such scientist!" << endl;
@@ -61,12 +64,14 @@ void core(vector<scientist> &s)
         {
             cout << endl;
             viewInfo(s);
+            saveInfo(s);
             go = true;
         }
         else if(choice == '4')
         {
             cout << endl;
             delInfo(s);
+            saveInfo(s);
             go = true;
         }
     }while(go);

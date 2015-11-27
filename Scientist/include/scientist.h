@@ -17,13 +17,14 @@ class scientist
         void editInfo();
         bool legalBirth(int yob);
         bool legalDeath(int yob, int yod);
+        bool swapName(string name1, string name2);
         friend ostream& operator<<(ostream& stream, const scientist &s);
         friend string retName(scientist &s);
         friend void viewInfo(vector<scientist> &s);
-        friend bool operator<(scientist &s1, scientist &s2);
         friend void saveInfo(vector<scientist> &s);
         friend void loadInfo(vector<scientist> &s);
         friend void delInfo(vector<scientist> &s);
+
     private:
         string name;
         bool gender;

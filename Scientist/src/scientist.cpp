@@ -121,6 +121,22 @@ bool scientist::legalDeath(int yob, int yod){
     return false;
 }
 
+bool scientist::swapName(string name1, string name2){
+    unsigned int shorter;
+    if(name1.size() >= name2.size()){
+        shorter = name1.size();
+    }
+    else {
+        shorter = name2.size();
+    }
+    for(unsigned int i = 0; i < shorter; i++){
+        if(name1[i] > name2[i]){
+            return true;
+        }
+    }
+    return false;
+}
+
 ostream& operator<<(ostream& stream, const scientist &s){
     stream << s.name << "\t";
     if(s.gender)
@@ -161,7 +177,26 @@ void viewInfo(vector<scientist> &s){
             cout << "Enter choice: ";
             cin >> choice;
             if(choice == '1'){
-                cout << "Not valid!" << endl;
+                bool swapped = false;
+                do{
+                    swapped = false;
+                    vector<string> v;
+                    for(unsigned int i = 0; i < s.size(); i++){
+                        v.push_back(s[i].name);
+                    }
+                    sort(v.begin(), v.end());
+                    for(unsigned int i=1; i < v.size(); i++){
+                        for(unsigned int j = 0; j < s.size(); j++){
+                            if(1){
+                            swap(s[i-1].name, s[i].name);
+                            swap(s[i-1].gender, s[i].gender);
+                            swap(s[i-1].yob, s[i].yob);
+                            swap(s[i-1].yod, s[i].yod);
+                            swapped = true;
+                            }
+                        }
+                    }
+                }while(swapped);
                 go = true;
             }
             else if(choice == '2'){
@@ -200,26 +235,6 @@ void viewInfo(vector<scientist> &s){
     }while(go);
 }
 
-bool operator<(scientist &s1, scientist &s2){
-    if(s1.name.size() <= s2.name.size()){
-        for(unsigned int i = 0; i < s1.name.size(); i++){
-            if(s1.name[i] > s2.name[i]){
-                swap(s1, s2);
-                return true;
-            }
-        }
-    }
-    if(s1.name.size() > s2.name.size()){
-        for(unsigned int i = 0; i < s2.name.size(); i++){
-            if(s1.name[i] > s2.name[i]){
-                swap(s1, s2);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 void saveInfo(vector<scientist> &s){
     ofstream save("scientists.txt", ofstream::out);
     for(unsigned int i = 0; i < s.size(); i++){
@@ -229,8 +244,6 @@ void saveInfo(vector<scientist> &s){
         save << s[i].yod << endl;
     }
     save.close();
-    cout << endl;
-    cout << "!Scientist saved to database!" << endl;
 }
 
 void loadInfo(vector<scientist> &s){
@@ -261,7 +274,7 @@ void delInfo(vector<scientist> &s){
     cin >> choice;
     do{
         go = false;
-        if(choice > (s.size()+1)){
+        if(choice >= (s.size()+1)){
             cout << "Invalid input! Enter again: ";
             cin >> choice;
             go = true;
