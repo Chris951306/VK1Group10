@@ -58,7 +58,7 @@ void scientist::editInfo(){
         cout << "Enter a number for your choice. Any other inputs return you to menu." << endl;
         cout << endl;
         cout << *this;
-        cout << "1. Name\t2. Gender\n3. Date of birth\t4. Date of death" << endl;
+        cout << "1. Name\t\t\t2. Gender\n3. Date of birth\t4. Date of death" << endl;
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1')
@@ -82,6 +82,7 @@ void scientist::editInfo(){
                 cin >> this->yob;
                 valid = legalBirth(yob);
             }while(!valid);
+            go = true;
         }
         else if(choice == '4')
         {
@@ -91,6 +92,7 @@ void scientist::editInfo(){
                 cin >> this->yod;
                 valid = legalDeath(yob, yod);
             }while(!valid);
+            go = true;
         }
     }while(go);
 }

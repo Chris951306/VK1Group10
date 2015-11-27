@@ -14,7 +14,6 @@ int main()
 void core(vector<scientist> &s)
 {
     bool go = false;
-    bool check = false;
     do{
         go = false;
         char choice;
@@ -30,19 +29,23 @@ void core(vector<scientist> &s)
             go = true;
         }
         else if(choice == '2'){
-            check = false;
+            bool check = false;
             string in;
             int choice = 99;
             cin >> in;
             for(unsigned int i = 0; i < s.size(); i++){
                 if(in == retName(s[i]))
+                {
                     choice = i;
                     check = true;
+                }
             }
             if(check)
                 s[choice].editInfo();
-            else if(!check)
-                cout << "No such scientist!";
+            else{
+                cout << "No such scientist!" << endl;
+                cout << endl;
+            }
             go = true;
         }
     }while(go);
