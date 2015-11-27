@@ -152,8 +152,7 @@ void viewInfo(vector<scientist> &s){
         cout << "Enter a number for your choice. Any other inputs return you to menu." << endl;
         cout << endl;
         if(s.size() == 0){
-            cout << "There are no scientists stored!" << endl;
-            cout << endl;
+            cout << "There are no scientists stored!";
         }
         else{
             for(unsigned int i = 0; i<s.size(); i++)

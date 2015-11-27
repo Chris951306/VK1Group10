@@ -53,8 +53,7 @@ void core(vector<scientist> &s)
                 s[choice].editInfo();
             }
             else{
-                cout << "No such scientist!" << endl;
-                cout << endl;
+                cout << endl << "No such scientist!" << endl;
             }
             go = true;
         }
