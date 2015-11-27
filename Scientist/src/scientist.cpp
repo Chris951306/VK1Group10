@@ -58,6 +58,7 @@ void scientist::editInfo(){
         cout << "Enter a number for your choice. Any other inputs return you to menu." << endl;
         cout << endl;
         cout << *this;
+        cout << endl;
         cout << "1. Name\t\t\t2. Gender\n3. Date of birth\t4. Date of death" << endl;
         cout << "Your choice: ";
         cin >> choice;
@@ -116,17 +117,78 @@ bool scientist::legalDeath(int yob, int yod){
 }
 
 ostream& operator<<(ostream& stream, const scientist &s){
-    stream << s.name << endl;
+    stream << s.name << "\t";
     if(s.gender)
-        stream << "Female" << endl;
+        stream << "Female" << "\t";
     else
-        stream << "Male" << endl;
-    stream << s.yob << endl;
+        stream << "Male" << "\t";
+    stream << s.yob << "\t";
     stream << s.yod << endl;
-    stream << endl;
     return stream;
 }
 
 string retName(scientist &s){
     return s.name;
+}
+
+void viewInfo(vector<scientist> &s){
+    char choice;
+    bool go = false;
+    do{
+        go = false;
+        cout << endl;
+        for(unsigned int i = 0; i<s.size(); i++)
+            cout << s[i] << endl;
+        cout << "1. Sort by name\t2. Sort by gender\n3. Sort by year of birth" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+        if(choice == '1')
+        {
+            cout << "Not valid!" << endl;
+            go = true;
+        }
+        else if(choice == '2')
+        {
+            if(s.size() < 2)
+            {
+                cout << "Add more scientists!" << endl;
+            }
+            else
+            {
+                bool swapped = false;
+                do{
+                    swapped = false;
+                    for(unsigned int i=1; i < s.size(); i++)
+                    {
+                        if(!s[i-1].gender && s[i].gender){
+                            swap(s[i-1].name, s[i].name);
+                            swap(s[i-1].gender, s[i].gender);
+                            swap(s[i-1].yob, s[i].yob);
+                            swap(s[i-1].yod, s[i].yod);
+                            swapped = true;
+                        }
+                    }
+                }while(swapped);
+            }
+            go = true;
+        }
+        else if(choice == '3')
+        {
+            bool swapped = false;
+            do{
+                swapped = false;
+                for(unsigned int i=1; i < s.size(); i++)
+                {
+                    if(s[i-1].yob > s[i].yob){
+                        swap(s[i-1].name, s[i].name);
+                        swap(s[i-1].gender, s[i].gender);
+                        swap(s[i-1].yob, s[i].yob);
+                        swap(s[i-1].yod, s[i].yod);
+                        swapped = true;
+                    }
+                }
+            }while(swapped);
+            go = true;
+        }
+    }while(go);
 }

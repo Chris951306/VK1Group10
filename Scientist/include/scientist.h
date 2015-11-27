@@ -18,6 +18,7 @@ class scientist
         bool legalDeath(int yob, int yod);
         friend ostream& operator<<(ostream& stream, const scientist &s);
         friend string retName(scientist &s);
+        friend void viewInfo(vector<scientist> &s);
     private:
         string name;
         bool gender;
