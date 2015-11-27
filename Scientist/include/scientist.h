@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -13,13 +14,15 @@ class scientist
         unsigned int size();
         void readInfo();
         void editInfo();
+        bool legalBirth(int yob);
+        bool legalDeath(int yob, int yod);
         friend ostream& operator<<(ostream& stream, const scientist &s);
-        friend void temp(scientist &s1, vector<scientist> &s2);
+        friend string retName(scientist &s);
     private:
         string name;
         bool gender;
-        int dob;
-        int dod;
+        int yob;
+        int yod;
 };
 
 #endif // SCIENTIST_H
