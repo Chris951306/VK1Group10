@@ -39,7 +39,7 @@ void scientist::editInfo(){
     bool go = false;
     do{
         cout << "Currently stored scientists:" << endl;
-        cout << this;
+        cout << *this;
         cout << "Print again(y/n): ";
         cin >> choice;
         if(choice == 'y')
