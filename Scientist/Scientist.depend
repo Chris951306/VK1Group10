@@ -9,13 +9,14 @@
 1448646160 source:c:\users\Şórmundursmári\vn1group10\scientist\main.cpp
 	"scientist.h"
 
-1448646961 c:\users\Şórmundursmári\vn1group10\scientist\include\scientist.h
+1448715964 c:\users\Şórmundursmári\vn1group10\scientist\include\scientist.h
 	<iostream>
 	<vector>
 	<string>
 	<fstream>
+	<algorithm>
 
-1448647003 source:c:\users\Şórmundursmári\vn1group10\scientist\src\scientist.cpp
+1448717219 source:c:\users\Şórmundursmári\vn1group10\scientist\src\scientist.cpp
 	"scientist.h"
 
 1448644579 source:c:\users\hekla\vn1group10\scientist\src\scientist.cpp

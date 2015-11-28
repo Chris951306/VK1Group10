@@ -68,7 +68,7 @@ void scientist::editInfo(){
         cout << endl;
         cout << *this;
         cout << endl;
-        cout << "1. Name\t\t\t2. Gender\n3. Date of birth\t4. Date of death" << endl;
+        cout << "1. Name\t\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
@@ -93,10 +93,22 @@ void scientist::editInfo(){
         }
         else if(choice == '4'){
             bool valid = false;
+            char alive;
             do{
-                valid = false;
-                cin >> this->yod;
-                valid = legalDeath(yob, yod);
+                cout << "So.... Is this person alive(y/n)? ";
+                cin  >> alive;
+                tolower(alive);
+                if(alive != 'y' && alive != 'n'){
+                    cout << "Invalid input!" << endl;
+                }
+            }while(alive != 'y' && alive != 'n');
+            this->yod = 0;
+            do{
+                valid = true;
+                if(alive == 'n'){
+                    cin >> this->yod;
+                    valid = legalDeath(yob, yod);
+                }
             }while(!valid);
             go = true;
         }
@@ -177,26 +189,21 @@ void viewInfo(vector<scientist> &s){
             cout << "Enter choice: ";
             cin >> choice;
             if(choice == '1'){
-                bool swapped = false;
-                do{
-                    swapped = false;
-                    vector<string> v;
-                    for(unsigned int i = 0; i < s.size(); i++){
-                        v.push_back(s[i].name);
-                    }
-                    sort(v.begin(), v.end());
-                    for(unsigned int i=1; i < v.size(); i++){
-                        for(unsigned int j = 0; j < s.size(); j++){
-                            if(1){
-                            swap(s[i-1].name, s[i].name);
-                            swap(s[i-1].gender, s[i].gender);
-                            swap(s[i-1].yob, s[i].yob);
-                            swap(s[i-1].yod, s[i].yod);
-                            swapped = true;
-                            }
+                vector<string> v;
+                for(unsigned int i = 0; i < s.size(); i++){
+                    v.push_back(s[i].name);
+                }
+                sort(v.begin(), v.end());
+                for(unsigned int i=0; i < v.size(); i++){
+                    for(unsigned int j = 0; j < s.size(); j++){
+                        if(v[i] == s[j].name){
+                            swap(s[i].name, s[j].name);
+                            swap(s[i].gender, s[j].gender);
+                            swap(s[i].yob, s[j].yob);
+                            swap(s[i].yod, s[j].yod);
                         }
                     }
-                }while(swapped);
+                }
                 go = true;
             }
             else if(choice == '2'){
