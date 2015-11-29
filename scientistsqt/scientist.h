@@ -1,5 +1,5 @@
-#ifndef SCIENTIST_H
-#define SCIENTIST_H
+#ifndef SCIENTIST
+#define SCIENTIST
 
 #include <iostream>
 #include <vector>
@@ -18,7 +18,6 @@ class scientist
         void editInfo();
         bool legalBirth(int yob);
         bool legalDeath(int yob, int yod);
-        bool swapName(string name1, string name2);
         friend ostream& operator<<(ostream& stream, const scientist &s);
         friend string retName(scientist &s);
         friend void viewInfo(vector<scientist> &s);
@@ -33,4 +32,5 @@ class scientist
         int yod;
 };
 
-#endif // SCIENTIST_H
+#endif // SCIENTIST
+

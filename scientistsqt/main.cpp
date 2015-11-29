@@ -1,10 +1,12 @@
+#include <QCoreApplication>
 #include "scientist.h"
 
 void core(vector<scientist> &s);
 void logo();
 
-int main()
-{
+int main(int argc, char *argv[]){
+    QCoreApplication a(argc, argv);
+
     vector<scientist> s;
 
     logo();
@@ -13,11 +15,10 @@ int main()
 
     core(s);
 
-    return 0;
+    return a.exec();
 }
 
-void core(vector<scientist> &s)
-{
+void core(vector<scientist> &s){
     bool go = false;
     do{
         go = false;
@@ -77,8 +78,8 @@ void core(vector<scientist> &s)
     }while(go);
 }
 
-void logo(){
-    char i = 92;
+void logo(){    // This is our awesome logo!!! It might not look like it, but we had to work around the escape
+    char i = 92;// sequence, so we just made a char with the ascii value of \.
     cout << "  ________                          ___________    " << endl;
     cout << " /  _____/______  ____  __ ________/_   " << i << "   _  " << i << "   " << endl;
     cout << "/   " << i << "  __" << i << "_  __ " << i << "/  _ " << i << "|  |  " << i << "____ "

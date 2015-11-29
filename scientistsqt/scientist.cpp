@@ -1,7 +1,8 @@
 #include "scientist.h"
 
-const int MinYear = 1800;
+const int MinYear = -1000;
 const int MaxYear = 2015;
+const int StillAlvie = 3000;
 
 scientist::scientist(){
 
@@ -17,7 +18,6 @@ void scientist::readInfo(){
     bool valid = false;
     cout << "Enter name: ";
     cin >> this->name;
-    toupper(this->name[0]);
 
     do{
         valid = false;
@@ -49,7 +49,7 @@ void scientist::readInfo(){
             cout << "Invalid input!" << endl;
         }
     }while(alive != 'n' && alive != 'y');
-    this->yod = 0;
+    this->yod = StillAlvie;
     if(alive == 'n'){
         do{
             valid = false;
@@ -103,7 +103,7 @@ void scientist::editInfo(){
                     cout << "Invalid input!" << endl;
                 }
             }while(alive != 'y' && alive != 'n');
-            this->yod = 0;
+            this->yod = StillAlvie;
             do{
                 valid = true;
                 if(alive == 'n'){
@@ -134,22 +134,6 @@ bool scientist::legalDeath(int yob, int yod){
     return false;
 }
 
-bool scientist::swapName(string name1, string name2){
-    unsigned int shorter;
-    if(name1.size() >= name2.size()){
-        shorter = name1.size();
-    }
-    else {
-        shorter = name2.size();
-    }
-    for(unsigned int i = 0; i < shorter; i++){
-        if(name1[i] > name2[i]){
-            return true;
-        }
-    }
-    return false;
-}
-
 ostream& operator<<(ostream& stream, const scientist &s){
     stream << s.name << "\t";
     if(s.gender)
@@ -157,8 +141,8 @@ ostream& operator<<(ostream& stream, const scientist &s){
     else
         stream << "Male" << "\t";
     stream << s.yob << "\t";
-    if(s.yod == 0){
-        for(int i = 0; i < 4; i++){
+    if(s.yod == StillAlvie){
+        for(unsigned int i = 0; i < 4; i++){
             cout << "?";
         }
     }
@@ -259,8 +243,8 @@ void loadInfo(vector<scientist> &s){
     ifstream load("scientists.txt");
     string a;
     bool b;
-    int c;
-    int d;
+    unsigned int c;
+    unsigned int d;
     while(load >> a >> b >> c >> d){
         temp.name = a;
         temp.gender = b;
