@@ -2,7 +2,7 @@
 
 const int MinYear = -1000;
 const int MaxYear = 2015;
-const int StillAlvie = 3000;
+const int StillAlive = 3000;
 
 scientist::scientist(){
 
@@ -17,8 +17,8 @@ void scientist::readInfo(){
     char alive;
     bool valid = false;
     cout << "Enter name: ";
-    cin >> this->name;
-
+    cin.ignore();
+    getline(cin, this->name);
     do{
         valid = false;
         cout << "Enter gender(m/f): ";
@@ -49,7 +49,7 @@ void scientist::readInfo(){
             cout << "Invalid input!" << endl;
         }
     }while(alive != 'n' && alive != 'y');
-    this->yod = StillAlvie;
+    this->yod = StillAlive;
     if(alive == 'n'){
         do{
             valid = false;
@@ -73,7 +73,9 @@ void scientist::editInfo(){
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
-            cin >> this->name;
+            cout << "Enter name: ";
+            cin.ignore();
+            getline(cin, this->name);
             go = true;
         }
         else if(choice == '2'){
@@ -103,7 +105,7 @@ void scientist::editInfo(){
                     cout << "Invalid input!" << endl;
                 }
             }while(alive != 'y' && alive != 'n');
-            this->yod = StillAlvie;
+            this->yod = StillAlive;
             do{
                 valid = true;
                 if(alive == 'n'){
@@ -140,14 +142,25 @@ ostream& operator<<(ostream& stream, const scientist &s){
         stream << "Female" << "\t";
     else
         stream << "Male" << "\t";
-    stream << s.yob << "\t";
-    if(s.yod == StillAlvie){
-        for(unsigned int i = 0; i < 4; i++){
-            cout << "?";
-        }
+    if(s.yob < 0)
+    {
+        stream << abs(s.yob) << " B.C. --> ";
     }
     else{
-        stream << s.yod;
+        stream << s.yob << " A.D. --> ";
+    }
+
+    if(s.yod == StillAlive){
+        for(unsigned int i = 0; i < 4; i++){
+            stream << "?";
+        }
+    }
+    else if(s.yod < 0)
+    {
+        stream << abs(s.yod) << " B.C.";
+    }
+    else{
+        stream << s.yod << " A.D.";
     }
     stream << endl;
     return stream;
@@ -229,6 +242,7 @@ void viewInfo(vector<scientist> &s){
 
 void saveInfo(vector<scientist> &s){
     ofstream save("scientists.txt", ofstream::out);
+    save << s.size();
     for(unsigned int i = 0; i < s.size(); i++){
         save << s[i].name << endl;
         save << s[i].gender << endl;
@@ -239,13 +253,17 @@ void saveInfo(vector<scientist> &s){
 }
 
 void loadInfo(vector<scientist> &s){
-    scientist temp;
     ifstream load("scientists.txt");
+    scientist temp;
+    unsigned int n;
     string a;
     bool b;
-    unsigned int c;
-    unsigned int d;
-    while(load >> a >> b >> c >> d){
+    int c;
+    int d;
+    load >> n;
+    for(unsigned int i = 0; i < n; i++){
+        getline(load, a);
+        load >> b >> c >> d;
         temp.name = a;
         temp.gender = b;
         temp.yob = c;

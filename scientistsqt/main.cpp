@@ -65,7 +65,6 @@ void core(vector<scientist> &s){
         {
             cout << endl;
             viewInfo(s);
-            saveInfo(s);
             go = true;
         }
         else if(choice == '4')
