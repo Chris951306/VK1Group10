@@ -78,8 +78,8 @@ void core(vector<scientist> &s){
     }while(go);
 }
 
-void logo(){
-    char i = 92;
+void logo(){    // This is our awesome logo!!! It might not look like it, but we had to work around the escape
+    char i = 92;// sequence, so we just made a char with the ascii value of \.
     cout << "  ________                          ___________    " << endl;
     cout << " /  _____/______  ____  __ ________/_   " << i << "   _  " << i << "   " << endl;
     cout << "/   " << i << "  __" << i << "_  __ " << i << "/  _ " << i << "|  |  " << i << "____ "

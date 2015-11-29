@@ -17,6 +17,7 @@ void scientist::readInfo(){
     bool valid = false;
     cout << "Enter name: ";
     cin >> this->name;
+    toupper(this->name[0]);
 
     do{
         valid = false;
