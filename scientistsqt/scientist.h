@@ -16,8 +16,8 @@ class scientist
         unsigned int size();
         void readInfo();
         void editInfo();
-        bool legalBirth(unsigned int yob);
-        bool legalDeath(unsigned int yob, unsigned int yod);
+        bool legalBirth(int yob);
+        bool legalDeath(int yob, int yod);
         friend ostream& operator<<(ostream& stream, const scientist &s);
         friend string retName(scientist &s);
         friend void viewInfo(vector<scientist> &s);
@@ -28,8 +28,8 @@ class scientist
     private:
         string name;
         bool gender;
-        unsigned int yob;
-        unsigned int yod;
+        int yob;
+        int yod;
 };
 
 #endif // SCIENTIST

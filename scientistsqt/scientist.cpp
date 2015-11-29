@@ -116,7 +116,7 @@ void scientist::editInfo(){
     }while(go);
 }
 
-bool scientist::legalBirth(unsigned int yob){
+bool scientist::legalBirth(int yob){
     if(MinYear < yob && yob <= MaxYear){
         return true;
     }
@@ -124,7 +124,7 @@ bool scientist::legalBirth(unsigned int yob){
     return false;
 }
 
-bool scientist::legalDeath(unsigned int yob, unsigned int yod){
+bool scientist::legalDeath(int yob, int yod){
     if(MinYear < yod && yod <= MaxYear){
         if(yob <= yod){
         return true;
