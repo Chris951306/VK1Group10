@@ -46,7 +46,7 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
         cout << "Is this amazing person alive(y/n):";
         cin  >> alive;
         if(alive != 'n' && alive != 'y'){
-            cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
+            cout << "Invalid input! Didn't you understand the instruction \nor are you just trolling... ENTER AGAIN: " << endl;
         }
     }while(alive != 'n' && alive != 'y');
     this->yod = StillAlive;
@@ -108,7 +108,7 @@ void scientist::editInfo(){ //
             do{
                 valid = true;
                 if(alive == 'n'){
-                    cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
+                    cout << "Why is this world so cruel? When did the scientist die? ";
                     cin >> this->yod;
 
                     valid = legalDeath(yob, yod);
@@ -133,7 +133,7 @@ bool scientist::legalDeath(int yob, int yod){
         return true;
         }
     }
-    cout << "Why is this world so cruel? When did the scientist die? :´( ";
+    cout << "Invalid input! Didn't you understand the instruction \nor are you just trolling... ENTER AGAIN: " << endl;
     return false;
 }
 
