@@ -2,7 +2,11 @@
 
 const int MinYear = -1000;
 const int MaxYear = 2015;
+<<<<<<< HEAD
 const int StillAlvie = 3000; //value that makes the program know that a person is still alive
+=======
+const int StillAlive = 3000;
+>>>>>>> master
 
 scientist::scientist(){
 
@@ -17,9 +21,15 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
     char alive;
     bool valid = false;
     cout << "Enter name: ";
+<<<<<<< HEAD
     cin >> this->name;
 
     do{  //makes sures that the input is either female or male
+=======
+    cin.ignore();
+    getline(cin, this->name);
+    do{
+>>>>>>> master
         valid = false;
         cout << "Enter gender(m/f): ";
         cin >> gender;
@@ -49,7 +59,7 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
             cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
         }
     }while(alive != 'n' && alive != 'y');
-    this->yod = StillAlvie;
+    this->yod = StillAlive;
     if(alive == 'n'){
         do{
             valid = false;
@@ -73,7 +83,9 @@ void scientist::editInfo(){ //
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
-            cin >> this->name;
+            cout << "Enter name: ";
+            cin.ignore();
+            getline(cin, this->name);
             go = true;
         }
         else if(choice == '2'){
@@ -102,7 +114,7 @@ void scientist::editInfo(){ //
                     cout << "Invalid input!" << endl;
                 }
             }while(alive != 'y' && alive != 'n');
-            this->yod = StillAlvie;
+            this->yod = StillAlive;
             do{
                 valid = true;
                 if(alive == 'n'){
@@ -141,14 +153,25 @@ ostream& operator<<(ostream& stream, const scientist &s){
         stream << "Female" << "\t";
     else
         stream << "Male" << "\t";
-    stream << s.yob << "\t";
-    if(s.yod == StillAlvie){
-        for(unsigned int i = 0; i < 4; i++){
-            cout << "?";
-        }
+    if(s.yob < 0)
+    {
+        stream << abs(s.yob) << " B.C. --> ";
     }
     else{
-        stream << s.yod;
+        stream << s.yob << " A.D. --> ";
+    }
+
+    if(s.yod == StillAlive){
+        for(unsigned int i = 0; i < 4; i++){
+            stream << "?";
+        }
+    }
+    else if(s.yod < 0)
+    {
+        stream << abs(s.yod) << " B.C.";
+    }
+    else{
+        stream << s.yod << " A.D.";
     }
     stream << endl;
     return stream;
@@ -230,6 +253,7 @@ void viewInfo(vector<scientist> &s){
 
 void saveInfo(vector<scientist> &s){
     ofstream save("scientists.txt", ofstream::out);
+    save << s.size();
     for(unsigned int i = 0; i < s.size(); i++){
         save << s[i].name << endl;
         save << s[i].gender << endl;
@@ -240,19 +264,49 @@ void saveInfo(vector<scientist> &s){
 }
 
 void loadInfo(vector<scientist> &s){
-    scientist temp;
     ifstream load("scientists.txt");
+    scientist temp;
+    unsigned int n;
     string a;
     bool b;
-    unsigned int c;
-    unsigned int d;
-    while(load >> a >> b >> c >> d){
-        temp.name = a;
-        temp.gender = b;
-        temp.yob = c;
-        temp.yod = d;
+    int c;
+    int d;
+    load >> n;
+    while(n > 0)
+    {
+        int te = 4;
+        while(te > 0){
+        getline(load, a);
+            if(te == 4){
+                load >> a;
+                temp.name = a;
+                //load >> a;
+                //temp.name += a;
+            }
+
+            else if(te == 3) {
+                load >> b;
+                temp.gender = b;
+            }
+
+            else if(te == 2) {
+                load >> c;
+                temp.yob = c;
+            }
+
+            else if(te == 1) {
+                load >> d;
+                temp.yod = d;
+            }
+            te--;
+        }
+        //cout << a << " " << b << " " << c << " " << d << endl;
+        cout << temp.name << " " << temp.gender << " " << temp.yob << " " << temp.yod << endl;
+
         s.push_back(temp);
+        n--;
     }
+
     if(s.size() > 0)
         cout << endl << "!All entries are loaded from database!" << endl;
 }
