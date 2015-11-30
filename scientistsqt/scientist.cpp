@@ -272,28 +272,23 @@ void loadInfo(vector<scientist> &s){
 }
 
 void delInfo(vector<scientist> &s){
-    unsigned int choice;
+    char choice;
+    unsigned int val;
     bool go = false;
     for(unsigned int i=0; i<s.size(); i++){
         cout << i+1 << ": " << s[i] << endl;
     }
-    cout << "Enter scientist number to delete(To return to menu, type \'0\'): ";
+    cout << "Enter scientist number to delete.\n(If input is not a listed number, you will be returned to menu): ";
     cin >> choice;
     do{
         go = false;
-        if(choice >= (s.size()+1)){
-            cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
-            cin >> choice;
-            go = true;
-        }
+        val = choice - 48;
+        if(isalpha(choice) || val == 0);
         else{
-            if(choice != 0){
-                for(unsigned int i=0; i<s.size(); i++){
-                    if(choice == i+1)
-                    {
-                        s.erase(s.begin()+i);
-                    }
-
+            for(unsigned int i=0; i<s.size(); i++){
+                if(val == i+1)
+                {
+                    s.erase(s.begin()+i);
                 }
             }
         }
