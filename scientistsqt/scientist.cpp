@@ -100,7 +100,6 @@ void scientist::editInfo(){
             do{
                 cout << "So.... Is this person alive(y/n)? ";
                 cin  >> alive;
-                tolower(alive);
                 if(alive != 'y' && alive != 'n'){
                     cout << "Invalid input!" << endl;
                 }
@@ -261,15 +260,41 @@ void loadInfo(vector<scientist> &s){
     int c;
     int d;
     load >> n;
-    for(unsigned int i = 0; i < n; i++){
+    while(n > 0)
+    {
+        int te = 4;
+        while(te > 0){
         getline(load, a);
-        load >> b >> c >> d;
-        temp.name = a;
-        temp.gender = b;
-        temp.yob = c;
-        temp.yod = d;
+            if(te == 4){
+                load >> a;
+                temp.name = a;
+                //load >> a;
+                //temp.name += a;
+            }
+
+            else if(te == 3) {
+                load >> b;
+                temp.gender = b;
+            }
+
+            else if(te == 2) {
+                load >> c;
+                temp.yob = c;
+            }
+
+            else if(te == 1) {
+                load >> d;
+                temp.yod = d;
+            }
+            te--;
+        }
+        //cout << a << " " << b << " " << c << " " << d << endl;
+        cout << temp.name << " " << temp.gender << " " << temp.yob << " " << temp.yod << endl;
+
         s.push_back(temp);
+        n--;
     }
+
     if(s.size() > 0)
         cout << endl << "!All entries are loaded from database!" << endl;
 }
