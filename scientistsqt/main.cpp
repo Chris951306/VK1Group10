@@ -4,8 +4,9 @@
 void core(vector<scientist> &s);
 void logo();
 
-int main(int argc, char *argv[]){
-    QCoreApplication a(argc, argv);
+int main(){
+    //(int argc, char *argv[])
+    //QCoreApplication a(argc, argv);
 
     vector<scientist> s;
 
@@ -15,7 +16,8 @@ int main(int argc, char *argv[]){
 
     core(s);
 
-    return a.exec();
+    //return a.exec();
+    return 0;
 }
 
 void core(vector<scientist> &s){
@@ -25,7 +27,7 @@ void core(vector<scientist> &s){
         char choice;
         cout << endl << "Enter a number for your choice. Any other inputs quit the program." << endl;
         cout << endl;
-        cout << "1. Add scientist\t\t2. Edit scientist\n3. Display all scientists\t4. Delete scientist" << endl;
+        cout << "1. Add scientist\t\t2. Edit scientist\n3. Display all scientists\t4. Delete scientist" << endl << endl;
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
@@ -45,8 +47,7 @@ void core(vector<scientist> &s){
             cout << "Enter name to search for(Searches are case sensitive): ";
             cin >> in;
             for(unsigned int i = 0; i < s.size(); i++){
-                if(in == retName(s[i]))
-                {
+                if(in == retName(s[i])){
                     choice = i;
                     check = true;
                 }
@@ -61,14 +62,12 @@ void core(vector<scientist> &s){
             }
             go = true;
         }
-        else if(choice == '3')
-        {
+        else if(choice == '3'){
             cout << endl;
             viewInfo(s);
             go = true;
         }
-        else if(choice == '4')
-        {
+        else if(choice == '4'){
             cout << endl;
             delInfo(s);
             saveInfo(s);

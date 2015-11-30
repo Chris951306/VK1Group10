@@ -2,7 +2,11 @@
 
 const int MinYear = -1000;
 const int MaxYear = 2015;
+<<<<<<< HEAD
+const int StillAlvie = 3000; //value that makes the program know that a person is still alive
+=======
 const int StillAlive = 3000;
+>>>>>>> master
 
 scientist::scientist(){
 
@@ -12,14 +16,20 @@ unsigned int scientist::size(){
     return this->size();
 }
 
-void scientist::readInfo(){
+void scientist::readInfo(){  //function that reads the info (name, gender, birthyear and year of death) about the scientists.
     char gender;
     char alive;
     bool valid = false;
     cout << "Enter name: ";
+<<<<<<< HEAD
+    cin >> this->name;
+
+    do{  //makes sures that the input is either female or male
+=======
     cin.ignore();
     getline(cin, this->name);
     do{
+>>>>>>> master
         valid = false;
         cout << "Enter gender(m/f): ";
         cin >> gender;
@@ -39,14 +49,14 @@ void scientist::readInfo(){
         valid = false;
         cout << "Enter year of birth(yyyy): ";
         cin >> this->yob;
-        valid = legalBirth(yob);
+        valid = legalBirth(yob); //uses bool function legalBirth which returns true if yob (year of birth) is a legalBirth
     }while(!valid);
 
-    do{
+    do{  // makes sures that the input is y (yes) or n (no)
         cout << "Is this amazing person alive(y/n):";
         cin  >> alive;
         if(alive != 'n' && alive != 'y'){
-            cout << "Invalid input!" << endl;
+            cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
         }
     }while(alive != 'n' && alive != 'y');
     this->yod = StillAlive;
@@ -55,12 +65,12 @@ void scientist::readInfo(){
             valid = false;
             cout << "Ohhhh I'm sorry, please enter year of death(yyyy): ";
             cin >> this->yod;
-            valid = legalDeath(yob, yod);
+            valid = legalDeath(yob, yod); //uses bool function legalDeath which returns true if yod (year of death) is a legalDeath
         }while(!valid);
     }
 }
 
-void scientist::editInfo(){
+void scientist::editInfo(){ //
     bool go = false;
     char choice;
     do{
@@ -108,7 +118,9 @@ void scientist::editInfo(){
             do{
                 valid = true;
                 if(alive == 'n'){
+                    cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
                     cin >> this->yod;
+
                     valid = legalDeath(yob, yod);
                 }
             }while(!valid);
@@ -121,7 +133,7 @@ bool scientist::legalBirth(int yob){
     if(MinYear < yob && yob <= MaxYear){
         return true;
     }
-    cout << "Invalid input!" << endl;
+    cout << "That is not possible! Try again:" << endl;
     return false;
 }
 
@@ -131,7 +143,7 @@ bool scientist::legalDeath(int yob, int yod){
         return true;
         }
     }
-    cout << "Invalid input!" << endl;
+    cout << "Why is this world so cruel? When did the scientist die? :´( ";
     return false;
 }
 
@@ -310,7 +322,7 @@ void delInfo(vector<scientist> &s){
     do{
         go = false;
         if(choice >= (s.size()+1)){
-            cout << "Invalid input! Enter again: ";
+            cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
             cin >> choice;
             go = true;
         }
