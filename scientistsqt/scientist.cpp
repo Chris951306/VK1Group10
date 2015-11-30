@@ -16,8 +16,9 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
     char gender;
     char alive;
     bool valid = false;
-    cout << "Enter name: ";
-    cin >> this->name;
+    cout << "Enter lastname: ";
+    cin.ignore();
+    getline(cin, this->name);
     do{     //makes sures that the input is either female or male
         valid = false;
         cout << "Enter gender(m/f): ";
@@ -242,7 +243,6 @@ void viewInfo(vector<scientist> &s){
 
 void saveInfo(vector<scientist> &s){
     ofstream save("scientists.txt", ofstream::out);
-    save << s.size();
     for(unsigned int i = 0; i < s.size(); i++){
         save << s[i].name << endl;
         save << s[i].gender << endl;
@@ -255,45 +255,16 @@ void saveInfo(vector<scientist> &s){
 void loadInfo(vector<scientist> &s){
     ifstream load("scientists.txt");
     scientist temp;
-    unsigned int n;
     string a;
     bool b;
     int c;
     int d;
-    load >> n;
-    while(n > 0)
-    {
-        int te = 4;
-        while(te > 0){
-        getline(load, a);
-            if(te == 4){
-                load >> a;
-                temp.name = a;
-                //load >> a;
-                //temp.name += a;
-            }
-
-            else if(te == 3) {
-                load >> b;
-                temp.gender = b;
-            }
-
-            else if(te == 2) {
-                load >> c;
-                temp.yob = c;
-            }
-
-            else if(te == 1) {
-                load >> d;
-                temp.yod = d;
-            }
-            te--;
-        }
-        //cout << a << " " << b << " " << c << " " << d << endl;
-        cout << temp.name << " " << temp.gender << " " << temp.yob << " " << temp.yod << endl;
-
+    while(load >> a >> b >> c >> d){
+        temp.name = a;
+        temp.gender = b;
+        temp.yob = c;
+        temp.yod = d;
         s.push_back(temp);
-        n--;
     }
 
     if(s.size() > 0)

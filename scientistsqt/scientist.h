@@ -26,7 +26,7 @@ class scientist
         friend void delInfo(vector<scientist> &s); //deletes info
 
     private:
-        string name; //scientist name
+        string name;
         bool gender;
         int yob; // year of birth
         int yod; // year of death

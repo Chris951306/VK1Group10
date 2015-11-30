@@ -43,9 +43,10 @@ void core(vector<scientist> &s){
         else if(choice == '2'){
             bool check = false;
             string in;
-            int choice;
+            unsigned int choice = 0;
             cout << "Enter name to search for(Searches are case sensitive): ";
-            cin >> in;
+            cin.ignore();
+            getline(cin, in);
             for(unsigned int i = 0; i < s.size(); i++){
                 if(in == retName(s[i])){
                     choice = i;
