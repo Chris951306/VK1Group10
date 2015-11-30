@@ -2,7 +2,7 @@
 
 const int MinYear = -1000;
 const int MaxYear = 2015;
-const int StillAlvie = 3000; //value that makes the program know that a person is still alive
+const int StillAlive = 3000; //value that makes the program know that a person is still alive
 
 scientist::scientist(){
 
