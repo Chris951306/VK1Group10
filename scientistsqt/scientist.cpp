@@ -16,7 +16,7 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
     char gender;
     char alive;
     bool valid = false;
-    cout << "Enter lastname: ";
+    cout << "Enter surname: ";
     cin.ignore();
     getline(cin, this->name);
     do{     //makes sures that the input is either female or male
@@ -69,11 +69,11 @@ void scientist::editInfo(){ //
         cout << endl;
         cout << *this;
         cout << endl;
-        cout << "1. Name\t\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
+        cout << "1. Surname\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
-            cout << "Enter name: ";
+            cout << "Enter surname: ";
             cin.ignore();
             getline(cin, this->name);
             go = true;
@@ -184,8 +184,8 @@ void viewInfo(vector<scientist> &s){
         else{
             for(unsigned int i = 0; i<s.size(); i++)
                 cout << s[i] << endl;
-            cout << "1. Sort by name\t2. Sort by gender\n3. Sort by year of birth" << endl;
-            cout << "Enter choice: ";
+            cout << "1. Sort by surname\t2. Sort by gender\t3. Sort by year of birth" << endl;
+            cout << endl << "Enter choice: ";
             cin >> choice;
             if(choice == '1'){
                 vector<string> v;
