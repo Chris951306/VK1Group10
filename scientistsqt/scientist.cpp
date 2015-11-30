@@ -2,11 +2,7 @@
 
 const int MinYear = -1000;
 const int MaxYear = 2015;
-<<<<<<< HEAD
 const int StillAlvie = 3000; //value that makes the program know that a person is still alive
-=======
-const int StillAlive = 3000;
->>>>>>> master
 
 scientist::scientist(){
 
@@ -21,15 +17,8 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
     char alive;
     bool valid = false;
     cout << "Enter name: ";
-<<<<<<< HEAD
     cin >> this->name;
-
-    do{  //makes sures that the input is either female or male
-=======
-    cin.ignore();
-    getline(cin, this->name);
-    do{
->>>>>>> master
+    do{     //makes sures that the input is either female or male
         valid = false;
         cout << "Enter gender(m/f): ";
         cin >> gender;
