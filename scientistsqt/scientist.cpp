@@ -145,10 +145,10 @@ ostream& operator<<(ostream& stream, const scientist &s){
         stream << "Male" << "\t";
     if(s.yob < 0)
     {
-        stream << abs(s.yob) << " B.C. --> ";
+        stream << abs(s.yob) << " B.C.   ";
     }
     else{
-        stream << s.yob << " A.D. --> ";
+        stream << s.yob << " A.D.   ";
     }
 
     if(s.yod == StillAlive){
