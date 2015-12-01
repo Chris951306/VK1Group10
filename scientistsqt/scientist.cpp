@@ -190,12 +190,16 @@ void viewInfo(vector<scientist> &s){
             if(choice == '1'){
                 vector<string> v;
                 for(unsigned int i = 0; i < s.size(); i++){
-                    v.push_back(s[i].name);
+                    string tmp = s[i].name;
+                    tmp[0] = toupper(tmp[0]);
+                    v.push_back(tmp);
                 }
                 sort(v.begin(), v.end());
                 for(unsigned int i=0; i < v.size(); i++){
                     for(unsigned int j = 0; j < s.size(); j++){
-                        if(v[i] == s[j].name){
+                        string tmpS = s[j].name;
+                        tmpS[0] = toupper(tmpS[0]);
+                        if(v[i] == tmpS){
                             swap(s[i].name, s[j].name);
                             swap(s[i].gender, s[j].gender);
                             swap(s[i].yob, s[j].yob);
@@ -275,6 +279,7 @@ void loadInfo(vector<scientist> &s){
             s.push_back(temp);
             counter = 0;
         }
+
 
     }
 
