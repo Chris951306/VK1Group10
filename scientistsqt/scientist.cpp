@@ -254,17 +254,34 @@ void saveInfo(vector<scientist> &s){
 
 void loadInfo(vector<scientist> &s){
     ifstream load("scientists.txt");
-    scientist temp;
-    string a;
-    bool b;
-    int c;
-    int d;
-    while(load >> a >> b >> c >> d){
-        temp.name = a;
+        scientist temp;
+        string a;
+        //string tmp = "";
+        int counter = 0;
+   while(getline(load, a)){
+       counter++;
+       if(counter == 1){
+           temp.name = a;
+       }
+        if(counter == 2)
+            if(a == "0"){
+                temp.gender = 0;
+            }else{
+                temp.gender = 1;
+            }
+        if(counter == 3)
+            temp.yob = atoi(a.c_str());
+        if(counter == 4){
+            temp.yod = atoi(a.c_str());
+            s.push_back(temp);
+            counter = 0;
+        }
+
+        /*temp.name = a;
+        load >> b >> c >> d;
         temp.gender = b;
         temp.yob = c;
-        temp.yod = d;
-        s.push_back(temp);
+        temp.yod = d;*/
     }
 
     if(s.size() > 0)
