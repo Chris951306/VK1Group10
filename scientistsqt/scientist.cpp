@@ -16,7 +16,7 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
     char gender;
     char alive;
     bool valid = false;
-    cout << "Enter surname: ";
+    cout << "Enter name: ";
     cin.ignore();
     getline(cin, this->name);
     do{     //makes sures that the input is either female or male
@@ -69,11 +69,11 @@ void scientist::editInfo(){ //
         cout << endl;
         cout << *this;
         cout << endl;
-        cout << "1. Surname\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
+        cout << "1. Name\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
-            cout << "Enter surname: ";
+            cout << "Enter name: ";
             cin.ignore();
             getline(cin, this->name);
             go = true;
@@ -184,7 +184,7 @@ void viewInfo(vector<scientist> &s){
         else{
             for(unsigned int i = 0; i<s.size(); i++)
                 cout << s[i] << endl;
-            cout << "1. Sort by surname\t2. Sort by gender\t3. Sort by year of birth" << endl;
+            cout << "1. Sort by name\t2. Sort by gender\t3. Sort by year of birth" << endl;
             cout << endl << "Enter choice: ";
             cin >> choice;
             if(choice == '1'){
@@ -256,7 +256,6 @@ void loadInfo(vector<scientist> &s){
     ifstream load("scientists.txt");
         scientist temp;
         string a;
-        //string tmp = "";
         int counter = 0;
    while(getline(load, a)){
        counter++;
@@ -277,11 +276,6 @@ void loadInfo(vector<scientist> &s){
             counter = 0;
         }
 
-        /*temp.name = a;
-        load >> b >> c >> d;
-        temp.gender = b;
-        temp.yob = c;
-        temp.yod = d;*/
     }
 
     if(s.size() > 0)
