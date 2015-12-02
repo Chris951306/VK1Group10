@@ -1,0 +1,44 @@
+Ada Lovelace
+0
+1815
+1852
+Charles Babbage 
+1
+1791
+1871
+Blaise Pascal
+1
+1623
+1662
+Alan Turing
+1
+1912
+1954
+Margaret Hamilton
+0
+1936
+3000
+Sophie Wilson
+0
+1957
+3000
+Marissa Ann Mayer
+0
+1975
+3000
+Larry Page
+1
+1973
+3000
+Grace Hopper
+0
+1906
+1992
+John McCarthy
+1
+1927
+2011
+James Gosling
+1
+1955
+3000
