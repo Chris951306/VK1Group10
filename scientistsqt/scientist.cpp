@@ -16,7 +16,7 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
     char gender;
     char alive;
     bool valid = false;
-    cout << "Enter surname: ";
+    cout << "Enter name: ";
     cin.ignore();
     getline(cin, this->name);
     do{     //makes sures that the input is either female or male
@@ -46,7 +46,7 @@ void scientist::readInfo(){  //function that reads the info (name, gender, birth
         cout << "Is this amazing person alive(y/n):";
         cin  >> alive;
         if(alive != 'n' && alive != 'y'){
-            cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
+            cout << "Invalid input! Didn't you understand the instruction \nor are you just trolling... ENTER AGAIN: " << endl;
         }
     }while(alive != 'n' && alive != 'y');
     this->yod = StillAlive;
@@ -69,11 +69,11 @@ void scientist::editInfo(){ //
         cout << endl;
         cout << *this;
         cout << endl;
-        cout << "1. Surname\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
+        cout << "1. Name\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
         cout << "Your choice: ";
         cin >> choice;
         if(choice == '1'){
-            cout << "Enter surname: ";
+            cout << "Enter name: ";
             cin.ignore();
             getline(cin, this->name);
             go = true;
@@ -108,7 +108,7 @@ void scientist::editInfo(){ //
             do{
                 valid = true;
                 if(alive == 'n'){
-                    cout << "Invalid input! Didn't you understand the instruction or are you just trolling... ENTER AGAIN: " << endl;
+                    cout << "Why is this world so cruel? When did the scientist die? ";
                     cin >> this->yod;
 
                     valid = legalDeath(yob, yod);
@@ -133,7 +133,7 @@ bool scientist::legalDeath(int yob, int yod){
         return true;
         }
     }
-    cout << "Why is this world so cruel? When did the scientist die? :´( ";
+    cout << "Invalid input! Didn't you understand the instruction \nor are you just trolling... ENTER AGAIN: " << endl;
     return false;
 }
 
@@ -145,10 +145,10 @@ ostream& operator<<(ostream& stream, const scientist &s){
         stream << "Male" << "\t";
     if(s.yob < 0)
     {
-        stream << abs(s.yob) << " B.C. --> ";
+        stream << abs(s.yob) << " B.C.   ";
     }
     else{
-        stream << s.yob << " A.D. --> ";
+        stream << s.yob << " A.D.   ";
     }
 
     if(s.yod == StillAlive){
@@ -184,18 +184,22 @@ void viewInfo(vector<scientist> &s){
         else{
             for(unsigned int i = 0; i<s.size(); i++)
                 cout << s[i] << endl;
-            cout << "1. Sort by surname\t2. Sort by gender\t3. Sort by year of birth" << endl;
+            cout << "1. Sort by name\t2. Sort by gender\t3. Sort by year of birth" << endl;
             cout << endl << "Enter choice: ";
             cin >> choice;
             if(choice == '1'){
                 vector<string> v;
                 for(unsigned int i = 0; i < s.size(); i++){
-                    v.push_back(s[i].name);
+                    string tmp = s[i].name;
+                    tmp[0] = toupper(tmp[0]);
+                    v.push_back(tmp);
                 }
                 sort(v.begin(), v.end());
                 for(unsigned int i=0; i < v.size(); i++){
                     for(unsigned int j = 0; j < s.size(); j++){
-                        if(v[i] == s[j].name){
+                        string tmpS = s[j].name;
+                        tmpS[0] = toupper(tmpS[0]);
+                        if(v[i] == tmpS){
                             swap(s[i].name, s[j].name);
                             swap(s[i].gender, s[j].gender);
                             swap(s[i].yob, s[j].yob);
@@ -254,17 +258,29 @@ void saveInfo(vector<scientist> &s){
 
 void loadInfo(vector<scientist> &s){
     ifstream load("scientists.txt");
-    scientist temp;
-    string a;
-    bool b;
-    int c;
-    int d;
-    while(load >> a >> b >> c >> d){
-        temp.name = a;
-        temp.gender = b;
-        temp.yob = c;
-        temp.yod = d;
-        s.push_back(temp);
+        scientist temp;
+        string a;
+        int counter = 0;
+   while(getline(load, a)){
+       counter++;
+       if(counter == 1){
+           temp.name = a;
+       }
+        if(counter == 2)
+            if(a == "0"){
+                temp.gender = 0;
+            }else{
+                temp.gender = 1;
+            }
+        if(counter == 3)
+            temp.yob = atoi(a.c_str());
+        if(counter == 4){
+            temp.yod = atoi(a.c_str());
+            s.push_back(temp);
+            counter = 0;
+        }
+
+
     }
 
     if(s.size() > 0)

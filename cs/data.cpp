@@ -1,32 +1,51 @@
 #include "data.h"
 
-data::data();
+data::data(string a, bool b, int c, int d){
+    name = a;
+    gender = b;
+    yob = c;
+    yod = d;
+}
+
+string data::returnName(){
+    return name;
+}
+
+bool data::returnGender(){
+    return gender;
+}
+
+int data::returnYob(){
+    return yob;
+}
+
+int data::returnYod(){
+    return yod;
+}
 
 ostream& operator<<(ostream& stream, const data &s){
-    stream << s.name << "\t";
+    stream << left << setfill(' ') << setw(25) << s.name;
     if(s.gender)
-        stream << "Female" << "\t";
+        stream << left << setw(12) << "Male";
     else
-        stream << "Male" << "\t";
+        stream << left << setw(12) << "Female";
     if(s.yob < 0)
     {
-        stream << abs(s.yob) << " B.C. --> ";
+        stream << right << setfill('0') << setw(4) << abs(s.yob) << " B.C. --> ";
     }
     else{
-        stream << s.yob << " A.D. --> ";
+        stream << right << setfill('0') << setw(4) << s.yob << " A.D. --> ";
     }
 
     if(s.yod == StillAlive){
-        for(unsigned int i = 0; i < 4; i++){
-            stream << "?";
-        }
+        stream << "Alive";
     }
     else if(s.yod < 0)
     {
-        stream << abs(s.yod) << " B.C.";
+        stream << right << setfill('0') << setw(4) << abs(s.yod) << " B.C.";
     }
     else{
-        stream << s.yod << " A.D.";
+        stream << right << setfill('0') << setw(4) << s.yod << " A.D.";
     }
     stream << endl;
     return stream;

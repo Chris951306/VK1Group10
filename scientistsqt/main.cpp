@@ -41,26 +41,29 @@ void core(vector<scientist> &s){
             go = true;
         }
         else if(choice == '2'){
-            bool check = false;
-            string in;
-            unsigned int choice = 0;
-            cout << "Enter name to search for(Searches are case sensitive): ";
-            cin.ignore();
-            getline(cin, in);
-            for(unsigned int i = 0; i < s.size(); i++){
-                if(in == retName(s[i])){
-                    choice = i;
-                    check = true;
+            char choice;
+            unsigned int val;
+            cout << endl;
+            for(unsigned int i=0; i<s.size(); i++){
+                cout << i+1 << ": " << s[i] << endl;
+            }
+            cout << "Enter scientist number to edit.\n(If input is not a listed number, you will be returned to menu): ";
+            cin >> choice;
+            do{
+                go = false;
+                val = choice - 48;
+                if(isalpha(choice) || val == 0);
+                else{
+                    for(unsigned int i=0; i<s.size(); i++){
+                        if(val == i+1)
+                        {
+                            cout << endl;
+                            s[i].editInfo();
+                        }
+                    }
                 }
-            }
-            if(check){
-                cout << endl;
-                s[choice].editInfo();
-                saveInfo(s);
-            }
-            else{
-                cout << endl << "No such scientist!" << endl;
-            }
+            }while(go);
+            saveInfo(s);
             go = true;
         }
         else if(choice == '3'){
