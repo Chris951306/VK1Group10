@@ -8,7 +8,7 @@ class display
 {
 public:
     display();
-    void viewData(vector<data> &cs);
-};
+    void viewData(vector<data> &cs);    //  Prints out every instance of the data-class file through the printData-function in service-class
+};                                      //  Also holds options for various sorting methods
 
 #endif // DISPLAY_H

@@ -28,7 +28,7 @@ void service::addData(vector<data> &cs){
     cin.ignore();
     readName(name);
     gender = legalGender();
-    yob = legalBirth(); //uses bool function legalBirth which returns true if yob (year of birth) is a legalBirth
+    yob = legalBirth();
     yod = legalDeath(yob);
     data temp(name, gender, yob, yod);
     cs.push_back(temp);

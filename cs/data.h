@@ -9,23 +9,23 @@
 
 using namespace std;
 
-const int MinYear = -1000;
-const int MaxYear = 2015;
-const int StillAlive = 3000; //value that makes the program know that a person is still alive
+const int MinYear = -1000;      //
+const int MaxYear = 2015;       //  Const definitions used to determine min/max-values and if scientist is still alive
+const int StillAlive = 3000;    //
 
 class data{
     public:
-        data(string a, bool b, int c, int d);
-        string returnName();
-        bool returnGender();
-        int returnYob();
-        int returnYod();
-        friend ostream& operator<<(ostream& stream, const data &s);
+        data(string a, bool b, int c, int d);                       //  Default constructor
+        string returnName();                                        //  Does what is says
+        bool returnGender();                                        //  --------||-------
+        int returnYob();                                            //  --------||-------
+        int returnYod();                                            //  --------||-------
+        friend ostream& operator<<(ostream& stream, const data &s); //  Overloads << for class
     private:
         string name;
         bool gender;
-        int yob;
-        int yod;
+        int yob;    //  Year of birth
+        int yod;    //  Year of death
 };
 
 #endif // DATA_H

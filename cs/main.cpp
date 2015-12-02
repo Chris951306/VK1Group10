@@ -1,3 +1,9 @@
+//  Made by:
+//  Christian Andreas Jacobsen
+//  Hekla Rún Ámundadóttir
+//  Kristín Vala Einarsdóttir
+//  Þórmundur Smári Hilmarsson
+
 #include "core.h"
 #include <QCoreApplication>
 

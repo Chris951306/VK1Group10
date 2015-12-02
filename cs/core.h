@@ -8,7 +8,7 @@
 class core
 {
 public:
-    void controller(vector<data> &cs);
+    void controller(vector<data> &cs);  //  Main controller for program. (UI)
 };
 
 #endif // CORE_H
