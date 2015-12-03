@@ -1,15 +1,9 @@
-#include "data.h"
-#include "service.h"
 #include "display.h"
 
-display::display()
-{
-    
-}
-
-void display::viewData(vector<data> &cs){
+void display::viewScientists(vector<scientists> &cs){
     service s;
     bool go = false;
+    unsigned int cs_id;
     string name;
     bool gender;
     int yob;
@@ -19,13 +13,13 @@ void display::viewData(vector<data> &cs){
     if(cs.size() == 0)
         cout << "No scientists stored!" << endl;
     else{
-        vector<data> temp;
+        vector<scientists> temp;
         for(unsigned int i = 0; i < cs.size(); i++){
             temp.push_back(cs[i]);
         }
         do{
             go = false;
-            s.printData(temp);
+            s.printScientists(temp);
             cout << "1. Sort by name\t\t2. Sort by gender\t3. Sort by year of birth" << endl;
             cout << "Enter choice: ";
             cin  >> choice;
@@ -43,11 +37,12 @@ void display::viewData(vector<data> &cs){
                         string tmp = cs[j].returnName();
                         tmp[0] = toupper(tmp[0]);
                         if(v[i] == tmp){
+                            cs_id = cs[j].returnId();
                             name = cs[j].returnName();
                             gender = cs[j].returnGender();
                             yob = cs[j].returnYob();
                             yod = cs[j].returnYod();
-                            data temp1(name, gender, yob, yod);
+                            scientists temp1(cs_id, name, gender, yob, yod);
                             temp.push_back(temp1);
                         }
                     }
@@ -86,4 +81,8 @@ void display::viewData(vector<data> &cs){
             }
         }while(go);
     }
+}
+
+void display::viewCombination(vector<scientists> &cs, vector<computers> &c){
+    cout << "Function missing!" << endl;
 }

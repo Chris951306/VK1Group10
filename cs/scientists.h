@@ -1,5 +1,5 @@
-#ifndef DATA_H
-#define DATA_H
+#ifndef SCIENTISTS_H
+#define SCIENTISTS_H
 #include <iostream>
 #include <vector>
 #include <string>
@@ -13,19 +13,21 @@ const int MinYear = -1000;      //
 const int MaxYear = 2015;       //  Const definitions used to determine min/max-values and if scientist is still alive
 const int StillAlive = 3000;    //
 
-class data{
+class scientists{
     public:
-        data(string a, bool b, int c, int d);                       //  Default constructor
-        string returnName();                                        //  Does what is says
+        scientists(unsigned int id, string a, bool b, int c, int d);//  Default constructor
+        unsigned int returnId();                                    //  Does what is says
+        string returnName();                                        //  --------||-------
         bool returnGender();                                        //  --------||-------
         int returnYob();                                            //  --------||-------
         int returnYod();                                            //  --------||-------
-        friend ostream& operator<<(ostream& stream, const data &s); //  Overloads << for class
+        friend ostream& operator<<(ostream& stream, const scientists &s); //  Overloads << for class
     private:
+        unsigned int cs_id;
         string name;
         bool gender;
         int yob;    //  Year of birth
         int yod;    //  Year of death
 };
 
-#endif // DATA_H
+#endif // SCIENTISTS_H

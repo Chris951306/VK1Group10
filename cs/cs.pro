@@ -1,4 +1,5 @@
 QT += core
+QT += sql
 QT -= gui
 
 TARGET = cs
@@ -8,14 +9,16 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    data.cpp \
     service.cpp \
     display.cpp \
-    core.cpp
+    core.cpp \
+    scientists.cpp \
+    computers.cpp
 
 HEADERS += \
-    data.h \
     service.h \
     display.h \
-    core.h
+    core.h \
+    scientists.h \
+    computers.h
 

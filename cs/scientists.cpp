@@ -1,29 +1,35 @@
-#include "data.h"
+#include "scientists.h"
 
-data::data(string a, bool b, int c, int d){
+scientists::scientists(unsigned int id, string a, bool b, int c, int d){
+    cs_id = id;
     name = a;
     gender = b;
     yob = c;
     yod = d;
 }
 
-string data::returnName(){
+unsigned int scientists::returnId(){
+    return cs_id;
+}
+
+string scientists::returnName(){
     return name;
 }
 
-bool data::returnGender(){
+bool scientists::returnGender(){
     return gender;
 }
 
-int data::returnYob(){
+int scientists::returnYob(){
     return yob;
 }
 
-int data::returnYod(){
+int scientists::returnYod(){
     return yod;
 }
 
-ostream& operator<<(ostream& stream, const data &s){
+ostream& operator<<(ostream& stream, const scientists &s){
+    stream << right << setfill(' ') << setw(4) << s.cs_id << ": ";
     stream << left << setfill(' ') << setw(25) << s.name;
     if(s.gender)
         stream << left << setw(12) << "Male";
@@ -47,7 +53,6 @@ ostream& operator<<(ostream& stream, const data &s){
     else{
         stream << right << setfill('0') << setw(4) << s.yod << " A.D.";
     }
-    stream << endl;
     return stream;
 }
 

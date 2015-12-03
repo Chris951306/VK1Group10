@@ -12,9 +12,10 @@ void logo();
 int main()
 {
     logo();
-    vector<data> cs;
+    vector<scientists> cs;
+    vector<computers> c;
     core view;
-    view.controller(cs);
+    view.controller(cs, c);
     return 0;
 }
 
