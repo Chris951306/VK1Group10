@@ -6,7 +6,9 @@
 #include <vector>
 #include <iomanip>
 
-const int StillAlive = 3000;
+const int STILLALIVE = 3000;
+const int MINYEAR = -1000;
+const int MAXYEAR = 2015;
 
 using namespace std;
 

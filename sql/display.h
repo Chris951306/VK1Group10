@@ -5,6 +5,8 @@
 class display{
 public:
     void printScientists();
+    void printScientist(unsigned int val);
+    bool sortScientist();
 };
 
 #endif // DISPLAY_H
