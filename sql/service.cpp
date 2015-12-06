@@ -90,14 +90,14 @@ int service::legalBirth(){
         if(MINYEAR < yob && yob <= MAXYEAR){
             return yob;
         }
-        cout << "That is not possible! Try again: " << endl;
+        cout << "That is not possible!" << endl;
     }while(true);
 }
 
 int service::legalDeath(int yob){
     int yod;
     char input;
-    do{  // makes sures that the input is y (yes) or n (no)
+    do{
         cout << "Is this amazing person alive(y/n):";
         cin  >> input;
         if(input != 'n' && input != 'y'){
@@ -115,7 +115,7 @@ int service::legalDeath(int yob){
                 return yod;
                 }
             }
-            cout << "That is not possible! Try again: " << endl;
+            cout << "That is not possible!" << endl;
         }while(true);
     }
     return yod;
@@ -141,6 +141,124 @@ bool service::legalGender(){
             cout << "Invalid input!" << endl;
     }while(!valid);
     return gender;
+}
+
+void service::addComputers(){
+    QSqlQuery query;
+    QString name, type;
+    int year;
+    bool built;
+    query.prepare("INSERT INTO computers (name, year, type, built) VALUES (:name, :year, :type, :built)");
+    QTextStream qtin(stdin);
+    cout << "Enter name of computer: ";
+    cin.ignore();
+    name = qtin.readLine();
+    query.bindValue(":name", name);
+    year = legalYear();
+    query.bindValue(":year", year);
+    cout << "Enter type of computer: ";
+    cin.ignore();
+    type = qtin.readLine();
+    query.bindValue(":type", type);
+    built = legalBuilt();
+    query.bindValue(":built", built);
+    query.exec();
+}
+bool service::editComputer(unsigned int val){
+    QSqlQuery query;
+    char choice;
+    QString name, type;
+    int year;
+    bool built;
+    cout << "1. Name\t\t\t2. Year\n3. Type\t4. Build status" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    if(choice == '1'){
+        query.prepare("UPDATE computers SET name = :name WHERE id = :id");
+        cout << "Enter name: ";
+        cin.ignore();
+        QTextStream qtin(stdin);
+        name = qtin.readLine();
+        query.bindValue(":name", name);
+        query.bindValue(":id", val);
+        query.exec();
+        return true;
+    }
+    else if(choice == '2'){
+        query.prepare("SELECT year FROM computers WHERE id = :id");
+        query.bindValue(":id", val);
+        query.exec();
+        query.next();
+        year = query.value("year").toInt();
+        query.prepare("UPDATE computers SET year = :year WHERE id = :id");
+        year = legalDeath(year);
+        query.bindValue(":year", year);
+        query.bindValue(":id", val);
+        query.exec();
+        return true;
+    }
+    else if(choice == '3'){
+        query.prepare("UPDATE computers SET type = :type WHERE id = :id");
+        cout << "Enter type: ";
+        cin.ignore();
+        QTextStream qtin(stdin);
+        type = qtin.readLine();
+        query.bindValue(":type", type);
+        query.bindValue(":id", val);
+        query.exec();
+        return true;
+    }
+    else if(choice == '4'){
+        query.prepare("SELECT built FROM computers WHERE id = :id");
+        query.bindValue(":id", val);
+        query.exec();
+        query.next();
+        built = query.value("built").toBool();
+        query.prepare("UPDATE computers SET built = :built WHERE id = :id");
+        if(built)
+            built = false;
+        else
+            built = true;
+        query.bindValue(":built", built);
+        query.bindValue(":id", val);
+        query.exec();
+        return true;
+    }
+    return false;
+}
+
+int service::legalYear(){
+    int year;
+    do{
+        cout << "When was this computer built(yyyy): ";
+        cin >> year;
+        if(MINYEAR < year && year <= MAXYEAR){
+            return year;
+        }
+        cout << "That is not possible!" << endl;
+    }while(true);
+}
+
+bool service::legalBuilt(){
+    bool valid = false;
+    bool built;
+    char input;
+    do{
+        valid = false;
+        cout << "Was the computer built(y/n): ";
+        cin >> input;
+        if(input == 'n'){
+            built = false;
+            valid = true;
+        }
+        else if(input == 'y'){
+            built = true;
+            valid = true;
+        }
+        else
+            cout << "Invalid input!" << endl;
+    }while(!valid);
+    return built;
 }
 
 unsigned int service::selectUnit(string &s){

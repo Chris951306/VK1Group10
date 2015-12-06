@@ -1,7 +1,6 @@
 #include "database.h"
 
-database::database()
-{
+database::database(){
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("database");
 }

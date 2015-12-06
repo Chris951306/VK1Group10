@@ -9,6 +9,10 @@ public:
     int legalBirth();
     int legalDeath(int yob);
     bool legalGender();
+    void addComputers();
+    bool editComputer(unsigned int val);
+    int legalYear();
+    bool legalBuilt();
     unsigned int selectUnit(string &s);
     bool isLetter(string &s);
 };
