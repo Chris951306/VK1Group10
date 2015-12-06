@@ -86,9 +86,8 @@ void control::maincontrol(database &db){
                 }while(go);
             }
             else if(choice2 == '2'){
-                 cout << "Still working on it" << endl;
-                 /*d.printComputers();
-                 do{
+                 d.printComputers();
+                 /*do{
                      go = false;
                      go = d.sortComputer();
                  }while(go);
