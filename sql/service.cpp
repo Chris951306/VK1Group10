@@ -12,7 +12,7 @@ void service::addScientist(){
         cout << "Enter name of scientist: ";
         cin.ignore();
         name = qtin.readLine();
-    }while(!checkName());
+    }while(!checkName(name));
     query.bindValue(":name", name);
     gender = legalGender();
     query.bindValue(":gender", gender);
@@ -40,7 +40,7 @@ bool service::editScientist(unsigned int val){
             cout << "Enter name of scientist: ";
             cin.ignore();
             name = qtin.readLine();
-        }while(!checkName());
+        }while(!checkName(name));
         query.bindValue(":name", name);
         query.bindValue(":id", val);
         query.exec();
@@ -158,7 +158,7 @@ void service::addComputer(){
         cout << "Enter name of computer: ";
         cin.ignore();
         name = qtin.readLine();
-    }while(!checkName());
+    }while(!checkName(name));
     query.bindValue(":name", name);
     year = legalYear();
     query.bindValue(":year", year);
@@ -166,7 +166,7 @@ void service::addComputer(){
         cout << "Enter type of computer: ";
         cin.ignore();
         name = qtin.readLine();
-    }while(!checkName());
+    }while(!checkName(name));
     query.bindValue(":type", type);
     built = legalBuilt();
     query.bindValue(":built", built);
@@ -188,7 +188,7 @@ bool service::editComputer(unsigned int val){
             cout << "Enter name of computer: ";
             cin.ignore();
             name = qtin.readLine();
-        }while(!checkName());
+        }while(!checkName(name));
         query.bindValue(":name", name);
         query.bindValue(":id", val);
         query.exec();
@@ -214,7 +214,7 @@ bool service::editComputer(unsigned int val){
             cout << "Enter type of computer: ";
             cin.ignore();
             name = qtin.readLine();
-        }while(!checkName());
+        }while(!checkName(name));
         query.bindValue(":type", type);
         query.bindValue(":id", val);
         query.exec();
@@ -298,7 +298,7 @@ bool service::isLetter(string s){
     return false;
 }
 
-bool service::checkName(string s){
+bool service::checkName(QString s){
     for(unsigned int i = 0; i < s.length(); i++){
         if((islower(s[i]) && i == 0) || (islower(s[i]) && s[i-1] == ' '))
             s[i] = toupper(s[i]);
