@@ -299,6 +299,9 @@ bool service::isLetter(string s){
 }
 
 bool service::checkName(QString &name){
+    QTextStream qtout(stdout);
+    qtout.operator <<(name);
+    cout << endl;
     string s = name.toStdString();
     for(unsigned int i = 0; i < s.length(); i++){
         if((islower(s[i]) && i == 0) || (islower(s[i]) && s[i-1] == ' '))
@@ -307,7 +310,7 @@ bool service::checkName(QString &name){
             s.erase(s.begin()+i);
             i--;
         }
-        else if(!isalpha(s[i]) || s[i] != ',' || s[i] != '.' || s[i] != '\'' || s[i] != '-'){
+        else if(!isalnum(s[i]) || s[i] != ',' || s[i] != '.' || s[i] != '\'' || s[i] != '-'){
             cout << "Invalid name!" << endl;
             return false;
         }
@@ -317,4 +320,85 @@ bool service::checkName(QString &name){
         name[i] = s[i];
     }
     return true;
+}
+
+void service::multiSearch(QString &s){
+    QString a = s;
+    for(unsigned int i = a.length()-1; i > 0; i--){
+        a[i+1] = a[i];
+    }
+    a[1] = s[0];
+    a[0] = '%';
+    a[a.length()] = '%';
+    s = a;
+}
+
+bool service::searchComputer(vector<int> &id){
+    QSqlQuery query;
+    char choice;
+    QString name, type;
+    int year;
+    bool built;
+    cout << "1. Search for name\t\t2. Search for year\n3. Search for type\t\t4. Search for built or not built" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    if(choice == '1'){
+        query.prepare("SELECT id FROM computers WHERE name LIKE :name");
+        QTextStream qtin(stdin);
+        do{
+            cout << "Enter name of computer: ";
+            cin.ignore();
+            name = qtin.readLine();
+        }while(!checkName(name));
+        multiSearch(name);
+        query.bindValue(":name", name);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    else if(choice == '2'){
+        query.prepare("SELECT id FROM computers WHERE year = :year");
+        year = legalYear();
+        query.bindValue(":year", year);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    else if(choice == '3'){
+        query.prepare("SELECT id FROM computers WHERE type LIKE :type");
+        QTextStream qtin(stdin);
+        do{
+            cout << "Enter type: ";
+            cin.ignore();
+            type = qtin.readLine();
+        }while(!checkName(type));
+        multiSearch(type);
+        query.bindValue(":type", type);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    else if(choice == '4'){
+        query.prepare("SELECT id FROM computers WHERE built = :built");
+        do{
+            built = legalBuilt();
+        }while(!built);
+        query.bindValue(":built", built);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    return false;
 }

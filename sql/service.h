@@ -16,6 +16,8 @@ public:
     unsigned int selectUnit(string s);
     bool isLetter(string s);
     bool checkName(QString &name);
+    void multiSearch(QString &s);
+    bool searchComputer(vector<int> &id);
 };
 
 #endif // SERVICE_H

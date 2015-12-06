@@ -11,7 +11,7 @@ void control::maincontrol(database &db){
     do{
         go = false;
         cout << "1. Add to database\t\t2. Edit database" << endl;
-        cout << "3. Display database\t\tAny other will quit program"<< endl;
+        cout << "3. Display database\t\t4. Search in database"<< endl;
         cout << "Enter your choice: ";
         cin  >> choice;
         cout << endl;
@@ -99,6 +99,31 @@ void control::maincontrol(database &db){
                      go = false;
                      go = d.sortComputers();
                  }while(go);
+            }
+            cout << endl;
+            go = true;
+        }
+        else if(choice == '4'){
+            vector<int> id;
+            cout << "1. Search for scientist \t\t 2. Search for computer" << endl;
+            cout << "Any other will go to menu" << endl;
+            cout << "Enter your choice: ";
+            cin >> choice2;
+            if(choice2 == '1'){
+                cout << "Missing" << endl;
+            }
+            else if(choice2 == '2'){
+                do{
+                    go = false;
+                    go = s.searchComputer(id);
+                    if(go){
+                        for(unsigned int i = 0; i < id.size(); i++){
+                            d.printComputer(id[i]);
+                            cout << endl;
+                        }
+                    }
+                    id.erase(id.begin(), id.end());
+                }while(go);
             }
             cout << endl;
             go = true;
