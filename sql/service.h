@@ -9,7 +9,7 @@ public:
     int legalBirth();
     int legalDeath(int yob);
     bool legalGender();
-    void addComputers();
+    void addComputer();
     bool editComputer(unsigned int val);
     int legalYear();
     bool legalBuilt();

@@ -143,7 +143,7 @@ bool service::legalGender(){
     return gender;
 }
 
-void service::addComputers(){
+void service::addComputer(){
     QSqlQuery query;
     QString name, type;
     int year;

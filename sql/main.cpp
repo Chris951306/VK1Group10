@@ -4,7 +4,6 @@ void logo();
 
 int main(){
     logo();
-
     database db;
     control c;
     c.maincontrol(db);

@@ -24,7 +24,7 @@ void control::maincontrol(database &db){
                 s.addScientist();
             }
             else if(choice2 == '2'){
-                cout << "We are still working on that... " << endl;
+                s.addComputer();
             }
             cout << endl;
             go = true;
@@ -41,6 +41,8 @@ void control::maincontrol(database &db){
                 cin >> option;
                 cout << endl << endl;
                 unsigned int val = s.selectUnit(option);
+                QSqlQuery query;
+                 query.exec("SELECT MAX(id) FROM scientists");
                 if(s.isLetter(option) || val == 0 || option[0] == 45);
                 else{
                     do{
@@ -52,7 +54,21 @@ void control::maincontrol(database &db){
                 }
             }
             else if(choice2 == '2'){
-                cout << "Not done yet :/" << endl;
+                //d.printComputers();
+                string option;
+                cout << "Enter computer number to edit.\n(If input is not a listed number, you will be returned to menu): ";
+                cin >> option;
+                cout << endl << endl;
+                unsigned int val = s.selectUnit(option);
+                if(s.isLetter(option) || val == 0 || option[0] == 45);
+                else{
+                    do{
+                        go = false;
+                        //d.printComputer(val);
+                        //cout << endl << endl;
+                        go = s.editComputer(val);
+                    }while(go);
+                }
             }
             cout << endl;
             go = true;
@@ -70,7 +86,13 @@ void control::maincontrol(database &db){
                 }while(go);
             }
             else if(choice2 == '2'){
-                 cout << "HAHA we havent done this yet" << endl;
+                 cout << "Still working on it" << endl;
+                 /*d.printComputers();
+                 do{
+                     go = false;
+                     go = d.sortComputer();
+                 }while(go);
+                 */
             }
             cout << endl;
             go = true;
