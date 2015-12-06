@@ -67,8 +67,8 @@ void control::maincontrol(database &db){
                 else{
                     do{
                         go = false;
-                        //d.printComputer(val);
-                        //cout << endl << endl;
+                        d.printComputer(val);
+                        cout << endl << endl;
                         go = s.editComputer(val);
                     }while(go);
                 }

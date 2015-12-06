@@ -170,7 +170,7 @@ bool service::editComputer(unsigned int val){
     QString name, type;
     int year;
     bool built;
-    cout << "1. Name\t\t\t2. Year\n3. Type\t4. Build status" << endl;
+    cout << "1. Name\t\t2. Year\n3. Type\t\t4. Build status" << endl;
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){

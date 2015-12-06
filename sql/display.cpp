@@ -139,9 +139,9 @@ bool display::sortScientist(){
     return true;
 }
 void display::printComputers(){
-    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(25) << "Name" << left << setw(6) << "Year";
-    cout << setfill(' ') << left << setw(20) << "Type" << left << "Build status" << endl;
-    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
+    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(30) << "Name" << left << setw(12) << "Year";
+    cout << setfill(' ') << left << setw(18) << "Type" << left << "Build status" << endl;
+    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
     QSqlQuery query;
     query.exec("SELECT * FROM computers");
     while(query.next()){
@@ -151,15 +151,15 @@ void display::printComputers(){
         string type = query.value("type").toString().toStdString();
         bool built = query.value("built").toBool();
         cout << right << setfill(' ') << setw(4) << id << ": ";
-        cout << left << setfill(' ') << setw(25) << name;
+        cout << left << setfill(' ') << setw(30) << name;
         if(year < 0)
         {
-            cout << right << setfill('0') << setw(6) << abs(year) << " B.C.";
+            cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
         }
         else{
-            cout << right << setfill('0') << setw(6) << year << " A.D.";
+            cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
         }
-        cout << left << setfill(' ') << setw(20) << type;
+        cout << left << setfill(' ') << setw(18) << type;
         if(built)
             cout << left << setw(9) << "Built";
         else
@@ -168,5 +168,34 @@ void display::printComputers(){
 
 
         cout << endl << endl;
+    }
+}
+void display::printComputer(unsigned int val){
+    QSqlQuery query;
+    query.prepare("SELECT * FROM computers WHERE id = :id");
+    query.bindValue(":id", val);
+    query.exec();
+    while(query.next()){
+        unsigned int id = query.value("id").toUInt();
+        string name = query.value("name").toString().toStdString();
+        int year = query.value("year").toInt();
+        string type = query.value("type").toString().toStdString();
+        bool built = query.value("built").toBool();
+        cout << right << setfill(' ') << setw(4) << id << ": ";
+        cout << left << setfill(' ') << setw(30) << name;
+        if(year < 0)
+        {
+            cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
+        }
+        else{
+            cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
+        }
+        cout << left << setfill(' ') << setw(18) << type;
+        if(built)
+            cout << left << setw(9) << "Built";
+        else
+            cout << left << setw(9) << "Not built";
+
+
     }
 }
