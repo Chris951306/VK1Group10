@@ -63,7 +63,12 @@ void control::maincontrol(database &db){
                 cin >> option;
                 cout << endl << endl;
                 unsigned int val = s.selectUnit(option);
-                if(s.isLetter(option) || val == 0 || option[0] == 45);
+                unsigned int maxId;
+                QSqlQuery query;
+                query.exec("SELECT MAX(id) FROM computers");
+                query.next();
+                maxId = query.value("MAX(id)").toUInt();
+                if(s.isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
                 else{
                     do{
                         go = false;
