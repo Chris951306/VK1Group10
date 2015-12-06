@@ -13,8 +13,9 @@ public:
     bool editComputer(unsigned int val);
     int legalYear();
     bool legalBuilt();
-    unsigned int selectUnit(string &s);
-    bool isLetter(string &s);
+    unsigned int selectUnit(string s);
+    bool isLetter(string s);
+    bool checkName(string s);
 };
 
 #endif // SERVICE_H

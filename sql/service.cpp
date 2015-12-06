@@ -8,9 +8,11 @@ void service::addScientist(){
     int yod;
     query.prepare("INSERT INTO scientists(name, gender, yob, yod) VALUES (:name, :gender, :yob, :yod)");
     QTextStream qtin(stdin);
-    cout << "Enter name of this genius: ";
-    cin.ignore();
-    name = qtin.readLine();
+    do{
+        cout << "Enter name of scientist: ";
+        cin.ignore();
+        name = qtin.readLine();
+    }while(!checkName());
     query.bindValue(":name", name);
     gender = legalGender();
     query.bindValue(":gender", gender);
@@ -33,10 +35,12 @@ bool service::editScientist(unsigned int val){
     cin >> choice;
     if(choice == '1'){
         query.prepare("UPDATE scientists SET name = :name WHERE id = :id");
-        cout << "Enter name: ";
-        cin.ignore();
         QTextStream qtin(stdin);
-        name = qtin.readLine();
+        do{
+            cout << "Enter name of scientist: ";
+            cin.ignore();
+            name = qtin.readLine();
+        }while(!checkName());
         query.bindValue(":name", name);
         query.bindValue(":id", val);
         query.exec();
@@ -150,15 +154,19 @@ void service::addComputer(){
     bool built;
     query.prepare("INSERT INTO computers (name, year, type, built) VALUES (:name, :year, :type, :built)");
     QTextStream qtin(stdin);
-    cout << "Enter name of computer: ";
-    cin.ignore();
-    name = qtin.readLine();
+    do{
+        cout << "Enter name of computer: ";
+        cin.ignore();
+        name = qtin.readLine();
+    }while(!checkName());
     query.bindValue(":name", name);
     year = legalYear();
     query.bindValue(":year", year);
-    cout << "Enter type of computer: ";
-    cin.ignore();
-    type = qtin.readLine();
+    do{
+        cout << "Enter type of computer: ";
+        cin.ignore();
+        name = qtin.readLine();
+    }while(!checkName());
     query.bindValue(":type", type);
     built = legalBuilt();
     query.bindValue(":built", built);
@@ -175,10 +183,12 @@ bool service::editComputer(unsigned int val){
     cin >> choice;
     if(choice == '1'){
         query.prepare("UPDATE computers SET name = :name WHERE id = :id");
-        cout << "Enter name: ";
-        cin.ignore();
         QTextStream qtin(stdin);
-        name = qtin.readLine();
+        do{
+            cout << "Enter name of computer: ";
+            cin.ignore();
+            name = qtin.readLine();
+        }while(!checkName());
         query.bindValue(":name", name);
         query.bindValue(":id", val);
         query.exec();
@@ -199,10 +209,12 @@ bool service::editComputer(unsigned int val){
     }
     else if(choice == '3'){
         query.prepare("UPDATE computers SET type = :type WHERE id = :id");
-        cout << "Enter type: ";
-        cin.ignore();
         QTextStream qtin(stdin);
-        type = qtin.readLine();
+        do{
+            cout << "Enter type of computer: ";
+            cin.ignore();
+            name = qtin.readLine();
+        }while(!checkName());
         query.bindValue(":type", type);
         query.bindValue(":id", val);
         query.exec();
@@ -261,7 +273,7 @@ bool service::legalBuilt(){
     return built;
 }
 
-unsigned int service::selectUnit(string &s){
+unsigned int service::selectUnit(string s){
     unsigned int val = 0;
     for(unsigned int i = 0; i < s.size(); i++){
         if(i == (s.size() - 1))
@@ -278,10 +290,30 @@ unsigned int service::selectUnit(string &s){
     return val;
 }
 
-bool service::isLetter(string &s){
+bool service::isLetter(string s){
     for(unsigned int i = 0; i < s.size(); i++){
         if(isalpha(s[i]))
             return true;
     }
     return false;
+}
+
+bool service::checkName(string s){
+    for(unsigned int i = 0; i < s.length(); i++){
+        if((islower(s[i]) && i == 0) || (islower(s[i]) && s[i-1] == ' '))
+            s[i] = toupper(s[i]);
+        else if(s[i] == ' ' && n[i+1] == ' ')
+            s.erase(s.begin()+i); i--;
+        else if(!islower(s[i])){
+            if((isupper(s[i]) && i == 0) || (isupper(s[i]) && s[i-1] == ' '));
+            else if((s[i] == '-' && islower(s[i-1])) || s[i] == ',' || s[i] == '.' || s[i] == ' ');
+            else if(isalpha(s[i]))
+                s[i] = tolower(s[i]);
+            else{
+                cout << "Invalid name!" << endl;
+                return false;
+            }
+        }
+    }
+    return true;
 }
