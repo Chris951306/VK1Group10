@@ -299,25 +299,18 @@ bool service::isLetter(string s){
 }
 
 bool service::checkName(QString &name){
-    QTextStream qtout(stdout);
-    qtout.operator <<(name);
-    cout << endl;
-    string s = name.toStdString();
-    for(unsigned int i = 0; i < s.length(); i++){
-        if((islower(s[i]) && i == 0) || (islower(s[i]) && s[i-1] == ' '))
-            s[i] = toupper(s[i]);
-        else if(s[i] == ' ' && s[i+1] == ' '){
-            s.erase(s.begin()+i);
+    for(int i = 0; i < name.length(); i++){
+        if((name[i].isLower() && i == 0) || (name[i].isLower() && name[i-1] == ' ')){
+            name[i] = name[i].toUpper();
+        }
+        else if(name[i] == ' ' && name[i+1] == ' '){
+            name.remove(i, 1);
             i--;
         }
-        else if(!isalnum(s[i]) || s[i] != ',' || s[i] != '.' || s[i] != '\'' || s[i] != '-'){
+        else if(!name[i].isLetterOrNumber() && name[i] != '\'' && name[i] != ',' && name[i] != '.' && name[i] != '-' && name[i] != ' '){
             cout << "Invalid name!" << endl;
             return false;
         }
-    }
-    name = "";
-    for(unsigned int i = 0; i < s.length(); i++){
-        name[i] = s[i];
     }
     return true;
 }
@@ -345,11 +338,9 @@ bool service::searchComputer(vector<int> &id){
     if(choice == '1'){
         query.prepare("SELECT id FROM computers WHERE name LIKE :name");
         QTextStream qtin(stdin);
-        do{
-            cout << "Enter name of computer: ";
-            cin.ignore();
-            name = qtin.readLine();
-        }while(!checkName(name));
+        cout << "Enter name of computer: ";
+        cin.ignore();
+        name = qtin.readLine();
         multiSearch(name);
         query.bindValue(":name", name);
         query.exec();
@@ -373,11 +364,9 @@ bool service::searchComputer(vector<int> &id){
     else if(choice == '3'){
         query.prepare("SELECT id FROM computers WHERE type LIKE :type");
         QTextStream qtin(stdin);
-        do{
-            cout << "Enter type: ";
-            cin.ignore();
-            type = qtin.readLine();
-        }while(!checkName(type));
+        cout << "Enter type: ";
+        cin.ignore();
+        type = qtin.readLine();
         multiSearch(type);
         query.bindValue(":type", type);
         query.exec();
