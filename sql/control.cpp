@@ -5,47 +5,75 @@ void control::maincontrol(database &db){
     service s;
     bool go = false;
     char choice;
+    char choice2;
     db.onoff();
     cout << db.status() << endl;
     do{
         go = false;
-        cout << "Hello my friend." << endl;
-        cout << "So what do you wana do?" << endl;
-        cout << "1. Display scientists \t\t 2. Add scientists" << endl;
-        cout << "3. Edit scientists \t\t Any other will quit" << endl;
-        cout << "Enter your choice plz: ";
+        cout << "1. Add to database\t\t2. Edit database" << endl;
+        cout << "3. Display database\t\tAny other will quit program"<< endl;
+        cout << "Enter your choice: ";
         cin  >> choice;
-        switch(choice){
-        case '1':
-            d.printScientists();
-            do{
-                go = false;
-                go = d.sortScientist();
-            }while(go);
+        cout << endl;
+        if(choice == '1'){
+            cout << "1. Add scientists \t\t 2. Add computer" << endl;
+            cout << "Any other will go to menu" << endl;
+            cout << "Enter your choice: ";
+            cin >> choice2;
+            if(choice2 == '1'){
+                s.addScientist();
+            }
+            else if(choice2 == '2'){
+                cout << "We are still working on that... " << endl;
+            }
+            cout << endl;
             go = true;
-            break;
-        case '2':
-            s.addScientist();
+        }
+        else if(choice == '2'){
+            cout << "1. Edit scientists \t\t 2. Edit computer" << endl;
+            cout << "Any other will go to menu" << endl;
+            cout << "Enter your choice: ";
+            cin >> choice2;
+            if(choice2 == '1'){
+                d.printScientists();
+                string option;
+                cout << "Enter scientist number to edit.\n(If input is not a listed number, you will be returned to menu): ";
+                cin >> option;
+                cout << endl << endl;
+                unsigned int val = s.selectUnit(option);
+                if(s.isLetter(option) || val == 0 || option[0] == 45);
+                else{
+                    do{
+                        go = false;
+                        d.printScientist(val);
+                        cout << endl << endl;
+                        go = s.editScientist(val);
+                    }while(go);
+                }
+            }
+            else if(choice2 == '2'){
+                cout << "Not done yet :/" << endl;
+            }
+            cout << endl;
             go = true;
-            break;
-        case '3':
-            d.printScientists();
-            string option;
-            cout << "Enter scientist number to edit.\n(If input is not a listed number, you will be returned to menu): ";
-            cin >> option;
-            cout << endl << endl;
-            unsigned int val = s.selectUnit(option);
-            if(s.isLetter(option) || val == 0);
-            else{
+        }
+        else if(choice == '3'){
+            cout << "1. Display scientists \t\t 2. Display computer" << endl;
+            cout << "Any other will go to menu" << endl;
+            cout << "Enter your choice: ";
+            cin >> choice2;
+            if(choice2 == '1'){
+                d.printScientists();
                 do{
                     go = false;
-                    d.printScientist(val);
-                    cout << endl << endl;
-                    go = s.editScientist(val);
+                    go = d.sortScientist();
                 }while(go);
             }
+            else if(choice2 == '2'){
+                 cout << "HAHA we havent done this yet" << endl;
+            }
+            cout << endl;
             go = true;
-            break;
         }
     }while(go);
 }
