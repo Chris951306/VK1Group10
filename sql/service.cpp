@@ -298,7 +298,7 @@ bool service::isLetter(string s){
     return false;
 }
 
-bool service::checkName(QString name){
+bool service::checkName(QString &name){
     string s = name.toStdString();
     for(unsigned int i = 0; i < s.length(); i++){
         if((islower(s[i]) && i == 0) || (islower(s[i]) && s[i-1] == ' '))
@@ -307,16 +307,14 @@ bool service::checkName(QString name){
             s.erase(s.begin()+i);
             i--;
         }
-        else if(!islower(s[i])){
-            if((isupper(s[i]) && i == 0) || (isupper(s[i]) && s[i-1] == ' '));
-            else if((s[i] == '-' && islower(s[i-1])) || s[i] == ',' || s[i] == '.' || s[i] == ' ');
-            else if(isalpha(s[i]))
-                s[i] = tolower(s[i]);
-            else{
-                cout << "Invalid name!" << endl;
-                return false;
-            }
+        else if(!isalpha(s[i]) || s[i] != ',' || s[i] != '.' || s[i] != '\'' || s[i] != '-'){
+            cout << "Invalid name!" << endl;
+            return false;
         }
+    }
+    name = "";
+    for(unsigned int i = 0; i < s.length(); i++){
+        name[i] = s[i];
     }
     return true;
 }

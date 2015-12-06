@@ -15,7 +15,7 @@ public:
     bool legalBuilt();
     unsigned int selectUnit(string s);
     bool isLetter(string s);
-    bool checkName(QString name);
+    bool checkName(QString &name);
 };
 
 #endif // SERVICE_H
