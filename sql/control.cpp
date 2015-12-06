@@ -39,11 +39,14 @@ void control::maincontrol(database &db){
                 string option;
                 cout << "Enter scientist number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
-                cout << endl << endl;
+                cout << endl;
                 unsigned int val = s.selectUnit(option);
+                unsigned int maxId;
                 QSqlQuery query;
-                 query.exec("SELECT MAX(id) FROM scientists");
-                if(s.isLetter(option) || val == 0 || option[0] == 45);
+                query.exec("SELECT MAX(id) FROM scientists");
+                query.next();
+                maxId = query.value("MAX(id)").toUInt();
+                if(s.isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
                 else{
                     do{
                         go = false;
@@ -54,7 +57,7 @@ void control::maincontrol(database &db){
                 }
             }
             else if(choice2 == '2'){
-                //d.printComputers();
+                d.printComputers();
                 string option;
                 cout << "Enter computer number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
