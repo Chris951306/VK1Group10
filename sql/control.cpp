@@ -90,11 +90,10 @@ void control::maincontrol(database &db){
             }
             else if(choice2 == '2'){
                  d.printComputers();
-                 /*do{
+                 do{
                      go = false;
-                     go = d.sortComputer();
+                     go = d.sortComputers();
                  }while(go);
-                 */
             }
             cout << endl;
             go = true;

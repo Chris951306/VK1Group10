@@ -9,6 +9,7 @@ public:
     bool sortScientist();
     void printComputers();
     void printComputer(unsigned int val);
+    bool sortComputers();
 };
 
 #endif // DISPLAY_H

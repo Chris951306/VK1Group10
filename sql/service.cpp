@@ -298,12 +298,15 @@ bool service::isLetter(string s){
     return false;
 }
 
-bool service::checkName(QString s){
+bool service::checkName(QString name){
+    string s = name.toStdString();
     for(unsigned int i = 0; i < s.length(); i++){
         if((islower(s[i]) && i == 0) || (islower(s[i]) && s[i-1] == ' '))
             s[i] = toupper(s[i]);
-        else if(s[i] == ' ' && n[i+1] == ' ')
-            s.erase(s.begin()+i); i--;
+        else if(s[i] == ' ' && s[i+1] == ' '){
+            s.erase(s.begin()+i);
+            i--;
+        }
         else if(!islower(s[i])){
             if((isupper(s[i]) && i == 0) || (isupper(s[i]) && s[i-1] == ' '));
             else if((s[i] == '-' && islower(s[i-1])) || s[i] == ',' || s[i] == '.' || s[i] == ' ');
