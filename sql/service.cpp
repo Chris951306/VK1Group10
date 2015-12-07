@@ -399,7 +399,7 @@ bool service::searchComputer(vector<int> &id){
     QString name, type;
     int year;
     bool built;
-    cout << "1. Search by name\t\t2. Search by year\n3. Search by type\t\t4. Search by built or not built" << endl;
+    cout << "1. Search by name\t\t2. Search by build year\n3. Search by type\t\t4. Search by built or not built" << endl;
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
