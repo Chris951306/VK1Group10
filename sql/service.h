@@ -17,6 +17,7 @@ public:
     bool isLetter(string s);
     bool checkName(QString &name);
     void multiSearch(QString &s);
+    bool searchScientist(vector<int> &id);
     bool searchComputer(vector<int> &id);
 };
 

@@ -111,12 +111,22 @@ void control::maincontrol(database &db){
         }
         else if(choice == '4'){
             vector<int> id;
-            cout << "1. Search for scientist \t\t 2. Search for computer" << endl;
+            cout << "1. Search for scientist\t\t2. Search for computer" << endl;
             cout << "Any other will go to menu" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
-                cout << "Missing" << endl;
+                do{
+                    go = false;
+                    go = s.searchScientist(id);
+                    if(go){
+                        for(unsigned int i = 0; i < id.size(); i++){
+                            d.printScientist(id[i]);
+                            cout << endl;
+                        }
+                    }
+                    id.erase(id.begin(), id.end());
+                }while(go);
             }
             else if(choice2 == '2'){
                 do{

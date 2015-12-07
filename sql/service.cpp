@@ -326,6 +326,73 @@ void service::multiSearch(QString &s){
     s = a;
 }
 
+bool service::searchScientist(vector<int> &id){
+    QSqlQuery query;
+    char choice, choice2;
+    QString name;
+    bool gender;
+    int yob, yod;
+    cout << "1. Search by name\t\t2. Search by gender\n3. Search by year of birth\t4. Search by year of death" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    if(choice == '1'){
+        query.prepare("SELECT id FROM scientists WHERE name LIKE :name");
+        QTextStream qtin(stdin);
+        cout << "Enter name of computer: ";
+        cin.ignore();
+        name = qtin.readLine();
+        multiSearch(name);
+        query.bindValue(":name", name);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    else if(choice == '2'){
+        query.prepare("SELECT id FROM scientists WHERE gender = :gender");
+        gender = legalGender();
+        query.bindValue(":gender", gender);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    else if(choice == '3'){
+        query.prepare("SELECT id FROM scientists WHERE yob = :yob");
+        yob = legalBirth();
+        query.bindValue(":yob", yob);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    else if(choice == '4'){
+        query.prepare("SELECT id FROM scientists WHERE yod = :yod");
+        cout << "Is the scientist alive(y/n): ";
+        cin >> choice2;
+        if(choice2 == 'y')
+            yod = 3000;
+        else if(choice2 == 'n'){
+            cout << "When did the scientist die(If B.C., write \'-\' in front of year): ";
+            cin >> yod;
+        }
+        query.bindValue(":yod", yod);
+        query.exec();
+        while(query.next()){
+            int store = query.value("id").toInt();
+            id.push_back(store);
+        }
+        return true;
+    }
+    return false;
+}
+
 bool service::searchComputer(vector<int> &id){
     QSqlQuery query;
     char choice;
