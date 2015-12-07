@@ -338,7 +338,7 @@ bool service::searchScientist(vector<int> &id){
     if(choice == '1'){
         query.prepare("SELECT id FROM scientists WHERE name LIKE :name");
         QTextStream qtin(stdin);
-        cout << "Enter name of computer: ";
+        cout << "Enter name of scientist: ";
         cin.ignore();
         name = qtin.readLine();
         multiSearch(name);
@@ -399,7 +399,7 @@ bool service::searchComputer(vector<int> &id){
     QString name, type;
     int year;
     bool built;
-    cout << "1. Search for name\t\t2. Search for year\n3. Search for type\t\t4. Search for built or not built" << endl;
+    cout << "1. Search by name\t\t2. Search by year\n3. Search by type\t\t4. Search by built or not built" << endl;
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
