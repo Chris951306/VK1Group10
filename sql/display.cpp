@@ -253,3 +253,40 @@ bool display::sortComputers(){
     }
     return true;
 }
+
+void display::printCStoC(){
+    unsigned int n, m, csid, cid;
+    string csname, cname;
+    QSqlQuery query;
+    query.exec("SELECT MAX(id) FROM scientists");
+    query.next();
+    n = query.value("MAX(id)").toUInt();
+    for(unsigned int i = 1; i <= n; i++){
+        cout << endl;
+        query.exec("SELECT id, name FROM scientists");
+        for(unsigned int j = 0; j < i; j++)
+            query.next();
+        csname = query.value("name").toString().toStdString();
+        csid = query.value("id").toUInt();
+        cout << "   " << csname << ":" << endl;
+        query.prepare("SELECT COUNT(cid) FROM link WHERE csid = :id");
+        query.bindValue(":id", csid);
+        query.exec();
+        query.next();
+        m = query.value("COUNT(cid)").toUInt();
+        for(unsigned int k = 1; k <= m; k++){
+            query.prepare("SELECT cid FROM link WHERE csid = :id");
+            query.bindValue(":id", csid);
+            query.exec();
+            for(unsigned int l = 0; l < k; l++)
+                query.next();
+            cid = query.value("cid").toUInt();
+            query.prepare("SELECT name FROM computers WHERE id = :id");
+            query.bindValue(":id", cid);
+            query.exec();
+            query.next();
+            cname = query.value("name").toString().toStdString();
+            cout << "\t- " << cname << endl;
+        }
+    }
+}

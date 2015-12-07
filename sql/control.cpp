@@ -82,8 +82,8 @@ void control::maincontrol(database &db){
             go = true;
         }
         else if(choice == '3'){
-            cout << "1. Display scientists \t\t 2. Display computer" << endl;
-            cout << "Any other will go to menu" << endl;
+            cout << "1. Display scientists\t\t2. Display computer" << endl;
+            cout << "3. CS connected to C\t\t4. C connected to CS" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
@@ -99,6 +99,9 @@ void control::maincontrol(database &db){
                      go = false;
                      go = d.sortComputers();
                  }while(go);
+            }
+            else if(choice2 == '3'){
+                d.printCStoC();
             }
             cout << endl;
             go = true;
