@@ -462,8 +462,19 @@ bool service::searchComputer(vector<int> &id){
 
 void service::addLink(int csid, int cid){
     QSqlQuery query;
-    query.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
+    query.prepare("SELECT COUNT(*) FROM link WHERE csid = :csid AND cid = :cid");
     query.bindValue(":csid", csid);
     query.bindValue(":cid", cid);
     query.exec();
+    query.next();
+    unsigned int count = query.value("COUNT(*)").toUInt();
+    if(count != 0){
+        cout << "This link already excists!" << endl;
+    }
+    else {
+        query.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
+        query.bindValue(":csid", csid);
+        query.bindValue(":cid", cid);
+        query.exec();
+    }
 }
