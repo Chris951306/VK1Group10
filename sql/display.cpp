@@ -6,10 +6,28 @@ void display::printCStop(){
     cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
 }
 
+void display::printCSbot(){
+    QSqlQuery bot;
+    bot.exec("SELECT COUNT(id) FROM scientists");
+    bot.next();
+    unsigned int count = bot.value("COUNT(id)").toUInt();
+    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
+    cout << setfill(' ') << setw(3) << "" << "Total amount of scientists: " << count << endl << endl;
+}
+
 void display::printCtop(){
     cout << setfill(' ') << right << setw(4) << "#" << left << setw(2) << "" << left << setw(30) << "Name" << left << setw(12) << "Year";
     cout << setfill(' ') << left << setw(18) << "Type" << left << "Build status" << endl;
     cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
+}
+
+void display::printCbot(){
+    QSqlQuery bot;
+    bot.exec("SELECT COUNT(id) FROM computers");
+    bot.next();
+    unsigned int count = bot.value("COUNT(id)").toUInt();
+    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
+    cout << setfill(' ') << setw(3) << "" << "Total amount of computers: " << count << endl << endl;
 }
 
 void display::printScientists(){
@@ -46,8 +64,9 @@ void display::printScientists(){
         else{
             cout << right << setfill('0') << setw(4) << yod << " A.D.";
         }
-        cout << endl << endl;
+        cout << endl;
     }
+    printCSbot();
 }
 
 void display::printScientist(unsigned int val){
@@ -88,30 +107,55 @@ void display::printScientist(unsigned int val){
     }
 }
 
-bool display::sortScientist(){
+bool display::sortScientist(bool &namesort, bool &gendersort, bool &yobsort){
     QSqlQuery query;
     char choice;
     cout << "1. Sort by name\t\t2. Sort by gender\t3. Sort by year of birth" << endl;
+    cout << "Same option twice sorts opposite." << endl;
     cout << "Enter choice: ";
     cin  >> choice;
 
     if(choice == '1'){
         cout << endl;
         printCStop();
-        query.exec("SELECT * FROM scientists ORDER BY name");
-        query.exec();
+        if(namesort){
+            query.exec("SELECT * FROM scientists ORDER BY name DESC");
+            query.exec();
+            namesort = false;
+        }
+        else{
+            query.exec("SELECT * FROM scientists ORDER BY name");
+            query.exec();
+            namesort = true;
+        }
     }
     else if(choice == '2'){
         cout << endl;
         printCStop();
-        query.exec("SELECT * FROM scientists ORDER BY gender");
-        query.exec();
+        if(gendersort){
+            query.exec("SELECT * FROM scientists ORDER BY gender DESC");
+            query.exec();
+            gendersort = false;
+        }
+        else{
+            query.exec("SELECT * FROM scientists ORDER BY gender");
+            query.exec();
+            gendersort = true;
+        }
     }
     else if(choice == '3'){
         cout << endl;
         printCStop();
-        query.exec("SELECT * FROM scientists ORDER BY yob");
-        query.exec();
+        if(yobsort){
+            query.exec("SELECT * FROM scientists ORDER BY yob DESC");
+            query.exec();
+            yobsort = false;
+        }
+        else{
+            query.exec("SELECT * FROM scientists ORDER BY yob");
+            query.exec();
+            yobsort = true;
+        }
     }
     else{
         return false;
@@ -146,8 +190,9 @@ bool display::sortScientist(){
         else{
             cout << right << setfill('0') << setw(4) << yod << " A.D.";
         }
-        cout << endl << endl;
+        cout << endl;
     }
+    printCSbot();
     return true;
 }
 
@@ -176,8 +221,9 @@ void display::printComputers(){
         else
             cout << left << setw(9) << "Not built";
 
-        cout << endl << endl;
+        cout << endl;
     }
+    printCbot();
 }
 
 void display::printComputer(unsigned int val){
@@ -208,36 +254,69 @@ void display::printComputer(unsigned int val){
     }
 }
 
-bool display::sortComputers(){
+bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool &builtsort){
     QSqlQuery query;
     char choice;
     cout << "1. Sort by name\t\t\t2. Sort by year\n3. Sort by type\t\t\t4. Sort by built or not" << endl;
+    cout << "Same option twice sorts opposite." << endl;
     cout << "Enter choice: ";
     cin  >> choice;
 
     if(choice == '1'){
         cout << endl;
         printCtop();
-        query.exec("SELECT * FROM computers ORDER BY name");
-        query.exec();
+        if(namesort){
+            query.exec("SELECT * FROM computers ORDER BY name DESC");
+            query.exec();
+            namesort = false;
+        }
+        else{
+            query.exec("SELECT * FROM computers ORDER BY name");
+            query.exec();
+            namesort = true;
+        }
     }
     else if(choice == '2'){
         cout << endl;
         printCtop();
-        query.exec("SELECT * FROM computers ORDER BY year");
-        query.exec();
+        if(yearsort){
+            query.exec("SELECT * FROM computers ORDER BY year DESC");
+            query.exec();
+            yearsort = false;
+        }
+        else{
+            query.exec("SELECT * FROM computers ORDER BY year");
+            query.exec();
+            yearsort = true;
+        }
     }
     else if(choice == '3'){
         cout << endl;
         printCtop();
-        query.exec("SELECT * FROM computers ORDER BY type");
-        query.exec();
+        if(typesort){
+            query.exec("SELECT * FROM computers ORDER BY type DESC");
+            query.exec();
+            typesort = false;
+        }
+        else{
+            query.exec("SELECT * FROM computers ORDER BY type");
+            query.exec();
+            typesort = true;
+        }
     }
     else if(choice == '4'){
         cout << endl;
         printCtop();
-        query.exec("SELECT * FROM computers ORDER BY built DESC");
-        query.exec();
+        if(builtsort){
+            query.exec("SELECT * FROM computers ORDER BY built DESC");
+            query.exec();
+            builtsort = false;
+        }
+        else{
+            query.exec("SELECT * FROM computers ORDER BY built");
+            query.exec();
+            builtsort = true;
+        }
     }
     else{
         return false;
@@ -263,8 +342,9 @@ bool display::sortComputers(){
         else
             cout << left << setw(9) << "Not built";
 
-        cout << endl << endl;
+        cout << endl;
     }
+    printCbot();
     return true;
 }
 

@@ -30,7 +30,7 @@ bool service::editScientist(unsigned int val){
     bool gender;
     int yob;
     int yod;
-    cout << "1. Name\t\t\t2. Gender\n3. Year of birth\t4. Year of death" << endl;
+    cout << "1. Scientist name\t\t2. Gender\n3. Year of birth\t\t4. Year of death" << endl;
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
@@ -102,7 +102,7 @@ int service::legalDeath(int yob){
     int yod;
     char input;
     do{
-        cout << "Is this amazing person alive(y/n):";
+        cout << "Is this amazing person alive(y/n): ";
         cin  >> input;
         if(input != 'n' && input != 'y'){
             cout << "Invalid input!" << endl;
@@ -179,7 +179,7 @@ bool service::editComputer(unsigned int val){
     QString name, type;
     int year;
     bool built;
-    cout << "1. Name\t\t2. Year\n3. Type\t\t4. Build status" << endl;
+    cout << "1. Computer name\t\t2. Build year\n3. Computer type\t\t4. Build status" << endl;
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
@@ -375,12 +375,12 @@ bool service::searchScientist(vector<int> &id){
     }
     else if(choice == '4'){
         query.prepare("SELECT id FROM scientists WHERE yod = :yod");
-        cout << "Is the scientist alive(y/n): ";
+        cout << "Is this amazing person alive(y/n): ";
         cin >> choice2;
         if(choice2 == 'y')
             yod = 3000;
         else if(choice2 == 'n'){
-            cout << "When did the scientist die(If B.C., write \'-\' in front of year): ";
+            cout << "Ohhhh I'm sorry, please enter year of death(yyyy): ";
             cin >> yod;
         }
         query.bindValue(":yod", yod);

@@ -114,16 +114,15 @@ void control::maincontrol(database &db){
             go = true;
         }
         else if(choice == '2'){
-            cout << "1. Edit scientists \t\t 2. Edit computer" << endl;
-            cout << "Any other will go to menu" << endl;
+            cout << "1. Edit scientists \t\t 2. Edit computers" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
+                cout << endl;
                 d.printScientists();
                 string option;
                 cout << "Enter scientist number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
-                cout << endl;
                 val = s.selectUnit(option);
                 unsigned int maxId;
                 QSqlQuery query;
@@ -134,6 +133,8 @@ void control::maincontrol(database &db){
                 else{
                     do{
                         go = false;
+                        cout << endl;
+                        d.printCStop();
                         d.printScientist(val);
                         cout << endl << endl;
                         go = s.editScientist(val);
@@ -141,11 +142,11 @@ void control::maincontrol(database &db){
                 }
             }
             else if(choice2 == '2'){
+                cout << endl;
                 d.printComputers();
                 string option;
                 cout << "Enter computer number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
-                cout << endl << endl;
                 val = s.selectUnit(option);
                 unsigned int maxId;
                 QSqlQuery query;
@@ -156,6 +157,8 @@ void control::maincontrol(database &db){
                 else{
                     do{
                         go = false;
+                        cout << endl;
+                        d.printCtop();
                         d.printComputer(val);
                         cout << endl << endl;
                         go = s.editComputer(val);
@@ -173,17 +176,24 @@ void control::maincontrol(database &db){
             if(choice2 == '1'){
                 cout << endl;
                 d.printScientists();
+                bool namesort = false;
+                bool gendersort = false;
+                bool yobsort = false;
                 do{
                     go = false;
-                    go = d.sortScientist();
+                    go = d.sortScientist(namesort, gendersort, yobsort);
                 }while(go);
             }
             else if(choice2 == '2'){
                 cout << endl;
                 d.printComputers();
+                bool namesort = false;
+                bool yearsort = false;
+                bool typesort = false;
+                bool builtsort = false;
                 do{
                     go = false;
-                    go = d.sortComputers();
+                    go = d.sortComputers(namesort, yearsort, typesort, builtsort);
                 }while(go);
             }
             else if(choice2 == '3'){
@@ -198,7 +208,6 @@ void control::maincontrol(database &db){
         else if(choice == '4'){
             vector<int> id;
             cout << "1. Search for scientist\t\t2. Search for computer" << endl;
-            cout << "Any other will go to menu" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
