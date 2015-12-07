@@ -11,6 +11,7 @@ public:
     void printComputer(unsigned int val);
     bool sortComputers();
     void printCStoC();
+    void printCtoCS();
 };
 
 #endif // DISPLAY_H

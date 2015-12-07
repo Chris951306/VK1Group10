@@ -103,6 +103,9 @@ void control::maincontrol(database &db){
             else if(choice2 == '3'){
                 d.printCStoC();
             }
+            else if(choice2 == '4'){
+                d.printCtoCS();
+            }
             cout << endl;
             go = true;
         }
