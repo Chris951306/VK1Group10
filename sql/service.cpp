@@ -172,6 +172,7 @@ void service::addComputer(){
     query.bindValue(":built", built);
     query.exec();
 }
+
 bool service::editComputer(unsigned int val){
     QSqlQuery query;
     char choice;
@@ -457,4 +458,12 @@ bool service::searchComputer(vector<int> &id){
         return true;
     }
     return false;
+}
+
+void service::addLink(int csid, int cid){
+    QSqlQuery query;
+    query.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
+    query.bindValue(":csid", csid);
+    query.bindValue(":cid", cid);
+    query.exec();
 }

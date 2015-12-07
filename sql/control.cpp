@@ -4,8 +4,8 @@ void control::maincontrol(database &db){
     display d;
     service s;
     bool go = false;
-    char choice;
-    char choice2;
+    char choice, choice2, choice3;
+    unsigned int val, csid, cid;
     db.onoff();
     cout << db.status() << endl;
     do{
@@ -16,7 +16,7 @@ void control::maincontrol(database &db){
         cin  >> choice;
         cout << endl;
         if(choice == '1'){
-            cout << "1. Add scientists \t\t 2. Add computer" << endl;
+            cout << "1. Add scientists \t\t 2. Add computer\n3. Add link" << endl;
             cout << "Any other will go to menu" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
@@ -25,6 +25,90 @@ void control::maincontrol(database &db){
             }
             else if(choice2 == '2'){
                 s.addComputer();
+            }
+            else if(choice2 == '3'){
+                cout << "1. Link computers to scientist\t2. Link scientists to computer" << endl;
+                cin >> choice3;
+                cout << endl;
+                if(choice3 == '1'){
+                    string option;
+                    d.printScientists();
+                    cout << "Enter id of scientist to link: ";
+                    cin >> option;
+                    csid = s.selectUnit(option);
+                    unsigned int maxId;
+                    QSqlQuery query;
+                    query.exec("SELECT MAX(id) FROM scientists");
+                    query.next();
+                    maxId = query.value("MAX(id)").toUInt();
+                    if(s.isLetter(option) || csid == 0 || option[0] == 45 || csid > maxId){
+                        cout << "Invalid id!" << endl;
+                    }
+                    else{
+                        char again;
+                        do{
+                            d.printComputers();
+                            cout << "Enter id of computer to link to this scientist:" << endl;
+                            d.printScientist(csid);
+                            cout << endl;
+                            cin >> option;
+                            cid = s.selectUnit(option);
+                            QSqlQuery query;
+                            query.exec("SELECT MAX(id) FROM computers");
+                            query.next();
+                            maxId = query.value("MAX(id)").toUInt();
+                            if(s.isLetter(option) || cid == 0 || option[0] == 45 || cid > maxId){
+                                cout << "Invalid id!" << endl;
+                            }
+                            else{
+                                s.addLink(csid, cid);
+                            }
+                            cout << "Do you want to add another computer to this scientist(y/n): ";
+                            cin >> again;
+                        }while(again == 'Y' || again == 'y');
+                    }
+
+                }
+                else if(choice3 == '2'){
+                    string option;
+                    d.printComputers();
+                    cout << "Enter id of computer to link: ";
+                    cin >> option;
+                    cid = s.selectUnit(option);
+                    unsigned int maxId;
+                    QSqlQuery query;
+                    query.exec("SELECT MAX(id) FROM computers");
+                    query.next();
+                    maxId = query.value("MAX(id)").toUInt();
+                    if(s.isLetter(option) || cid == 0 || option[0] == 45 || cid > maxId){
+                        cout << "Invalid id!" << endl;
+                    }
+                    else{
+                        char again;
+                        do{
+                            d.printScientists();
+                            cout << "Enter id of scientist to link to this computer:" << endl;
+                            d.printComputer(cid);
+                            cout << endl;
+                            cin >> option;
+                            csid = s.selectUnit(option);
+                            QSqlQuery query;
+                            query.exec("SELECT MAX(id) FROM scientists");
+                            query.next();
+                            maxId = query.value("MAX(id)").toUInt();
+                            if(s.isLetter(option) || csid == 0 || option[0] == 45 || csid > maxId){
+                                cout << "Invalid id!" << endl;
+                            }
+                            else{
+                                s.addLink(csid, cid);
+                            }
+                            cout << "Do you want to add another scientist to this computer(y/n): ";
+                            cin >> again;
+                        }while(again == 'Y' || again == 'y');
+                    }
+
+                }
+
             }
             cout << endl;
             go = true;
@@ -40,7 +124,7 @@ void control::maincontrol(database &db){
                 cout << "Enter scientist number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
                 cout << endl;
-                unsigned int val = s.selectUnit(option);
+                val = s.selectUnit(option);
                 unsigned int maxId;
                 QSqlQuery query;
                 query.exec("SELECT MAX(id) FROM scientists");
@@ -62,7 +146,7 @@ void control::maincontrol(database &db){
                 cout << "Enter computer number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
                 cout << endl << endl;
-                unsigned int val = s.selectUnit(option);
+                val = s.selectUnit(option);
                 unsigned int maxId;
                 QSqlQuery query;
                 query.exec("SELECT MAX(id) FROM computers");

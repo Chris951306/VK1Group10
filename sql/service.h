@@ -19,6 +19,7 @@ public:
     void multiSearch(QString &s);
     bool searchScientist(vector<int> &id);
     bool searchComputer(vector<int> &id);
+    void addLink(int csid, int cid);
 };
 
 #endif // SERVICE_H
