@@ -1,5 +1,17 @@
 #include "display.h"
 
+void display::printCStop(){
+    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(25) << "Name" << left << setw(12) << "Gender";
+    cout << setfill(' ') << left << setw(14) << "Birth" << left << "Death" << endl;
+    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
+}
+
+void display::printCtop(){
+    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(30) << "Name" << left << setw(12) << "Year";
+    cout << setfill(' ') << left << setw(18) << "Type" << left << "Build status" << endl;
+    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
+}
+
 void display::printScientists(){
     cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(25) << "Name" << left << setw(12) << "Gender";
     cout << setfill(' ') << left << setw(14) << "Birth" << left << "Death" << endl;

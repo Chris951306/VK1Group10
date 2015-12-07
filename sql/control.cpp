@@ -202,8 +202,11 @@ void control::maincontrol(database &db){
             if(choice2 == '1'){
                 do{
                     go = false;
+                    cout << endl;
                     go = s.searchScientist(id);
                     if(go){
+                        cout << endl;
+                        d.printCStop();
                         for(unsigned int i = 0; i < id.size(); i++){
                             d.printScientist(id[i]);
                             cout << endl;
@@ -215,8 +218,11 @@ void control::maincontrol(database &db){
             else if(choice2 == '2'){
                 do{
                     go = false;
+                    cout << endl;
                     go = s.searchComputer(id);
                     if(go){
+                        cout << endl;
+                        d.printCtop();
                         for(unsigned int i = 0; i < id.size(); i++){
                             d.printComputer(id[i]);
                             cout << endl;

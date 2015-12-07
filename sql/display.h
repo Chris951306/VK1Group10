@@ -4,6 +4,8 @@
 
 class display{
 public:
+    void printCStop();
+    void printCtop();
     void printScientists();
     void printScientist(unsigned int val);
     bool sortScientist();
