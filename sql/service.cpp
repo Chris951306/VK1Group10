@@ -332,7 +332,7 @@ bool service::searchScientist(vector<int> &id){
     char choice, choice2;
     QString name;
     bool gender;
-    int yob, yod;
+    int yob, yod = 0;
     cout << "1. Search by name\t\t2. Search by gender\n3. Search by year of birth\t4. Search by year of death" << endl;
     cout << "Your choice: ";
     cin >> choice;

@@ -10,14 +10,14 @@ void control::maincontrol(database &db){
     cout << db.status() << endl;
     do{
         go = false;
+        cout << "Enter a number for your choice. Any other input quits the program!" << endl << endl;
         cout << "1. Add to database\t\t2. Edit database" << endl;
         cout << "3. Display database\t\t4. Search in database"<< endl;
         cout << "Enter your choice: ";
         cin  >> choice;
         cout << endl;
         if(choice == '1'){
-            cout << "1. Add scientists \t\t 2. Add computer\n3. Add link" << endl;
-            cout << "Any other will go to menu" << endl;
+            cout << "1. Add scientist\t\t2. Add computer\n3. Add link" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
@@ -166,11 +166,12 @@ void control::maincontrol(database &db){
             go = true;
         }
         else if(choice == '3'){
-            cout << "1. Display scientists\t\t2. Display computer" << endl;
+            cout << "1. Display scientists\t\t2. Display computers" << endl;
             cout << "3. CS connected to C\t\t4. C connected to CS" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
+                cout << endl;
                 d.printScientists();
                 do{
                     go = false;
@@ -178,11 +179,12 @@ void control::maincontrol(database &db){
                 }while(go);
             }
             else if(choice2 == '2'){
-                 d.printComputers();
-                 do{
-                     go = false;
-                     go = d.sortComputers();
-                 }while(go);
+                cout << endl;
+                d.printComputers();
+                do{
+                    go = false;
+                    go = d.sortComputers();
+                }while(go);
             }
             else if(choice2 == '3'){
                 d.printCStoC();

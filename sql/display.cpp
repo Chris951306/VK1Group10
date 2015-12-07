@@ -13,9 +13,7 @@ void display::printCtop(){
 }
 
 void display::printScientists(){
-    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(25) << "Name" << left << setw(12) << "Gender";
-    cout << setfill(' ') << left << setw(14) << "Birth" << left << "Death" << endl;
-    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
+    printCStop();
     QSqlQuery query;
     query.exec("SELECT * FROM scientists");
     while(query.next()){
@@ -98,24 +96,26 @@ bool display::sortScientist(){
     cin  >> choice;
 
     if(choice == '1'){
+        cout << endl;
+        printCStop();
         query.exec("SELECT * FROM scientists ORDER BY name");
         query.exec();
     }
     else if(choice == '2'){
+        cout << endl;
+        printCStop();
         query.exec("SELECT * FROM scientists ORDER BY gender");
         query.exec();
     }
     else if(choice == '3'){
+        cout << endl;
+        printCStop();
         query.exec("SELECT * FROM scientists ORDER BY yob");
         query.exec();
     }
     else{
-        cout << "Invalid input!" << endl;
         return false;
     }
-    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(25) << "Name" << left << setw(12) << "Gender";
-    cout << setfill(' ') << left << setw(14) << "Birth" << left << "Death" << endl;
-    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
     while(query.next()){
         unsigned int id = query.value("id").toUInt();
         string name = query.value("name").toString().toStdString();
@@ -152,9 +152,7 @@ bool display::sortScientist(){
 }
 
 void display::printComputers(){
-    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(30) << "Name" << left << setw(12) << "Year";
-    cout << setfill(' ') << left << setw(18) << "Type" << left << "Build status" << endl;
-    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
+    printCtop();
     QSqlQuery query;
     query.exec("SELECT * FROM computers");
     while(query.next()){
@@ -213,33 +211,37 @@ void display::printComputer(unsigned int val){
 bool display::sortComputers(){
     QSqlQuery query;
     char choice;
-    cout << "1. Sort by name\t\t2. Sort by year\n3. Sort by type\t\t4. Sort by built or not" << endl;
+    cout << "1. Sort by name\t\t\t2. Sort by year\n3. Sort by type\t\t\t4. Sort by built or not" << endl;
     cout << "Enter choice: ";
     cin  >> choice;
 
     if(choice == '1'){
+        cout << endl;
+        printCtop();
         query.exec("SELECT * FROM computers ORDER BY name");
         query.exec();
     }
     else if(choice == '2'){
+        cout << endl;
+        printCtop();
         query.exec("SELECT * FROM computers ORDER BY year");
         query.exec();
     }
     else if(choice == '3'){
+        cout << endl;
+        printCtop();
         query.exec("SELECT * FROM computers ORDER BY type");
         query.exec();
     }
     else if(choice == '4'){
+        cout << endl;
+        printCtop();
         query.exec("SELECT * FROM computers ORDER BY built DESC");
         query.exec();
     }
     else{
-        cout << "Invalid input!" << endl;
         return false;
     }
-    cout << setfill(' ') << setw(4) << "#" << left << setw(2) << "" << left << setw(30) << "Name" << left << setw(12) << "Year";
-    cout << setfill(' ') << left << setw(18) << "Type" << left << "Build status" << endl;
-    cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
     while(query.next()){
         unsigned int id = query.value("id").toUInt();
         string name = query.value("name").toString().toStdString();
