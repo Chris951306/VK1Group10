@@ -322,7 +322,7 @@ bool service::checkName(QString &name){
 
 void service::multiSearch(QString &s){
     QString a = s;// In case shit should happen and function brakes, doesn't fuck up original string
-    if(a.length() > 0){
+    if(!s.isEmpty()){// Checks if string is empty, if not - '%' is not added to prevent an empty search to list everything
         for(unsigned int i = a.length()-1; i > 0; i--){
             a[i+1] = a[i];// Shifts all the characters in the string one position to the right
         }
