@@ -114,7 +114,7 @@ void control::maincontrol(database &db){
             go = true;
         }
         else if(choice == '2'){
-            cout << "1. Edit scientists \t\t 2. Edit computers" << endl;
+            cout << "1. Edit scientists \t\t2. Edit computers" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){

@@ -5,6 +5,7 @@
 class control{
 public:
     void maincontrol(database &db);
+        //Main control function - lets user choose between different functions
 };
 
 #endif // CONTROL_H

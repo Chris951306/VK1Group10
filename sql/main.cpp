@@ -1,16 +1,17 @@
 #include "control.h"
 
 void logo();
+    //Logo
 
 int main(){
     logo();
-    database db;
-    control c;
-    c.maincontrol(db);
+    database db;// Initializes the database
+    control c;// Initializes the control
+    c.maincontrol(db);// Enter main control, takes the database named db with it
     return 0;
 }
 
-void logo(){
+void logo(){    //This is our logo - had to add the character value for '\' so it wouldn't count as an escape character
     char i = 92;
     cout << "  ________                          ___________    " << endl;
     cout << " /  _____/______  ____  __ ________/_   " << i << "   _  " << i << "   " << endl;
