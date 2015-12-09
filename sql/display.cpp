@@ -650,7 +650,7 @@ void display::addLink(int csid, int cid){
 void display::editLink(){
     service s;
     vector<int> l;
-    link::link ltemp(0, 0);
+    link ltemp(0, 0);
     scientist stemp(0, "", 0, 0, 0);
     computer ctemp(0, "", 0, "", 0);
     s.returnLinks(l);
@@ -665,7 +665,7 @@ void display::editLink(){
         int cid = ltemp.returnCID();
         s.returnComputer(cid, ctemp);
         string cname = ctemp.returnName();
-        cout << setfill(' ') << setw(4) << "" << i << ":  " << setfill(' ') << left << setw(25) << csname << setfill(' ') << left << setw(30) << cname << endl;
+        cout << setfill(' ') << right << setw(5) << i << ":  " << setfill(' ') << left << setw(25) << csname << setfill(' ') << left << setw(30) << cname << endl;
     }
     cout << endl;
     string option;
@@ -685,11 +685,30 @@ void display::editLink(){
             printScientists();
             cout << "Enter scientist number to change to.\n(If input is not a listed number, you will be returned to menu): ";
             cin >> option;
-            int csid = selectUnit(option);
+            unsigned int csid = selectUnit(option);
             unsigned int maxId = s.maxCSid();
-            if(isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
+            if(isLetter(option) || csid == 0 || option[0] == 45 || csid > maxId);
             else{
-                s.updateCSlink(val, csid);
+                vector<int> l;
+                bool check = false;
+                s.returnLinks(l);
+                for(unsigned int i = 1; i <= l.size(); i++){
+                    link temp(0, 0);
+                    s.returnLink(i, temp);
+                    unsigned int check_cid = temp.returnCID();
+                    unsigned int check_csid = temp.returnCSID();
+                    s.returnLink(val, temp);
+                    unsigned int cid = temp.returnCID();
+                    if(check_csid == csid && check_cid == cid){
+                        if(s.isLink(csid, cid)){
+                            cout << endl << "This link already exists!" << endl;
+                            check = true;
+                        }
+                    }
+                }
+                if(!check){
+                    s.updateCSlink(val, csid);
+                }
             }
         }
         else if(choice == '2'){
@@ -697,11 +716,30 @@ void display::editLink(){
             printComputers();
             cout << "Enter computer number to change to.\n(If input is not a listed number, you will be returned to menu): ";
             cin >> option;
-            int cid = selectUnit(option);
+            unsigned int cid = selectUnit(option);
             unsigned int maxId = s.maxCid();
-            if(isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
+            if(isLetter(option) || cid == 0 || option[0] == 45 || cid > maxId);
             else{
-                s.updateClink(val, cid);
+                vector<int> l;
+                bool check = false;
+                s.returnLinks(l);
+                for(unsigned int i = 1; i <= l.size(); i++){
+                    link temp(0, 0);
+                    s.returnLink(i, temp);
+                    unsigned int check_cid = temp.returnCID();
+                    unsigned int check_csid = temp.returnCSID();
+                    s.returnLink(val, temp);
+                    unsigned int csid = temp.returnCSID();
+                    if(check_csid == csid && check_cid == cid){
+                        if(s.isLink(csid, cid)){
+                            cout << endl << "This link already exists!" << endl;
+                            check = true;
+                        }
+                    }
+                }
+                if(!check){
+                    s.updateClink(val, cid);
+                }
             }
         }
     }

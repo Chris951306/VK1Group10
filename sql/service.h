@@ -30,7 +30,7 @@ public:
     unsigned int maxLid();
     void addLink(int csid, int cid);
     bool isLink(int csid, int cid);
-    void returnLink(unsigned int val, link::link &l);
+    void returnLink(unsigned int val, link &l);
     void returnLinks(vector<int> &l);
     void updateCSlink(unsigned int val, unsigned int csid);
     void updateClink(unsigned int val, unsigned int cid);

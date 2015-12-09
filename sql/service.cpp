@@ -130,7 +130,7 @@ bool service::isLink(int csid, int cid){
     return db.isLink(csid, cid);
 }
 
-void service::returnLink(unsigned int val, link::link &l){
+void service::returnLink(unsigned int val, link &l){
     database db;
     db.returnLink(val, l);
 }

@@ -307,7 +307,7 @@ bool database::isLink(int csid, int cid){
     return false;
 }
 
-void database::returnLink(unsigned int val, link::link &l){
+void database::returnLink(unsigned int val, link &l){
     QSqlQuery query;
     query.prepare("SELECT * FROM link WHERE rowid = :id");
     query.bindValue(":id", val);
@@ -315,7 +315,7 @@ void database::returnLink(unsigned int val, link::link &l){
     query.next();
     int a = query.value("csid").toInt();
     int b = query.value("cid").toInt();
-    link::link temp(a, b);
+    link temp(a, b);
     l = temp;
 }
 
