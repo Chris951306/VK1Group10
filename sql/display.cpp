@@ -27,14 +27,15 @@ void display::printCbot(){
 }
 
 void display::addScientist(){
+    QTextStream in(stdin);
     service s;
     QString name;
     bool gender;
     int yob, yod;
+    cin.ignore();
     do{
-        QTextStream qtin(stdin);
         cout << "Enter name of scientist: ";
-        name = qtin.readLine();
+        name = in.readLine();
     }while(!checkName(name));
     gender = legalGender();
     yob = legalBirth();
@@ -43,6 +44,7 @@ void display::addScientist(){
 }
 
 bool display::editScientist(unsigned int val){
+    QTextStream in(stdin);
     service s;
     char choice;
     QString name;
@@ -53,10 +55,10 @@ bool display::editScientist(unsigned int val){
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
+        cin.ignore();
         do{
-            QTextStream qtin(stdin);
             cout << "Enter name of scientist: ";
-            name = qtin.readLine();
+            name = in.readLine();
         }while(!checkName(name));
         s.updateCSname(val, name);
         return true;
@@ -221,6 +223,7 @@ bool display::sortScientists(bool &namesort, bool &gendersort, bool &yobsort){
 }
 
 bool display::searchScientists(vector<int> &id){
+    QTextStream in(stdin);
     service s;
     char choice, choice2;
     QString name;
@@ -230,10 +233,9 @@ bool display::searchScientists(vector<int> &id){
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
-        QTextStream qtin(stdin);
-        cout << "Enter name of scientist: ";
-        name = qtin.readLine();
         cin.ignore();
+        cout << "Enter name of scientist: ";
+        name = in.readLine();
         multiSearch(name);
         s.searchCSname(name, id);
         return true;
@@ -346,26 +348,28 @@ bool display::checkName(QString &name){
 }
 
 void display::addComputer(){
+    QTextStream in(stdin);
     service s;
     QString name, type;
     int year;
     bool built;
+    cin.ignore();
     do{
-        QTextStream qtin(stdin);
         cout << "Enter name of computer: ";
-        name = qtin.readLine();
+        name = in.readLine();
     }while(!checkName(name));
     year = legalYear();
+    cin.ignore();
     do{
-        QTextStream qtin(stdin);
         cout << "Enter type of computer: ";
-        type = qtin.readLine();
+        type = in.readLine();
     }while(!checkName(type));
     built = legalBuilt();
     s.addComputer(name, year, type, built);
 }
 
 bool display::editComputer(unsigned int val){
+    QTextStream in(stdin);
     service s;
     char choice;
     QString name, type;
@@ -375,10 +379,10 @@ bool display::editComputer(unsigned int val){
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
+        cin.ignore();
         do{
-            QTextStream qtin(stdin);
             cout << "Enter name of computer: ";
-            name = qtin.readLine();
+            name = in.readLine();
         }while(!checkName(name));
         s.updateCname(val, name);
         return true;
@@ -389,10 +393,10 @@ bool display::editComputer(unsigned int val){
         return true;
     }
     else if(choice == '3'){
+        cin.ignore();
         do{
-            QTextStream qtin(stdin);
             cout << "Enter type of computer: ";
-            type = qtin.readLine();
+            type = in.readLine();
         }while(!checkName(type));
         s.updateCtype(val, type);
         return true;
@@ -558,6 +562,7 @@ bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool
 }
 
 bool display::searchComputers(vector<int> &id){
+    QTextStream in(stdin);
     service s;
     char choice;
     QString name, type;
@@ -567,10 +572,9 @@ bool display::searchComputers(vector<int> &id){
     cout << "Your choice: ";
     cin >> choice;
     if(choice == '1'){
-        QTextStream qtin(stdin);
-        cout << "Enter name of computer: ";
         cin.ignore();
-        name = qtin.readLine();
+        cout << "Enter name of computer: ";
+        name = in.readLine();
         multiSearch(name);
         s.searchCname(name, id);
         return true;
@@ -581,10 +585,9 @@ bool display::searchComputers(vector<int> &id){
         return true;
     }
     else if(choice == '3'){
-        QTextStream qtin(stdin);
-        cout << "Enter type: ";
         cin.ignore();
-        type = qtin.readLine();
+        cout << "Enter type: ";
+        type = in.readLine();
         multiSearch(type);
         s.searchCtype(type, id);
         return true;
@@ -627,18 +630,80 @@ bool display::legalBuilt(){
             built = true;
             valid = true;
         }
-        else
+        else{
             cout << "Invalid input!" << endl;
+        }
     }while(!valid);
     return built;
 }
 
 void display::addLink(int csid, int cid){
     service s;
-    if(s.isLink(csid, cid))
+    if(s.isLink(csid, cid)){
         cout << "This link already exists!" << endl;
+    }
     else{
         s.addLink(csid, cid);
+    }
+}
+
+void display::editLink(){
+    service s;
+    vector<int> l;
+    link::link ltemp(0, 0);
+    scientist stemp(0, "", 0, 0, 0);
+    computer ctemp(0, "", 0, "", 0);
+    s.returnLinks(l);
+    cout << endl;
+    cout << setfill(' ') << setw(8) << right << "#   " <<  setfill(' ') << left << setw(25) << "Scientist name" << setfill(' ') << left << setw(30) << "Computer name" << endl;
+    cout << setfill(' ') << setw(4) << "" << setfill('-') << setw(55) << "" << endl;
+    for(unsigned int i = 1; i <= l.size(); i++){
+        s.returnLink(i, ltemp);
+        int csid = ltemp.returnCSID();
+        s.returnScientist(csid, stemp);
+        string csname = stemp.returnName();
+        int cid = ltemp.returnCID();
+        s.returnComputer(cid, ctemp);
+        string cname = ctemp.returnName();
+        cout << setfill(' ') << setw(4) << "" << i << ":  " << setfill(' ') << left << setw(25) << csname << setfill(' ') << left << setw(30) << cname << endl;
+    }
+    cout << endl;
+    string option;
+    cout << "Enter link number to edit.\n(If input is not a listed number, you will be returned to menu): ";
+    cin >> option;
+    unsigned int val = selectUnit(option);
+    unsigned int maxId = s.maxLid();
+    if(isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
+    else{
+        char choice;
+        cout << endl;
+        cout << "1. Edit scientist link\t\t2. Edit computer link" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+        if(choice == '1'){
+            cout << endl;
+            printScientists();
+            cout << "Enter scientist number to change to.\n(If input is not a listed number, you will be returned to menu): ";
+            cin >> option;
+            int csid = selectUnit(option);
+            unsigned int maxId = s.maxCSid();
+            if(isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
+            else{
+                s.updateCSlink(val, csid);
+            }
+        }
+        else if(choice == '2'){
+            cout << endl;
+            printComputers();
+            cout << "Enter computer number to change to.\n(If input is not a listed number, you will be returned to menu): ";
+            cin >> option;
+            int cid = selectUnit(option);
+            unsigned int maxId = s.maxCid();
+            if(isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
+            else{
+                s.updateClink(val, cid);
+            }
+        }
     }
 }
 
@@ -694,6 +759,24 @@ void display::printCStoC(){
             s.getCidFromCSid(csid, cid, j);
             s.getCnameFromCid(cid, cname);
             cout << "\t- " << cname << endl;
+        }
+    }
+}
+
+void display::printCtoCS(){
+    service s;
+    unsigned int n, m, csid, cid;
+    string csname, cname;
+    n = s.maxCid();
+    for(unsigned int i = 1; i <= n; i++){
+        cout << endl;
+        s.getCid(cname, cid, i);
+        cout << "   " << cname << ":" << endl;
+        m = s.getCSIDcount(cid);
+        for(unsigned int j = 1; j <= m; j++){
+            s.getCSidFromCid(cid, csid, j);
+            s.getCSnameFromCSid(csid, csname);
+            cout << "\t- " << csname << endl;
         }
     }
 }

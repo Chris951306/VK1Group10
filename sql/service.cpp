@@ -115,6 +115,11 @@ void service::searchCbuilt(bool built, vector<int> &id){
     db.searchCbuilt(built, id);
 }
 
+unsigned int service::maxLid(){
+    database db;
+    return db.maxLid();
+}
+
 void service::addLink(int csid, int cid){
     database db;
     db.addLink(csid, cid);
@@ -123,6 +128,26 @@ void service::addLink(int csid, int cid){
 bool service::isLink(int csid, int cid){
     database db;
     return db.isLink(csid, cid);
+}
+
+void service::returnLink(unsigned int val, link::link &l){
+    database db;
+    db.returnLink(val, l);
+}
+
+void service::returnLinks(vector<int> &l){
+    database db;
+    db.returnLinks(l);
+}
+
+void service::updateCSlink(unsigned int val, unsigned int csid){
+    database db;
+    db.updateCSlink(val, csid);
+}
+
+void service::updateClink(unsigned int val, unsigned int cid){
+    database db;
+    db.updateClink(val, cid);
 }
 
 void service::updateCSname(unsigned int val, QString name){
@@ -208,4 +233,24 @@ void service::getCnameFromCid(unsigned int cid, string &cname){
 unsigned int service::maxCid(){
     database db;
     return db.maxCid();
+}
+
+void service::getCid(string &cname, unsigned int &cid, unsigned int step){
+    database db;
+    db.getCid(cname, cid, step);
+}
+
+unsigned int service::getCSIDcount(unsigned int cid){
+    database db;
+    return db.getCSIDcount(cid);
+}
+
+void service::getCSidFromCid(unsigned int cid, unsigned int &csid, unsigned int step){
+    database db;
+    db.getCSidFromCid(cid, csid, step);
+}
+
+void service::getCSnameFromCSid(unsigned int csid, string &csname){
+    database db;
+    db.getCSnameFromCSid(csid, csname);
 }

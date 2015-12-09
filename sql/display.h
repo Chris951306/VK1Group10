@@ -27,6 +27,7 @@ public:
     int legalYear(); // Checks if the year is legal
     bool legalBuilt(); // Checks if the built is legal
     void addLink(int csid, int cid); // Adds a link between scientist with id = csid and computer with id = cid
+    void editLink();
     unsigned int selectUnit(string s); // Changes string s to a number.
     bool isLetter(string s); // Checks if s is a letter
     void multiSearch(QString &s); // Takes QString s and adds '%' in front and behind the string so that it is possible to search for substring

@@ -2,6 +2,8 @@
 #define LINK_H
 #include <iostream>
 
+using namespace std;
+
 class link{
 public:
     link(int a, int b);

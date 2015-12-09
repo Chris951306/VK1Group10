@@ -279,6 +279,13 @@ void database::searchCbuilt(bool built, vector<int> &id){
     }
 }
 
+unsigned int database::maxLid(){
+    QSqlQuery query;
+    query.exec("SELECT MAX(rowid) FROM link");
+    query.next();
+    return query.value("MAX(rowid)").toUInt();
+}
+
 void database::addLink(int csid, int cid){
     QSqlQuery query;
     query.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
@@ -298,6 +305,43 @@ bool database::isLink(int csid, int cid){
     if(count != 0)
         return true;
     return false;
+}
+
+void database::returnLink(unsigned int val, link::link &l){
+    QSqlQuery query;
+    query.prepare("SELECT * FROM link WHERE rowid = :id");
+    query.bindValue(":id", val);
+    query.exec();
+    query.next();
+    int a = query.value("csid").toInt();
+    int b = query.value("cid").toInt();
+    link::link temp(a, b);
+    l = temp;
+}
+
+void database::returnLinks(vector<int> &l){
+    QSqlQuery query;
+    query.exec("SELECT rowid FROM link");
+    while(query.next()){
+        int store = query.value("rowid").toInt();
+        l.push_back(store);
+    }
+}
+
+void database::updateCSlink(unsigned int val, unsigned int csid){
+    QSqlQuery query;
+    query.prepare("UPDATE link SET csid = :csid WHERE rowid = :id");
+    query.bindValue(":csid", csid);
+    query.bindValue(":id", val);
+    query.exec();
+}
+
+void database::updateClink(unsigned int val, unsigned int cid){
+    QSqlQuery query;
+    query.prepare("UPDATE link SET cid = :cid WHERE rowid = :id");
+    query.bindValue(":cid", cid);
+    query.bindValue(":id", val);
+    query.exec();
 }
 
 void database::updateCSname(unsigned int val, QString name){
@@ -442,4 +486,43 @@ unsigned int database::maxCid(){
     query.exec("SELECT MAX(id) FROM computers");
     query.next();
     return query.value("MAX(id)").toUInt();
+}
+
+void database::getCid(string &cname, unsigned int &cid, unsigned int step){
+    QSqlQuery query;
+    query.exec("SELECT id, name FROM computers");
+    for(unsigned int i = 0; i < step; i++){
+        query.next();
+    }
+    cname = query.value("name").toString().toStdString();
+    cid = query.value("id").toUInt();
+}
+
+unsigned int database::getCSIDcount(unsigned int cid){
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(csid) FROM link WHERE cid = :id");
+    query.bindValue(":id", cid);
+    query.exec();
+    query.next();
+    return query.value("COUNT(csid)").toUInt();
+}
+
+void database::getCSidFromCid(unsigned int cid, unsigned int &csid, unsigned int step){
+    QSqlQuery query;
+    query.prepare("SELECT csid FROM link WHERE cid = :id");
+    query.bindValue(":id", cid);
+    query.exec();
+    for(unsigned int i = 0; i < step; i++){
+        query.next();
+    }
+    csid = query.value("csid").toUInt();
+}
+
+void database::getCSnameFromCSid(unsigned int csid, string &csname){
+    QSqlQuery query;
+    query.prepare("SELECT name FROM scientists WHERE id = :id");
+    query.bindValue(":id", csid);
+    query.exec();
+    query.next();
+    csname = query.value("name").toString().toStdString();
 }

@@ -9,7 +9,8 @@ void control::maincontrol(){
     unsigned int val, csid, cid;
     do{
         go = false;
-        cout << "Enter a number for your choice. Any other input quits the program!" << endl << endl;
+        cout << "Enter a number for your choice. Any other input quits the program!" << endl;
+        cout << "Throughout the program, options that are not listed will return you to menu!" << endl << endl;
         cout << "1. Add to database\t\t2. Edit database" << endl;
         cout    << "3. Display database\t\t4. Search in database"<< endl;
         cout << "Enter your choice: ";
@@ -105,7 +106,8 @@ void control::maincontrol(){
             go = true;
         }
         else if(choice == '2'){
-            cout << "1. Edit scientists \t\t2. Edit computers" << endl;
+            service s;
+            cout << "1. Edit scientists \t\t2. Edit computers\n3. Edit link" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
@@ -115,7 +117,7 @@ void control::maincontrol(){
                 cout << "Enter scientist number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
                 val = d.selectUnit(option);
-                unsigned int maxId = 15;
+                unsigned int maxId = s.maxCSid();
                 if(d.isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
                 else{
                     do{
@@ -129,13 +131,14 @@ void control::maincontrol(){
                 }
             }
             else if(choice2 == '2'){
+                service s;
                 cout << endl;
                 d.printComputers();
                 string option;
                 cout << "Enter computer number to edit.\n(If input is not a listed number, you will be returned to menu): ";
                 cin >> option;
                 val = d.selectUnit(option);
-                unsigned int maxId = 10;
+                unsigned int maxId = s.maxCid();
                 if(d.isLetter(option) || val == 0 || option[0] == 45 || val > maxId);
                 else{
                     do{
@@ -148,12 +151,15 @@ void control::maincontrol(){
                     }while(go);
                 }
             }
+            else if(choice2 == '3'){
+                d.editLink();
+            }
             cout << endl;
             go = true;
         }
         else if(choice == '3'){
             cout << "1. Display scientists\t\t2. Display computers" << endl;
-            cout << "3. CS connected to C\t\t4. C connected to CS" << endl;
+            cout << "3. Scientist --> Computer\t4. Computer --> Scientist" << endl;
             cout << "Enter your choice: ";
             cin >> choice2;
             if(choice2 == '1'){
@@ -183,7 +189,7 @@ void control::maincontrol(){
                 d.printCStoC();
             }
             else if(choice2 == '4'){
-//                d.printCtoCS();
+                d.printCtoCS();
             }
             cout << endl;
             go = true;
