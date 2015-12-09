@@ -5,9 +5,8 @@ void logo();
 
 int main(){
     logo();
-    database db;// Initializes the database
     control c;// Initializes the control
-    c.maincontrol(db);// Enter main control, takes the database named db with it
+    c.maincontrol();// Enter main control, takes the database named db with it
     return 0;
 }
 

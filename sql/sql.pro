@@ -11,11 +11,17 @@ SOURCES += main.cpp \
     database.cpp \
     control.cpp \
     service.cpp \
-    display.cpp
+    display.cpp \
+    scientist.cpp \
+    computer.cpp \
+    link.cpp
 
 HEADERS += \
     database.h \
     control.h \
     service.h \
-    display.h
+    display.h \
+    scientist.h \
+    computer.h \
+    link.h
 

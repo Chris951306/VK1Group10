@@ -4,38 +4,48 @@
 
 class service{
 public:
-    void addScientist();
-        //^Adds a scientist based on the user's inputs to the sql database
-    bool editScientist(unsigned int val);
-        //^Edits a scientist based on the user's inputs in the sql database
-    int legalBirth();
-        //^Determines whether the scientist's year of birth is legal or not
-    int legalDeath(int yob);
-        //^Determines whether the scientist's year of death is legal, not legal or if scientist is alive
-    bool legalGender();
-        //^Determines whether the scientist's gender is valid - only accepts 'm' or 'f' as input
-    void addComputer();
-        //^Adds a computer based on the user's inputs to the sql database
-    bool editComputer(unsigned int val);
-        //^Edits a computer based on the user's inputs in the sql database
-    int legalYear();
-        //^Determines whether the computer's build year is legal or not
-    bool legalBuilt();
-        //^Determines whether the computer was built or not
-    unsigned int selectUnit(string s);
-        //^Converts a string containing a number into an unsigned int to use when selecting scientists or computers to edit
-    bool isLetter(string s);
-        //^Determines whether the string contains a letter or not
-    bool checkName(QString &name);
-        //^Checks and fixes a QString to fit within the appropriate spacing- and capitalization-rules of the database
-    void multiSearch(QString &s);
-        //^Adds a '%' to the beginning and the end of the QString used to search - allows to search with QString as substring
-    bool searchScientist(vector<int> &id);
-        //^Allows user to search for a scientist based on the 4 input values - stores the valid id's in the vector
-    bool searchComputer(vector<int> &id);
-        //^Allows user to search for a computer based on the 4 input values - stores the valid id's in the vector
+    unsigned int returnCScount();
+    unsigned int returnCcount();
+    void addScientist(QString name, bool gender, int yob, int yod);
+    void returnScientist(unsigned int val, scientist &cs);
+    void returnScientists(vector<scientist> &cs);
+    void sortCSname(bool &namesort, vector<int> &cs);
+    void sortCSgender(bool &gendersort, vector<int> &cs);
+    void sortCSyob(bool &yobsort, vector<int> &cs);
+    void searchCSname(QString name, vector<int> &id);
+    void searchCSgender(bool gender, vector<int> &id);
+    void searchCSyob(int yob, vector<int> &id);
+    void searchCSyod(int yod, vector<int> &id);
+    void addComputer(QString name, int year, QString type, bool built);
+    void returnComputer(unsigned int val, computer &c);
+    void returnComputers(vector<computer> &c);
+    void sortCname(bool &namesort, vector<int> &c);
+    void sortCyear(bool &yearsort, vector<int> &c);
+    void sortCtype(bool &typesort, vector<int> &c);
+    void sortCbuilt(bool &builtsort, vector<int> &c);
+    void searchCname(QString name, vector<int> &id);
+    void searchCyear(int year, vector<int> &id);
+    void searchCtype(QString type, vector<int> &id);
+    void searchCbuilt(bool built, vector<int> &id);
     void addLink(int csid, int cid);
-        //^Adds a link between a scientist and a computer to the sql database
+    bool isLink(int csid, int cid);
+    void updateCSname(unsigned int val, QString name);
+    bool returnCSgender(unsigned int val);
+    void updateCSgender(unsigned int val, bool gender);
+    int returnCSyob(unsigned int val);
+    void updateCSyob(unsigned int val, int yob);
+    void updateCSyod(unsigned int val, int yod);
+    void updateCname(unsigned int val, QString name);
+    void updateCyear(unsigned int val, int year);
+    void updateCtype(unsigned int val, QString type);
+    bool returnCbuilt(unsigned int val);
+    void updateCbuilt(unsigned int val, bool built);
+    unsigned int maxCSid();
+    void getCSid(string &csname, unsigned int &csid, unsigned int step);
+    unsigned int getCIDcount(unsigned int csid);
+    void getCidFromCSid(unsigned int csid, unsigned int &cid, unsigned int step);
+    void getCnameFromCid(unsigned int cid, string &cname);
+    unsigned int maxCid();
 };
 
 #endif // SERVICE_H

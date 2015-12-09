@@ -4,7 +4,7 @@
 
 class control{
 public:
-    void maincontrol(database &db);
+    void maincontrol();
         //Main control function - lets user choose between different functions
 };
 

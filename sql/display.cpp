@@ -7,10 +7,8 @@ void display::printCStop(){
 }
 
 void display::printCSbot(){
-    QSqlQuery bot;
-    bot.exec("SELECT COUNT(id) FROM scientists");
-    bot.next();
-    unsigned int count = bot.value("COUNT(id)").toUInt();
+    service s;
+    unsigned int count = s.returnCScount();
     cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
     cout << setfill(' ') << setw(3) << "" << "Total amount of scientists: " << count << endl << endl;
 }
@@ -22,24 +20,110 @@ void display::printCtop(){
 }
 
 void display::printCbot(){
-    QSqlQuery bot;
-    bot.exec("SELECT COUNT(id) FROM computers");
-    bot.next();
-    unsigned int count = bot.value("COUNT(id)").toUInt();
+    service s;
+    unsigned int count = s.returnCcount();
     cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
     cout << setfill(' ') << setw(3) << "" << "Total amount of computers: " << count << endl << endl;
 }
 
+void display::addScientist(){
+    service s;
+    QString name;
+    bool gender;
+    int yob, yod;
+    do{
+        QTextStream qtin(stdin);
+        cout << "Enter name of scientist: ";
+        name = qtin.readLine();
+    }while(!checkName(name));
+    gender = legalGender();
+    yob = legalBirth();
+    yod = legalDeath(yob);
+    s.addScientist(name, gender, yob, yod);
+}
+
+bool display::editScientist(unsigned int val){
+    service s;
+    char choice;
+    QString name;
+    bool gender;
+    int yob;
+    int yod;
+    cout << "1. Scientist name\t\t2. Gender\n3. Year of birth\t\t4. Year of death" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    if(choice == '1'){
+        do{
+            QTextStream qtin(stdin);
+            cout << "Enter name of scientist: ";
+            name = qtin.readLine();
+        }while(!checkName(name));
+        s.updateCSname(val, name);
+        return true;
+    }
+    else if(choice == '2'){
+        gender = s.returnCSgender(val);
+        if(gender)// If male --> female
+            gender = false;
+        else// If female --> male
+            gender = true;
+        s.updateCSgender(val, gender);
+        return true;
+    }
+    else if(choice == '3'){
+        yob = legalBirth();
+        s.updateCSyob(val, yob);
+        return true;
+    }
+    else if(choice == '4'){
+        yob = s.returnCSyob(val);
+        yod = legalDeath(yob);
+        s.updateCSyod(val, yod);
+        return true;
+    }
+    return false;
+}
+
+void display::printScientist(unsigned int val){
+    service s;
+    scientist cs(0, "", 0, 0, 0);
+    s.returnScientist(val, cs);
+    cout << right << setfill(' ') << setw(4) << cs.returnId() << ": ";
+    cout << left << setfill(' ') << setw(25) << cs.returnName();
+    if(cs.returnGender())
+        cout << left << setw(12) << "Male";
+    else
+        cout << left << setw(12) << "Female";
+    int yob = cs.returnYob();
+    if(yob < 0){
+        cout << right << setfill('0') << setw(4) << abs(yob) << " B.C. --> ";
+    }
+    else{
+        cout << right << setfill('0') << setw(4) << yob << " A.D. --> ";
+    }
+    int yod = cs.returnYod();
+    if(yod == STILLALIVE){
+        cout << "Alive";
+    }
+    else if(yod < 0){
+        cout << right << setfill('0') << setw(4) << abs(yod) << " B.C.";
+    }
+    else{
+        cout << right << setfill('0') << setw(4) << yod << " A.D.";
+    }
+}
+
 void display::printScientists(){
+    service s;
     printCStop();
-    QSqlQuery query;
-    query.exec("SELECT * FROM scientists");
-    while(query.next()){
-        unsigned int id = query.value("id").toUInt();
-        string name = query.value("name").toString().toStdString();
-        bool gender = query.value("gender").toBool();
-        int yob = query.value("yob").toInt();
-        int yod = query.value("yod").toInt();
+    vector<scientist> cs;
+    s.returnScientists(cs);
+    for(unsigned int i = 0; i < cs.size(); i++){
+        unsigned int id = cs[i].returnId();
+        string name = cs[i].returnName();
+        bool gender = cs[i].returnGender();
+        int yob = cs[i].returnYob();
+        int yod = cs[i].returnYod();
         cout << right << setfill(' ') << setw(4) << id << ": ";
         cout << left << setfill(' ') << setw(25) << name;
         if(gender)
@@ -47,85 +131,45 @@ void display::printScientists(){
         else
             cout << left << setw(12) << "Female";
         if(yob < 0)
-        {
             cout << right << setfill('0') << setw(4) << abs(yob) << " B.C. --> ";
-        }
-        else{
+        else
             cout << right << setfill('0') << setw(4) << yob << " A.D. --> ";
-        }
-
-        if(yod == STILLALIVE){
+        if(yod == STILLALIVE)
             cout << "Alive";
-        }
         else if(yod < 0)
-        {
             cout << right << setfill('0') << setw(4) << abs(yod) << " B.C.";
-        }
-        else{
+        else
             cout << right << setfill('0') << setw(4) << yod << " A.D.";
-        }
         cout << endl;
     }
     printCSbot();
 }
 
-void display::printScientist(unsigned int val){
-    QSqlQuery query;
-    query.prepare("SELECT * FROM scientists WHERE id = :id");
-    query.bindValue(":id", val);
-    query.exec();
-    while(query.next()){
-        unsigned int id = query.value("id").toUInt();
-        string name = query.value("name").toString().toStdString();
-        bool gender = query.value("gender").toBool();
-        int yob = query.value("yob").toInt();
-        int yod = query.value("yod").toInt();
-        cout << right << setfill(' ') << setw(4) << id << ": ";
-        cout << left << setfill(' ') << setw(25) << name;
-        if(gender)
-            cout << left << setw(12) << "Male";
-        else
-            cout << left << setw(12) << "Female";
-        if(yob < 0)
-        {
-            cout << right << setfill('0') << setw(4) << abs(yob) << " B.C. --> ";
-        }
-        else{
-            cout << right << setfill('0') << setw(4) << yob << " A.D. --> ";
-        }
-
-        if(yod == STILLALIVE){
-            cout << "Alive";
-        }
-        else if(yod < 0)
-        {
-            cout << right << setfill('0') << setw(4) << abs(yod) << " B.C.";
-        }
-        else{
-            cout << right << setfill('0') << setw(4) << yod << " A.D.";
-        }
-    }
-}
-
-bool display::sortScientist(bool &namesort, bool &gendersort, bool &yobsort){
-    QSqlQuery query;
+bool display::sortScientists(bool &namesort, bool &gendersort, bool &yobsort){
+    service s;
+    vector<int> cs;
     char choice;
     cout << "1. Sort by name\t\t2. Sort by gender\t3. Sort by year of birth" << endl;
     cout << "Same option twice sorts opposite." << endl;
     cout << "Enter choice: ";
     cin  >> choice;
-
     if(choice == '1'){
         cout << endl;
         printCStop();
         if(namesort){
-            query.exec("SELECT * FROM scientists ORDER BY name DESC");
-            query.exec();
+            s.sortCSname(namesort, cs);
+            for(unsigned int i = 0; i < cs.size(); i++){
+                printScientist(cs[i]);
+                cout << endl;
+            }
             namesort = false;
         }
         else{
-            query.exec("SELECT * FROM scientists ORDER BY name");
-            query.exec();
+            s.sortCSname(namesort, cs);
+            for(unsigned int i = 0; i < cs.size(); i++){
+                printScientist(cs[i]);
+                cout << endl;
+            }
             namesort = true;
         }
     }
@@ -133,13 +177,19 @@ bool display::sortScientist(bool &namesort, bool &gendersort, bool &yobsort){
         cout << endl;
         printCStop();
         if(gendersort){
-            query.exec("SELECT * FROM scientists ORDER BY gender DESC");
-            query.exec();
+            s.sortCSgender(gendersort, cs);
+            for(unsigned int i = 0; i < cs.size(); i++){
+                printScientist(cs[i]);
+                cout << endl;
+            }
             gendersort = false;
         }
         else{
-            query.exec("SELECT * FROM scientists ORDER BY gender");
-            query.exec();
+            s.sortCSgender(gendersort, cs);
+            for(unsigned int i = 0; i < cs.size(); i++){
+                printScientist(cs[i]);
+                cout << endl;
+            }
             gendersort = true;
         }
     }
@@ -147,132 +197,296 @@ bool display::sortScientist(bool &namesort, bool &gendersort, bool &yobsort){
         cout << endl;
         printCStop();
         if(yobsort){
-            query.exec("SELECT * FROM scientists ORDER BY yob DESC");
-            query.exec();
+            s.sortCSyob(yobsort, cs);
+            for(unsigned int i = 0; i < cs.size(); i++){
+                printScientist(cs[i]);
+                cout << endl;
+            }
             yobsort = false;
         }
         else{
-            query.exec("SELECT * FROM scientists ORDER BY yob");
-            query.exec();
+            s.sortCSyob(yobsort, cs);
+            for(unsigned int i = 0; i < cs.size(); i++){
+                printScientist(cs[i]);
+                cout << endl;
+            }
             yobsort = true;
         }
     }
     else{
         return false;
     }
-    while(query.next()){
-        unsigned int id = query.value("id").toUInt();
-        string name = query.value("name").toString().toStdString();
-        bool gender = query.value("gender").toBool();
-        int yob = query.value("yob").toInt();
-        int yod = query.value("yod").toInt();
-        cout << right << setfill(' ') << setw(4) << id << ": ";
-        cout << left << setfill(' ') << setw(25) << name;
-        if(gender)
-            cout << left << setw(12) << "Male";
-        else
-            cout << left << setw(12) << "Female";
-        if(yob < 0)
-        {
-            cout << right << setfill('0') << setw(4) << abs(yob) << " B.C. --> ";
-        }
-        else{
-            cout << right << setfill('0') << setw(4) << yob << " A.D. --> ";
-        }
-
-        if(yod == STILLALIVE){
-            cout << "Alive";
-        }
-        else if(yod < 0)
-        {
-            cout << right << setfill('0') << setw(4) << abs(yod) << " B.C.";
-        }
-        else{
-            cout << right << setfill('0') << setw(4) << yod << " A.D.";
-        }
-        cout << endl;
-    }
     printCSbot();
     return true;
 }
 
+bool display::searchScientists(vector<int> &id){
+    service s;
+    char choice, choice2;
+    QString name;
+    bool gender;
+    int yob, yod = 0;
+    cout << "1. Search by name\t\t2. Search by gender\n3. Search by year of birth\t4. Search by year of death" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    if(choice == '1'){
+        QTextStream qtin(stdin);
+        cout << "Enter name of scientist: ";
+        name = qtin.readLine();
+        cin.ignore();
+        multiSearch(name);
+        s.searchCSname(name, id);
+        return true;
+    }
+    else if(choice == '2'){
+        gender = legalGender();
+        s.searchCSgender(gender, id);
+        return true;
+    }
+    else if(choice == '3'){
+        yob = legalBirth();
+        s.searchCSyob(yob, id);
+        return true;
+    }
+    else if(choice == '4'){
+        cout << "Is this amazing person alive(y/n): ";
+        cin >> choice2;
+        if(choice2 == 'y')
+            yod = 3000;
+        else if(choice2 == 'n'){
+            cout << "Ohhhh I'm sorry, please enter year of death(yyyy): ";
+            cin >> yod;
+        }
+        s.searchCSyod(yod, id);
+        return true;
+    }
+    return false;
+}
+
+int display::legalBirth(){
+    int yob;
+    do{
+        cout << "Enter year of birth(yyyy): ";
+        cin >> yob;
+        if(MINYEAR < yob && yob <= MAXYEAR){// Makes sure the user inputs a valid year of birth, based on constants declared in database.h
+            return yob;
+        }
+        cout << "That is not possible!" << endl;
+    }while(true);
+}
+
+int display::legalDeath(int yob){
+    int yod;
+    char input;
+    do{
+        cout << "Is this amazing person alive(y/n): ";// Gives the user the option to make the scientist 'still alive'
+        cin  >> input;
+        if(input != 'n' && input != 'y'){// Makes sure user answers the question in an appropriate fashion
+            cout << "Invalid input!" << endl;
+        }
+    }while(input != 'n' && input != 'y');// Loops as long as input is invalid
+
+    yod = STILLALIVE;// Sets the scientists year of death to a value above MAXYEAR, as declared in database.h
+    if(input == 'n'){
+        do{
+            cout << "Ohhhh I'm sorry, please enter year of death(yyyy): ";
+            cin >> yod;
+            if(MINYEAR < yod && yod <= MAXYEAR){// Makes sure the year of death is within the limits of the constants MINYEAR and MAXYEAR
+                if(yob <= yod){// Makes sure the person is born before it died
+                return yod;
+                }
+            }
+            cout << "That is not possible!" << endl;
+        }while(true);
+    }
+    return yod;
+}
+
+bool display::legalGender(){// Entire function only makes sure input is either m or f, and sets the appropriate boolean value to the variable
+    bool valid = false;
+    bool gender;
+    char input;
+    do{
+        valid = false;
+        cout << "Enter gender(m/f): ";
+        cin >> input;
+        if(input == 'f'){
+            gender = false;
+            valid = true;
+        }
+        else if(input == 'm'){
+            gender = true;
+            valid = true;
+        }
+        else
+            cout << "Invalid input!" << endl;
+    }while(!valid);
+    return gender;
+}
+
+bool display::checkName(QString &name){
+    if(name.isEmpty()){// If the input string is empy, user is told to input at least(!) something
+        cout << "Name can't be empty!" << endl;
+        return false;
+    }
+    for(int i = 0; i < name.size(); i++){
+        if((name[i].isLower() && i == 0) || (name[i].isLower() && name[i-1] == ' ')){// If first charachter is lower or first character after a space is lower, change the letter to capital
+            name[i] = name[i].toUpper();
+        }
+        else if((name[i] == ' ' && name[i+1] == ' ') || (name[i] == ' ' && i == 0)){// If there are two spaces after each other or the string begins with one or more spaces, remove a space
+            name.remove(i, 1);
+            i--;
+        }
+        else if(!name[i].isLetterOrNumber() && name[i] != '\'' && name[i] != ',' && name[i] != '.' && name[i] != '-' && name[i] != ' '){// If the current character is not a letter nor a number or any of the legal symbols, make user input a new, valid, string
+            cout << "Invalid name!" << endl;
+            return false;
+        }
+    }
+    return true;
+}
+
+void display::addComputer(){
+    service s;
+    QString name, type;
+    int year;
+    bool built;
+    do{
+        QTextStream qtin(stdin);
+        cout << "Enter name of computer: ";
+        name = qtin.readLine();
+    }while(!checkName(name));
+    year = legalYear();
+    do{
+        QTextStream qtin(stdin);
+        cout << "Enter type of computer: ";
+        type = qtin.readLine();
+    }while(!checkName(type));
+    built = legalBuilt();
+    s.addComputer(name, year, type, built);
+}
+
+bool display::editComputer(unsigned int val){
+    service s;
+    char choice;
+    QString name, type;
+    int year;
+    bool built;
+    cout << "1. Computer name\t\t2. Build year\n3. Computer type\t\t4. Build status" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    if(choice == '1'){
+        do{
+            QTextStream qtin(stdin);
+            cout << "Enter name of computer: ";
+            name = qtin.readLine();
+        }while(!checkName(name));
+        s.updateCname(val, name);
+        return true;
+    }
+    else if(choice == '2'){
+        year = legalYear();
+        s.updateCyear(val, year);
+        return true;
+    }
+    else if(choice == '3'){
+        do{
+            QTextStream qtin(stdin);
+            cout << "Enter type of computer: ";
+            type = qtin.readLine();
+        }while(!checkName(type));
+        s.updateCtype(val, type);
+        return true;
+    }
+    else if(choice == '4'){
+        built = s.returnCbuilt(val);
+        if(built)
+            built = false;
+        else
+            built = true;
+        s.updateCbuilt(val, built);
+        return true;
+    }
+    return false;
+}
+
+
+void display::printComputer(unsigned int val){
+    service s;
+    computer c(0, "", 0, "", 0);
+    s.returnComputer(val, c);
+    unsigned int id = c.returnId();
+    string name = c.returnName();
+    int year = c.returnYear();
+    string type = c.returnType();
+    bool built = c.returnBuilt();
+    cout << right << setfill(' ') << setw(4) << id << ": ";
+    cout << left << setfill(' ') << setw(30) << name;
+    if(year < 0)
+    {
+        cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
+    }
+    else{
+        cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
+    }
+    cout << left << setfill(' ') << setw(18) << type;
+    if(built)
+        cout << left << setw(9) << "Built";
+    else
+        cout << left << setw(9) << "Not built";
+}
+
 void display::printComputers(){
+    service s;
     printCtop();
-    QSqlQuery query;
-    query.exec("SELECT * FROM computers");
-    while(query.next()){
-        unsigned int id = query.value("id").toUInt();
-        string name = query.value("name").toString().toStdString();
-        int year = query.value("year").toInt();
-        string type = query.value("type").toString().toStdString();
-        bool built = query.value("built").toBool();
+    vector<computer> c;
+    s.returnComputers(c);
+    for(unsigned int i = 0; i < c.size(); i++){
+        unsigned int id = c[i].returnId();
+        string name = c[i].returnName();
+        int year = c[i].returnYear();
+        string type = c[i].returnType();
+        bool built = c[i].returnBuilt();
         cout << right << setfill(' ') << setw(4) << id << ": ";
         cout << left << setfill(' ') << setw(30) << name;
         if(year < 0)
-        {
             cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
-        }
-        else{
+        else
             cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
-        }
         cout << left << setfill(' ') << setw(18) << type;
         if(built)
             cout << left << setw(9) << "Built";
         else
             cout << left << setw(9) << "Not built";
-
         cout << endl;
     }
     printCbot();
 }
 
-void display::printComputer(unsigned int val){
-    QSqlQuery query;
-    query.prepare("SELECT * FROM computers WHERE id = :id");
-    query.bindValue(":id", val);
-    query.exec();
-    while(query.next()){
-        unsigned int id = query.value("id").toUInt();
-        string name = query.value("name").toString().toStdString();
-        int year = query.value("year").toInt();
-        string type = query.value("type").toString().toStdString();
-        bool built = query.value("built").toBool();
-        cout << right << setfill(' ') << setw(4) << id << ": ";
-        cout << left << setfill(' ') << setw(30) << name;
-        if(year < 0)
-        {
-            cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
-        }
-        else{
-            cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
-        }
-        cout << left << setfill(' ') << setw(18) << type;
-        if(built)
-            cout << left << setw(9) << "Built";
-        else
-            cout << left << setw(9) << "Not built";
-    }
-}
-
 bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool &builtsort){
-    QSqlQuery query;
+    service s;
+    vector<int> c;
     char choice;
     cout << "1. Sort by name\t\t\t2. Sort by year\n3. Sort by type\t\t\t4. Sort by built or not" << endl;
     cout << "Same option twice sorts opposite." << endl;
     cout << "Enter choice: ";
     cin  >> choice;
-
     if(choice == '1'){
         cout << endl;
         printCtop();
         if(namesort){
-            query.exec("SELECT * FROM computers ORDER BY name DESC");
-            query.exec();
+            s.sortCname(namesort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             namesort = false;
         }
         else{
-            query.exec("SELECT * FROM computers ORDER BY name");
-            query.exec();
+            s.sortCname(namesort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             namesort = true;
         }
     }
@@ -280,13 +494,19 @@ bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool
         cout << endl;
         printCtop();
         if(yearsort){
-            query.exec("SELECT * FROM computers ORDER BY year DESC");
-            query.exec();
+            s.sortCyear(yearsort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             yearsort = false;
         }
         else{
-            query.exec("SELECT * FROM computers ORDER BY year");
-            query.exec();
+            s.sortCyear(yearsort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             yearsort = true;
         }
     }
@@ -294,13 +514,19 @@ bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool
         cout << endl;
         printCtop();
         if(typesort){
-            query.exec("SELECT * FROM computers ORDER BY type DESC");
-            query.exec();
+            s.sortCtype(typesort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             typesort = false;
         }
         else{
-            query.exec("SELECT * FROM computers ORDER BY type");
-            query.exec();
+            s.sortCtype(typesort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             typesort = true;
         }
     }
@@ -308,117 +534,166 @@ bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool
         cout << endl;
         printCtop();
         if(builtsort){
-            query.exec("SELECT * FROM computers ORDER BY built DESC");
-            query.exec();
+            s.sortCbuilt(builtsort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             builtsort = false;
         }
         else{
-            query.exec("SELECT * FROM computers ORDER BY built");
-            query.exec();
+            s.sortCbuilt(builtsort, c);
+            for(unsigned int i = 0; i < c.size(); i++){
+                printComputer(c[i]);
+                cout << endl;
+            }
             builtsort = true;
         }
     }
     else{
         return false;
     }
-    while(query.next()){
-        unsigned int id = query.value("id").toUInt();
-        string name = query.value("name").toString().toStdString();
-        int year = query.value("year").toInt();
-        string type = query.value("type").toString().toStdString();
-        bool built = query.value("built").toBool();
-        cout << right << setfill(' ') << setw(4) << id << ": ";
-        cout << left << setfill(' ') << setw(30) << name;
-        if(year < 0)
-        {
-            cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
-        }
-        else{
-            cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
-        }
-        cout << left << setfill(' ') << setw(18) << type;
-        if(built)
-            cout << left << setw(9) << "Built";
-        else
-            cout << left << setw(9) << "Not built";
-
-        cout << endl;
-    }
     printCbot();
     return true;
 }
 
+bool display::searchComputers(vector<int> &id){
+    service s;
+    char choice;
+    QString name, type;
+    int year;
+    bool built;
+    cout << "1. Search by name\t\t2. Search by build year\n3. Search by type\t\t4. Search by built or not built" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    if(choice == '1'){
+        QTextStream qtin(stdin);
+        cout << "Enter name of computer: ";
+        cin.ignore();
+        name = qtin.readLine();
+        multiSearch(name);
+        s.searchCname(name, id);
+        return true;
+    }
+    else if(choice == '2'){
+        year = legalYear();
+        s.searchCyear(year, id);
+        return true;
+    }
+    else if(choice == '3'){
+        QTextStream qtin(stdin);
+        cout << "Enter type: ";
+        cin.ignore();
+        type = qtin.readLine();
+        multiSearch(type);
+        s.searchCtype(type, id);
+        return true;
+    }
+    else if(choice == '4'){
+        do{
+            built = legalBuilt();
+        }while(!built);
+        s.searchCbuilt(built, id);
+        return true;
+    }
+    return false;
+}
+
+int display::legalYear(){
+    int year;
+    do{
+        cout << "When was this computer built(yyyy): ";
+        cin >> year;
+        if(MINYEAR < year && year <= MAXYEAR){
+            return year;
+        }
+        cout << "That is not possible!" << endl;
+    }while(true);
+}
+
+bool display::legalBuilt(){
+    bool valid = false;
+    bool built;
+    char input;
+    do{
+        valid = false;
+        cout << "Was the computer built(y/n): ";
+        cin >> input;
+        if(input == 'n'){
+            built = false;
+            valid = true;
+        }
+        else if(input == 'y'){
+            built = true;
+            valid = true;
+        }
+        else
+            cout << "Invalid input!" << endl;
+    }while(!valid);
+    return built;
+}
+
+void display::addLink(int csid, int cid){
+    service s;
+    if(s.isLink(csid, cid))
+        cout << "This link already exists!" << endl;
+    else{
+        s.addLink(csid, cid);
+    }
+}
+
+unsigned int display::selectUnit(string s){
+    unsigned int val = 0;
+    for(unsigned int i = 0; i < s.size(); i++){
+        if(i == (s.size() - 1))// Counts amount of 1s
+            val += s[i] - 48;
+        else if(i == (s.size() - 2))// Counts amount of 10s
+            val += (s[i] - 48) * 10;
+        else if(i == (s.size() - 3))// Counts amount of 100s
+            val += (s[i] - 48) * 100;
+        else if(i == (s.size() - 4))// Counts amount of 1.000s
+            val += (s[i] - 48) * 1000;
+        else if(i == (s.size() - 5))// Counts amount of 10.000s
+            val += (s[i] - 48) * 10000;
+    }
+    return val;
+}
+
+bool display::isLetter(string s){
+    for(unsigned int i = 0; i < s.size(); i++){
+        if(isalpha(s[i]))
+            return true;
+    }
+    return false;
+}
+
+void display::multiSearch(QString &s){
+    QString a = s;// In case shit should happen and function brakes, doesn't fuck up original string
+    if(!s.isEmpty()){// Checks if string is empty, if not - '%' is not added to prevent an empty search to list everything
+        for(unsigned int i = a.length()-1; i > 0; i--){
+            a[i+1] = a[i];// Shifts all the characters in the string one position to the right
+        }
+        a[1] = s[0];// Workaround for a bug where the first character was not moved
+        a[0] = '%';// Replaces the character in position 0 with a '%'
+        a[a.length()] = '%';// Adds a '%' to the end of string
+    }
+    s = a;// Things went as expected, set input string equal to the edited string
+}
+
 void display::printCStoC(){
+    service s;
     unsigned int n, m, csid, cid;
     string csname, cname;
-    QSqlQuery query;
-    query.exec("SELECT MAX(id) FROM scientists");
-    query.next();
-    n = query.value("MAX(id)").toUInt();
+    n = s.maxCSid();
     for(unsigned int i = 1; i <= n; i++){
         cout << endl;
-        query.exec("SELECT id, name FROM scientists");
-        for(unsigned int j = 0; j < i; j++)
-            query.next();
-        csname = query.value("name").toString().toStdString();
-        csid = query.value("id").toUInt();
+        s.getCSid(csname, csid, i);
         cout << "   " << csname << ":" << endl;
-        query.prepare("SELECT COUNT(cid) FROM link WHERE csid = :id");
-        query.bindValue(":id", csid);
-        query.exec();
-        query.next();
-        m = query.value("COUNT(cid)").toUInt();
-        for(unsigned int k = 1; k <= m; k++){
-            query.prepare("SELECT cid FROM link WHERE csid = :id");
-            query.bindValue(":id", csid);
-            query.exec();
-            for(unsigned int l = 0; l < k; l++)
-                query.next();
-            cid = query.value("cid").toUInt();
-            query.prepare("SELECT name FROM computers WHERE id = :id");
-            query.bindValue(":id", cid);
-            query.exec();
-            query.next();
-            cname = query.value("name").toString().toStdString();
+        m = s.getCIDcount(csid);
+        for(unsigned int j = 1; j <= m; j++){
+            s.getCidFromCSid(csid, cid, j);
+            s.getCnameFromCid(cid, cname);
             cout << "\t- " << cname << endl;
         }
     }
 }
-
-void display::printCtoCS(){
-    unsigned int n, m, csid, cid;
-    string csname, cname;
-    QSqlQuery query;
-    query.exec("SELECT MAX(id) FROM computers");
-    query.next();
-    n = query.value("MAX(id)").toUInt();
-    for(unsigned int i = 1; i <= n; i++){
-        cout << endl;
-        query.exec("SELECT id, name FROM computers");
-        for(unsigned int j = 0; j < i; j++)
-            query.next();
-        cname = query.value("name").toString().toStdString();
-        cid = query.value("id").toUInt();
-        cout << "   " << cname << ":" << endl;
-        query.prepare("SELECT COUNT(csid) FROM link WHERE cid = :id");
-        query.bindValue(":id", cid);
-        query.exec();
-        query.next();
-        m = query.value("COUNT(csid)").toUInt();
-        for(unsigned int k = 1; k <= m; k++){
-            query.prepare("SELECT csid FROM link WHERE cid = :id");
-            query.bindValue(":id", cid);
-            query.exec();
-            for(unsigned int l = 0; l < k; l++)
-                query.next();
-            csid = query.value("csid").toUInt();
-            query.prepare("SELECT name FROM scientists WHERE id = :id");
-            query.bindValue(":id", csid);
-            query.exec();
-            query.next();
-            csname = query.value("name").toString().toStdString();
-            cout << "\t- " << csname << endl;
-        }
-    }
-}
-
