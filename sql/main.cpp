@@ -1,3 +1,8 @@
+//  Made by:
+//  Christian Andreas Jacobsen
+//  Hekla Rún Ámundadóttir
+//  Kristín Vala Einarsdóttir
+//  Þórmundur Smári Hilmarsson
 #include "control.h"
 
 void logo();
@@ -5,8 +10,10 @@ void logo();
 
 int main(){
     logo();
+    database db;// Initializes a db class
+    db.start();// Makes use of db class to start the SQL-server
     control c;// Initializes the control
-    c.maincontrol();// Enter main control, takes the database named db with it
+    c.maincontrol();// Enter main control
     return 0;
 }
 

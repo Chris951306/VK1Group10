@@ -4,6 +4,7 @@
 
 class service{
 public:
+    // For all functions, read comments in database.h/-.cpp as they are the same
     unsigned int returnCScount();
     unsigned int returnCcount();
     void addScientist(QString name, bool gender, int yob, int yod);

@@ -1,11 +1,13 @@
 #include "display.h"
 
+// Prints the header of scientists display
 void display::printCStop(){
     cout << setfill(' ') << right << setw(4) << "#" << left << setw(2) << "" << left << setw(25) << "Name" << left << setw(12) << "Gender";
     cout << setfill(' ') << left << setw(14) << "Birth" << left << "Death" << endl;
     cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(63) << "" << endl;
 }
 
+// Prints the bottom of scientists display and total amount scientists stored
 void display::printCSbot(){
     service s;
     unsigned int count = s.returnCScount();
@@ -13,12 +15,14 @@ void display::printCSbot(){
     cout << setfill(' ') << setw(3) << "" << "Total amount of scientists: " << count << endl << endl;
 }
 
+// Prints the header of computers display
 void display::printCtop(){
     cout << setfill(' ') << right << setw(4) << "#" << left << setw(2) << "" << left << setw(30) << "Name" << left << setw(12) << "Year";
     cout << setfill(' ') << left << setw(18) << "Type" << left << "Build status" << endl;
     cout << setfill(' ') << setw(3) << "" << setfill('-') << setw(75) << "" << endl;
 }
 
+// Prints the bottom of computers display and total amount computers stored
 void display::printCbot(){
     service s;
     unsigned int count = s.returnCcount();
@@ -26,6 +30,7 @@ void display::printCbot(){
     cout << setfill(' ') << setw(3) << "" << "Total amount of computers: " << count << endl << endl;
 }
 
+// Adds scientist to be stored
 void display::addScientist(){
     QTextStream in(stdin);
     service s;
@@ -43,6 +48,7 @@ void display::addScientist(){
     s.addScientist(name, gender, yob, yod);
 }
 
+// Edit scientist
 bool display::editScientist(unsigned int val){
     QTextStream in(stdin);
     service s;
@@ -65,10 +71,12 @@ bool display::editScientist(unsigned int val){
     }
     else if(choice == '2'){
         gender = s.returnCSgender(val);
-        if(gender)// If male --> female
+        if(gender){ // If male --> female
             gender = false;
-        else// If female --> male
+        }
+        else{ // If female --> male
             gender = true;
+        }
         s.updateCSgender(val, gender);
         return true;
     }
@@ -86,16 +94,19 @@ bool display::editScientist(unsigned int val){
     return false;
 }
 
+// Prints one scientist with the Id = val
 void display::printScientist(unsigned int val){
     service s;
     scientist cs(0, "", 0, 0, 0);
     s.returnScientist(val, cs);
     cout << right << setfill(' ') << setw(4) << cs.returnId() << ": ";
     cout << left << setfill(' ') << setw(25) << cs.returnName();
-    if(cs.returnGender())
+    if(cs.returnGender()){
         cout << left << setw(12) << "Male";
-    else
+    }
+    else{
         cout << left << setw(12) << "Female";
+    }
     int yob = cs.returnYob();
     if(yob < 0){
         cout << right << setfill('0') << setw(4) << abs(yob) << " B.C. --> ";
@@ -115,6 +126,7 @@ void display::printScientist(unsigned int val){
     }
 }
 
+// Prints all scientists
 void display::printScientists(){
     service s;
     printCStop();
@@ -128,25 +140,33 @@ void display::printScientists(){
         int yod = cs[i].returnYod();
         cout << right << setfill(' ') << setw(4) << id << ": ";
         cout << left << setfill(' ') << setw(25) << name;
-        if(gender)
+        if(gender){
             cout << left << setw(12) << "Male";
-        else
+        }
+        else{
             cout << left << setw(12) << "Female";
-        if(yob < 0)
+        }
+        if(yob < 0){
             cout << right << setfill('0') << setw(4) << abs(yob) << " B.C. --> ";
-        else
+        }
+        else{
             cout << right << setfill('0') << setw(4) << yob << " A.D. --> ";
-        if(yod == STILLALIVE)
+        }
+        if(yod == STILLALIVE){
             cout << "Alive";
-        else if(yod < 0)
+        }
+        else if(yod < 0){
             cout << right << setfill('0') << setw(4) << abs(yod) << " B.C.";
-        else
+        }
+        else{
             cout << right << setfill('0') << setw(4) << yod << " A.D.";
+        }
         cout << endl;
     }
     printCSbot();
 }
 
+// Sorts scientists by name, gender, yob
 bool display::sortScientists(bool &namesort, bool &gendersort, bool &yobsort){
     service s;
     vector<int> cs;
@@ -222,6 +242,7 @@ bool display::sortScientists(bool &namesort, bool &gendersort, bool &yobsort){
     return true;
 }
 
+// Search for scientist in database... by name, gender, yob or yod
 bool display::searchScientists(vector<int> &id){
     QTextStream in(stdin);
     service s;
@@ -265,6 +286,7 @@ bool display::searchScientists(vector<int> &id){
     return false;
 }
 
+// Checks if it's valid birth
 int display::legalBirth(){
     int yob;
     do{
@@ -277,6 +299,7 @@ int display::legalBirth(){
     }while(true);
 }
 
+// Checks if it's valid death
 int display::legalDeath(int yob){
     int yod;
     char input;
@@ -304,7 +327,8 @@ int display::legalDeath(int yob){
     return yod;
 }
 
-bool display::legalGender(){// Entire function only makes sure input is either m or f, and sets the appropriate boolean value to the variable
+// Entire function only makes sure input is either m or f, and sets the appropriate boolean value to the variable
+bool display::legalGender(){
     bool valid = false;
     bool gender;
     char input;
@@ -326,6 +350,7 @@ bool display::legalGender(){// Entire function only makes sure input is either m
     return gender;
 }
 
+// Checks if it's legal name
 bool display::checkName(QString &name){
     if(name.isEmpty()){// If the input string is empy, user is told to input at least(!) something
         cout << "Name can't be empty!" << endl;
@@ -347,6 +372,7 @@ bool display::checkName(QString &name){
     return true;
 }
 
+// Adds computer to be stored
 void display::addComputer(){
     QTextStream in(stdin);
     service s;
@@ -368,6 +394,7 @@ void display::addComputer(){
     s.addComputer(name, year, type, built);
 }
 
+// Edit computer
 bool display::editComputer(unsigned int val){
     QTextStream in(stdin);
     service s;
@@ -413,7 +440,7 @@ bool display::editComputer(unsigned int val){
     return false;
 }
 
-
+// Prints one computer with the Id = val
 void display::printComputer(unsigned int val){
     service s;
     computer c(0, "", 0, "", 0);
@@ -425,20 +452,22 @@ void display::printComputer(unsigned int val){
     bool built = c.returnBuilt();
     cout << right << setfill(' ') << setw(4) << id << ": ";
     cout << left << setfill(' ') << setw(30) << name;
-    if(year < 0)
-    {
+    if(year < 0){
         cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
     }
     else{
         cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
     }
     cout << left << setfill(' ') << setw(18) << type;
-    if(built)
+    if(built){
         cout << left << setw(9) << "Built";
-    else
+    }
+    else{
         cout << left << setw(9) << "Not built";
+    }
 }
 
+// Prints all computers
 void display::printComputers(){
     service s;
     printCtop();
@@ -452,20 +481,25 @@ void display::printComputers(){
         bool built = c[i].returnBuilt();
         cout << right << setfill(' ') << setw(4) << id << ": ";
         cout << left << setfill(' ') << setw(30) << name;
-        if(year < 0)
+        if(year < 0){
             cout << left << setfill('0') << setw(4) << abs(year) << setfill(' ') << setw(8) << " B.C.";
-        else
+        }
+        else{
             cout << left << setfill('0') << setw(4) << year << setfill(' ') << setw(8) << " A.D.";
+        }
         cout << left << setfill(' ') << setw(18) << type;
-        if(built)
+        if(built){
             cout << left << setw(9) << "Built";
-        else
+        }
+        else{
             cout << left << setw(9) << "Not built";
+        }
         cout << endl;
     }
     printCbot();
 }
 
+// Sorts scientists by name, year, type, built
 bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool &builtsort){
     service s;
     vector<int> c;
@@ -561,6 +595,7 @@ bool display::sortComputers(bool &namesort, bool &yearsort, bool &typesort, bool
     return true;
 }
 
+// Search for computer in database... by name, year, type or built
 bool display::searchComputers(vector<int> &id){
     QTextStream in(stdin);
     service s;
@@ -602,6 +637,7 @@ bool display::searchComputers(vector<int> &id){
     return false;
 }
 
+// Checks if the year is legal
 int display::legalYear(){
     int year;
     do{
@@ -614,6 +650,7 @@ int display::legalYear(){
     }while(true);
 }
 
+// Checks if the built is legal
 bool display::legalBuilt(){
     bool valid = false;
     bool built;
@@ -637,6 +674,7 @@ bool display::legalBuilt(){
     return built;
 }
 
+// Adds a link between scientist with id = csid and computer with id = cid
 void display::addLink(int csid, int cid){
     service s;
     if(s.isLink(csid, cid)){
@@ -647,6 +685,7 @@ void display::addLink(int csid, int cid){
     }
 }
 
+// Edits a link between CS and C, based on user's choices
 void display::editLink(){
     service s;
     vector<int> l;
@@ -745,6 +784,7 @@ void display::editLink(){
     }
 }
 
+// Changes string s to a number.
 unsigned int display::selectUnit(string s){
     unsigned int val = 0;
     for(unsigned int i = 0; i < s.size(); i++){
@@ -762,14 +802,17 @@ unsigned int display::selectUnit(string s){
     return val;
 }
 
+// Checks if s contains a letter
 bool display::isLetter(string s){
     for(unsigned int i = 0; i < s.size(); i++){
-        if(isalpha(s[i]))
+        if(isalpha(s[i])){
             return true;
+        }
     }
     return false;
 }
 
+// Takes QString s and adds '%' in front and behind the string so that it is possible to search for substring
 void display::multiSearch(QString &s){
     QString a = s;// In case shit should happen and function brakes, doesn't fuck up original string
     if(!s.isEmpty()){// Checks if string is empty, if not - '%' is not added to prevent an empty search to list everything
@@ -783,6 +826,7 @@ void display::multiSearch(QString &s){
     s = a;// Things went as expected, set input string equal to the edited string
 }
 
+// Prints all scientists and computers which are linked to each scientist
 void display::printCStoC(){
     service s;
     unsigned int n, m, csid, cid;
@@ -801,6 +845,7 @@ void display::printCStoC(){
     }
 }
 
+// Prints all computers and scientists which are linked to each computer
 void display::printCtoCS(){
     service s;
     unsigned int n, m, csid, cid;

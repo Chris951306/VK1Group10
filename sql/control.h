@@ -4,8 +4,7 @@
 
 class control{
 public:
-    void maincontrol();
-        //Main control function - lets user choose between different functions
+    void maincontrol(); //Main control function - lets user choose between different functions
 };
 
 #endif // CONTROL_H

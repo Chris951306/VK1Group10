@@ -1,9 +1,8 @@
 #include "control.h"
 
+//Main control function - lets user choose between different functions
 void control::maincontrol(){
-    database db;
     display d;
-    db.start();
     bool go = false;
     char choice, choice2, choice3;
     unsigned int val, csid, cid;

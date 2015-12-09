@@ -1,5 +1,6 @@
 #include "database.h"
 
+// Connects the SQL Database and opens the connection
 void database::start(){
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -7,6 +8,7 @@ void database::start(){
     db.open();
 }
 
+// Returns the amount of scientist entries
 unsigned int database::returnCScount(){
     QSqlQuery query;
     query.exec("SELECT COUNT(id) FROM scientists");
@@ -14,6 +16,7 @@ unsigned int database::returnCScount(){
     return query.value("COUNT(id)").toUInt();
 }
 
+// Returns the amount of compute entries
 unsigned int database::returnCcount(){
     QSqlQuery query;
     query.exec("SELECT COUNT(id) FROM computers");
@@ -21,6 +24,7 @@ unsigned int database::returnCcount(){
     return query.value("COUNT(id)").toUInt();
 }
 
+// Adds a scientist to SQL server
 void database::addScientist(QString name, bool gender, int yob, int yod){
     QSqlQuery query;
     query.prepare("INSERT INTO scientists (name, gender, yob, yod) VALUES (:name, :gender, :yob, :yod)");
@@ -31,6 +35,7 @@ void database::addScientist(QString name, bool gender, int yob, int yod){
     query.exec();
 }
 
+// Returns a scientist based on index 'val'
 void database::returnScientist(unsigned int val, scientist &cs){
     QSqlQuery query;
     query.prepare("SELECT * FROM scientists WHERE id = :id");
@@ -46,6 +51,7 @@ void database::returnScientist(unsigned int val, scientist &cs){
     cs = temp;
 }
 
+// Stores all scientist ids in a vector
 void database::returnScientists(vector<scientist> &cs){
     QSqlQuery query;
     query.exec("SELECT * FROM scientists");
@@ -60,6 +66,7 @@ void database::returnScientists(vector<scientist> &cs){
     }
 }
 
+// Sorts by name in direction determined by parsed bool
 void database::sortCSname(bool &namesort, vector<int> &cs){
     QSqlQuery query;
     if(namesort)
@@ -72,30 +79,37 @@ void database::sortCSname(bool &namesort, vector<int> &cs){
     }
 }
 
+// Sorts by gender in direction determinded by parsed bool
 void database::sortCSgender(bool &gendersort, vector<int> &cs){
     QSqlQuery query;
-    if(gendersort)
+    if(gendersort){
         query.exec("SELECT id FROM scientists ORDER BY gender DESC");
-    else
+    }
+    else{
         query.exec("SELECT id FROM scientists ORDER BY gender");
+    }
     while(query.next()){
         int id = query.value("id").toUInt();
         cs.push_back(id);
     }
 }
 
+// Sorts by year of birth in direction determined by parsed bool
 void database::sortCSyob(bool &yobsort, vector<int> &cs){
     QSqlQuery query;
-    if(yobsort)
+    if(yobsort){
         query.exec("SELECT id FROM scientists ORDER BY yob DESC");
-    else
+    }
+    else{
         query.exec("SELECT id FROM scientists ORDER BY yob");
+    }
     while(query.next()){
         int id = query.value("id").toUInt();
         cs.push_back(id);
     }
 }
 
+// Searches for name based on a QString
 void database::searchCSname(QString name, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM scientists WHERE name LIKE :name");
@@ -107,6 +121,7 @@ void database::searchCSname(QString name, vector<int> &id){
     }
 }
 
+// Searches for gender based on a bool
 void database::searchCSgender(bool gender, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM scientists WHERE gender = :gender");
@@ -118,6 +133,7 @@ void database::searchCSgender(bool gender, vector<int> &id){
     }
 }
 
+// Seaches for a year of birth
 void database::searchCSyob(int yob, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM scientists WHERE yob = :yob");
@@ -129,6 +145,7 @@ void database::searchCSyob(int yob, vector<int> &id){
     }
 }
 
+// Searches for a year of death
 void database::searchCSyod(int yod, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM scientists WHERE yod = :yod");
@@ -140,6 +157,7 @@ void database::searchCSyod(int yod, vector<int> &id){
     }
 }
 
+// Adds a computer to SQL server
 void database::addComputer(QString name, int year, QString type, bool built){
     QSqlQuery query;
     query.prepare("INSERT INTO computers (name, year, type, built) VALUES (:name, :year, :type, :built)");
@@ -150,6 +168,7 @@ void database::addComputer(QString name, int year, QString type, bool built){
     query.exec();
 }
 
+// Returns a computer based on index 'val'
 void database::returnComputer(unsigned int val, computer &c){
     QSqlQuery query;
     query.prepare("SELECT * FROM computers WHERE id = :id");
@@ -165,6 +184,7 @@ void database::returnComputer(unsigned int val, computer &c){
     c = temp;
 }
 
+// Stores all comoyter ids in a vector
 void database::returnComputers(vector<computer> &c){
     QSqlQuery query;
     query.exec("SELECT * FROM computers");
@@ -179,6 +199,7 @@ void database::returnComputers(vector<computer> &c){
     }
 }
 
+// Sorts by name in direction determined by parsed bool
 void database::sortCname(bool &namesort, vector<int> &c){
     QSqlQuery query;
     if(namesort){
@@ -193,6 +214,7 @@ void database::sortCname(bool &namesort, vector<int> &c){
     }
 }
 
+// Sorts by year in direction determined by parsed bool
 void database::sortCyear(bool &yearsort, vector<int> &c){
     QSqlQuery query;
     if(yearsort){
@@ -207,6 +229,7 @@ void database::sortCyear(bool &yearsort, vector<int> &c){
     }
 }
 
+// Sorts by type in direction determined by parsed bool
 void database::sortCtype(bool &typesort, vector<int> &c){
     QSqlQuery query;
     if(typesort){
@@ -221,6 +244,7 @@ void database::sortCtype(bool &typesort, vector<int> &c){
     }
 }
 
+// Sorts by build status in direction determined by parsed bool
 void database::sortCbuilt(bool &builtsort, vector<int> &c){
     QSqlQuery query;
     if(builtsort){
@@ -235,6 +259,7 @@ void database::sortCbuilt(bool &builtsort, vector<int> &c){
     }
 }
 
+// Searches for name based on a QString
 void database::searchCname(QString name, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM computers WHERE name LIKE :name");
@@ -246,6 +271,7 @@ void database::searchCname(QString name, vector<int> &id){
     }
 }
 
+// Searches for a year
 void database::searchCyear(int year, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM computers WHERE year = :year");
@@ -257,6 +283,7 @@ void database::searchCyear(int year, vector<int> &id){
     }
 }
 
+// Searches for type based on a QString
 void database::searchCtype(QString type, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM computers WHERE type LIKE :type");
@@ -268,6 +295,7 @@ void database::searchCtype(QString type, vector<int> &id){
     }
 }
 
+// Searches for a built status
 void database::searchCbuilt(bool built, vector<int> &id){
     QSqlQuery query;
     query.prepare("SELECT id FROM computers WHERE built = :built");
@@ -279,6 +307,7 @@ void database::searchCbuilt(bool built, vector<int> &id){
     }
 }
 
+// Returns the MAX(rowid) from link
 unsigned int database::maxLid(){
     QSqlQuery query;
     query.exec("SELECT MAX(rowid) FROM link");
@@ -286,6 +315,7 @@ unsigned int database::maxLid(){
     return query.value("MAX(rowid)").toUInt();
 }
 
+// Adds a link to SQL server
 void database::addLink(int csid, int cid){
     QSqlQuery query;
     query.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
@@ -294,6 +324,7 @@ void database::addLink(int csid, int cid){
     query.exec();
 }
 
+// Returns true if link already exists
 bool database::isLink(int csid, int cid){
     QSqlQuery query;
     query.prepare("SELECT COUNT(*) FROM link WHERE csid = :csid AND cid = :cid");
@@ -302,11 +333,13 @@ bool database::isLink(int csid, int cid){
     query.exec();
     query.next();
     unsigned int count = query.value("COUNT(*)").toUInt();
-    if(count != 0)
+    if(count != 0){
         return true;
+    }
     return false;
 }
 
+// Returns a link based on inder 'val'
 void database::returnLink(unsigned int val, link &l){
     QSqlQuery query;
     query.prepare("SELECT * FROM link WHERE rowid = :id");
@@ -319,6 +352,7 @@ void database::returnLink(unsigned int val, link &l){
     l = temp;
 }
 
+// Stores all rowids from link in vector
 void database::returnLinks(vector<int> &l){
     QSqlQuery query;
     query.exec("SELECT rowid FROM link");
@@ -328,6 +362,7 @@ void database::returnLinks(vector<int> &l){
     }
 }
 
+// Updates the scientist id at rowid = val
 void database::updateCSlink(unsigned int val, unsigned int csid){
     QSqlQuery query;
     query.prepare("UPDATE link SET csid = :csid WHERE rowid = :id");
@@ -336,6 +371,7 @@ void database::updateCSlink(unsigned int val, unsigned int csid){
     query.exec();
 }
 
+// Updates the computer id at rowid = val
 void database::updateClink(unsigned int val, unsigned int cid){
     QSqlQuery query;
     query.prepare("UPDATE link SET cid = :cid WHERE rowid = :id");
@@ -344,6 +380,7 @@ void database::updateClink(unsigned int val, unsigned int cid){
     query.exec();
 }
 
+// Updates scientist name at id = val
 void database::updateCSname(unsigned int val, QString name){
     QSqlQuery query;
     query.prepare("UPDATE scientists SET name = :name WHERE id = :id");
@@ -352,6 +389,7 @@ void database::updateCSname(unsigned int val, QString name){
     query.exec();
 }
 
+// Returns the current gender of scientist at id = val
 bool database::returnCSgender(unsigned int val){
     QSqlQuery query;
     query.prepare("SELECT gender FROM scientists WHERE id = :id");
@@ -361,6 +399,7 @@ bool database::returnCSgender(unsigned int val){
     return query.value("gender").toBool();
 }
 
+// Updates scientist gender at id = val
 void database::updateCSgender(unsigned int val, bool gender){
     QSqlQuery query;
     query.prepare("UPDATE scientists SET gender = :gender WHERE id = :id");
@@ -369,6 +408,7 @@ void database::updateCSgender(unsigned int val, bool gender){
     query.exec();
 }
 
+// Return the current year of birth of scientist at id = val
 int database::returnCSyob(unsigned int val){
     QSqlQuery query;
     query.prepare("SELECT yob FROM scientists WHERE id = :id");
@@ -378,6 +418,7 @@ int database::returnCSyob(unsigned int val){
     return query.value("yob").toInt();
 }
 
+// Updates scientist year of birth at id = val
 void database::updateCSyob(unsigned int val, int yob){
     QSqlQuery query;
     query.prepare("UPDATE scientists SET yob = :yob WHERE id = :id");
@@ -386,6 +427,7 @@ void database::updateCSyob(unsigned int val, int yob){
     query.exec();
 }
 
+// Updates scientist year of death at id = val
 void database::updateCSyod(unsigned int val, int yod){
     QSqlQuery query;
     query.prepare("UPDATE scientists SET yod = :yod WHERE id = :id");
@@ -394,6 +436,7 @@ void database::updateCSyod(unsigned int val, int yod){
     query.exec();
 }
 
+// Updates computer name at id = val
 void database::updateCname(unsigned int val, QString name){
     QSqlQuery query;
     query.prepare("UPDATE computers SET name = :name WHERE id = :id");
@@ -402,6 +445,7 @@ void database::updateCname(unsigned int val, QString name){
     query.exec();
 }
 
+// Updates the computer build year at id = val
 void database::updateCyear(unsigned int val, int year){
     QSqlQuery query;
     query.prepare("UPDATE computers SET year = :year WHERE id = :id");
@@ -410,6 +454,7 @@ void database::updateCyear(unsigned int val, int year){
     query.exec();
 }
 
+// Updates the computer type at id = val
 void database::updateCtype(unsigned int val, QString type){
     QSqlQuery query;
     query.prepare("UPDATE computers SET type = :type WHERE id = :id");
@@ -418,6 +463,7 @@ void database::updateCtype(unsigned int val, QString type){
     query.exec();
 }
 
+// Returns current build status of computer at id = val
 bool database::returnCbuilt(unsigned int val){
     QSqlQuery query;
     query.prepare("SELECT built FROM computers WHERE id = :id");
@@ -427,6 +473,7 @@ bool database::returnCbuilt(unsigned int val){
     return query.value("built").toBool();
 }
 
+// Updates computer build status at id = val
 void database::updateCbuilt(unsigned int val, bool built){
     QSqlQuery query;
     query.prepare("UPDATE computers SET built = :built WHERE id = :id");
@@ -435,6 +482,7 @@ void database::updateCbuilt(unsigned int val, bool built){
     query.exec();
 }
 
+// Returns the MAX(id) from scientists
 unsigned int database::maxCSid(){
     QSqlQuery query;
     query.exec("SELECT MAX(id) FROM scientists");
@@ -442,6 +490,7 @@ unsigned int database::maxCSid(){
     return query.value("MAX(id)").toUInt();
 }
 
+// Gets the name and id of a scientist at position = step
 void database::getCSid(string &csname, unsigned int &csid, unsigned int step){
     QSqlQuery query;
     query.exec("SELECT id, name FROM scientists");
@@ -452,6 +501,7 @@ void database::getCSid(string &csname, unsigned int &csid, unsigned int step){
     csid = query.value("id").toUInt();
 }
 
+// Returns the COUNT(cid) from link
 unsigned int database::getCIDcount(unsigned int csid){
     QSqlQuery query;
     query.prepare("SELECT COUNT(cid) FROM link WHERE csid = :id");
@@ -461,6 +511,7 @@ unsigned int database::getCIDcount(unsigned int csid){
     return query.value("COUNT(cid)").toUInt();
 }
 
+// Gets the cid from link
 void database::getCidFromCSid(unsigned int csid, unsigned int &cid, unsigned int step){
     QSqlQuery query;
     query.prepare("SELECT cid FROM link WHERE csid = :id");
@@ -472,6 +523,7 @@ void database::getCidFromCSid(unsigned int csid, unsigned int &cid, unsigned int
     cid = query.value("cid").toUInt();
 }
 
+// Gets computer name from cid
 void database::getCnameFromCid(unsigned int cid, string &cname){
     QSqlQuery query;
     query.prepare("SELECT name FROM computers WHERE id = :id");
@@ -481,6 +533,7 @@ void database::getCnameFromCid(unsigned int cid, string &cname){
     cname = query.value("name").toString().toStdString();
 }
 
+// Returns the MAX(id) from computers
 unsigned int database::maxCid(){
     QSqlQuery query;
     query.exec("SELECT MAX(id) FROM computers");
@@ -488,6 +541,7 @@ unsigned int database::maxCid(){
     return query.value("MAX(id)").toUInt();
 }
 
+// Gets the name and id of a computer at position = step
 void database::getCid(string &cname, unsigned int &cid, unsigned int step){
     QSqlQuery query;
     query.exec("SELECT id, name FROM computers");
@@ -498,6 +552,7 @@ void database::getCid(string &cname, unsigned int &cid, unsigned int step){
     cid = query.value("id").toUInt();
 }
 
+// Returns the COUNT(csid) from link
 unsigned int database::getCSIDcount(unsigned int cid){
     QSqlQuery query;
     query.prepare("SELECT COUNT(csid) FROM link WHERE cid = :id");
@@ -507,6 +562,7 @@ unsigned int database::getCSIDcount(unsigned int cid){
     return query.value("COUNT(csid)").toUInt();
 }
 
+// Gets the csid from link
 void database::getCSidFromCid(unsigned int cid, unsigned int &csid, unsigned int step){
     QSqlQuery query;
     query.prepare("SELECT csid FROM link WHERE cid = :id");
@@ -518,6 +574,7 @@ void database::getCSidFromCid(unsigned int cid, unsigned int &csid, unsigned int
     csid = query.value("csid").toUInt();
 }
 
+// Gets scientist name from csid
 void database::getCSnameFromCSid(unsigned int csid, string &csname){
     QSqlQuery query;
     query.prepare("SELECT name FROM scientists WHERE id = :id");

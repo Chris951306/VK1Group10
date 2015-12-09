@@ -1,5 +1,7 @@
 #include "service.h"
 
+// For all functions, read comments in database.h/-.cpp as they are the same
+
 unsigned int service::returnCScount(){
     database db;
     return db.returnCScount();
