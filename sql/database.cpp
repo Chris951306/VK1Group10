@@ -69,10 +69,12 @@ void database::returnScientists(vector<scientist> &cs){
 // Sorts by name in direction determined by parsed bool
 void database::sortCSname(bool &namesort, vector<int> &cs){
     QSqlQuery query;
-    if(namesort)
+    if(namesort){
         query.exec("SELECT id FROM scientists ORDER BY name DESC");
-    else
+    }
+    else{
         query.exec("SELECT id FROM scientists ORDER BY name");
+    }
     while(query.next()){
         int id = query.value("id").toUInt();
         cs.push_back(id);
