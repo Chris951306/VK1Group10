@@ -66,6 +66,19 @@
      <string>Search in database</string>
     </property>
    </widget>
+   <widget class="QLabel" name="labelPic">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>30</y>
+      <width>541</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -73,7 +86,7 @@
      <x>0</x>
      <y>0</y>
      <width>892</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
