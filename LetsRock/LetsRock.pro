@@ -16,14 +16,20 @@ SOURCES += main.cpp\
         mainmenu.cpp \
     cswindow.cpp \
     cwindow.cpp \
-    lwindow.cpp
+    lwindow.cpp \
+    addcs.cpp \
+    addc.cpp
 
 HEADERS  += mainmenu.h \
     cswindow.h \
     cwindow.h \
-    lwindow.h
+    lwindow.h \
+    addcs.h \
+    addc.h
 
 FORMS    += mainmenu.ui \
     cswindow.ui \
     cwindow.ui \
-    lwindow.ui
+    lwindow.ui \
+    addcs.ui \
+    addc.ui

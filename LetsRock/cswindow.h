@@ -16,7 +16,10 @@ public:
     ~CSWindow();
 
 private slots:
-    void on_pushMenuButton_clicked();
+
+    void on_CSMenuButton_clicked();
+
+    void on_AddCSButton_clicked();
 
 private:
     Ui::CSWindow *ui;

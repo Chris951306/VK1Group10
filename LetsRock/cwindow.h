@@ -15,6 +15,9 @@ public:
     explicit cwindow(QWidget *parent = 0);
     ~cwindow();
 
+private slots:
+    void on_AddCButton_clicked();
+
 private:
     Ui::cwindow *ui;
 };

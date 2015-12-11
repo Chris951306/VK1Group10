@@ -1,5 +1,6 @@
 #include "cwindow.h"
 #include "ui_cwindow.h"
+#include "addc.h"
 
 cwindow::cwindow(QWidget *parent) :
     QDialog(parent),
@@ -11,4 +12,11 @@ cwindow::cwindow(QWidget *parent) :
 cwindow::~cwindow()
 {
     delete ui;
+}
+
+void cwindow::on_AddCButton_clicked()
+{
+    AddC add;
+    add.setModal(true);
+    add.exec();
 }

@@ -20,23 +20,18 @@ MainMenu::~MainMenu(){
 }
 
 void MainMenu::on_pushCSbutton_clicked(){
-    this->hide();
     CSWindow cs;
     cs.setModal(true);
     cs.exec();
 }
 
-void MainMenu::on_pushCButton_clicked()
-{
-    this->hide();
+void MainMenu::on_pushCButton_clicked(){
     cwindow c;
     c.setModal(true);
     c.exec();
 }
 
-void MainMenu::on_pushLButton_clicked()
-{
-    this->hide();
+void MainMenu::on_pushLButton_clicked(){
     LWindow l;
     l.setModal(true);
     l.exec();
