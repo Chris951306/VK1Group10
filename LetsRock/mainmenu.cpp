@@ -36,3 +36,4 @@ void MainMenu::on_pushLButton_clicked(){
     l.setModal(true);
     l.exec();
 }
+æ

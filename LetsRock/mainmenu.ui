@@ -14,19 +14,6 @@
    <string>MainMenu</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="eg">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>10</y>
-      <width>391</width>
-      <height>181</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
