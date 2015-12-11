@@ -4,7 +4,7 @@ and year of death (if it applies). User can input these information about a scie
 get all the data displayed, sort it and also delete if needed.
 
 #Authors
-* Christian Jenkins Jacobsen
+* Christian Andreas Jacobsen
 * Hekla Rún Ámundadóttir
 * Kristín Vala Einarsdóttir 
 * Þórmundur Smári Hilmarsson
