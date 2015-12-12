@@ -1,16 +1,15 @@
-#ifndef SERVICE_H
-#define SERVICE_H
-#include "database.h"
+#ifndef DATABASE_H
+#define DATABASE_H
 #include <iostream>
+#include <QtSql>
 
-class service
-{
+class database{
 public:
     void start();
     QSqlQuery returnCSquery();
     QSqlQuery returnCquery();
 private:
-    database db;
+    QSqlDatabase db;
 };
 
-#endif // SERVICE_H
+#endif // DATABASE_H

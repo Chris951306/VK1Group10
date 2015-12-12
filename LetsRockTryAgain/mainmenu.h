@@ -1,5 +1,7 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
+#include "service.h"
+#include "add.h"
 
 #include <QMainWindow>
 
@@ -20,6 +22,10 @@ public:
 
 private slots:
     void on_pushAddButton_clicked();
+
+    void on_radioButton_toggled(bool checked);
+
+    void on_radioButton_2_toggled(bool checked);
 
 private:
     Ui::MainMenu *ui;
