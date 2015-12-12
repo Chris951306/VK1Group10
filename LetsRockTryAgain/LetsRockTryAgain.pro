@@ -14,10 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainmenu.cpp \
-    add.cpp
+    add.cpp \
+    database_scientists.cpp \
+    service.cpp
 
 HEADERS  += mainmenu.h \
-    add.h
+    add.h \
+    database_scientists.h \
+    service.h
 
 FORMS    += mainmenu.ui \
     add.ui
