@@ -1,8 +1,8 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 #include "service.h"
-#include "add.h"
-
+#include "addcs.h"
+#include "addc.h"
 #include <QMainWindow>
 
 namespace Ui {

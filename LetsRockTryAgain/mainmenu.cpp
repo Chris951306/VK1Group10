@@ -13,13 +13,22 @@ MainMenu::~MainMenu(){
 }
 
 void MainMenu::on_pushAddButton_clicked(){
-    Add a;
-    a.setModal(true);
-    a.exec();
+    if(ui->radioButton->isChecked()){
+        AddCS cs;
+        cs.setModal(true);
+        cs.exec();
+    }
+    else if(ui->radioButton_2->isChecked()){
+        AddC c;
+        c.setModal(true);
+        c.exec();
+    }
 }
 
 void MainMenu::on_radioButton_toggled(bool checked){
     service s;
+    ui->pushAddButton->setEnabled(true);
+    ui->pushAddButton->setText("Add Scientist");
     if(checked){
         QSqlQueryModel * modal=new QSqlQueryModel();
         modal->setQuery(s.returnCSquery());
@@ -31,6 +40,8 @@ void MainMenu::on_radioButton_toggled(bool checked){
 
 void MainMenu::on_radioButton_2_toggled(bool checked){
     service s;
+    ui->pushAddButton->setEnabled(true);
+    ui->pushAddButton->setText("Add Computer");
     if(checked){
         QSqlQueryModel * modal=new QSqlQueryModel();
         modal->setQuery(s.returnCquery());

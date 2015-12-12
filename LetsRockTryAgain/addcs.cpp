@@ -1,0 +1,92 @@
+#include "addcs.h"
+#include "ui_addcs.h"
+
+
+AddCS::AddCS(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::AddCS){
+    ui->setupUi(this);
+    setMaxYear();
+}
+
+AddCS::~AddCS(){
+delete ui;
+}
+
+void AddCS::setMaxYear(){
+    QDate today = QDate::currentDate();
+    int year = today.year();
+    ui->input_cs_yob->setMaximum(year);
+    ui->input_cs_yod->setMaximum(year);
+}
+
+bool AddCS::checkName(QString &name){
+    if(name.isEmpty()){// If the input string is empy, user is told to input at least(!) something
+        ui->error_cs_name->setText("<span style ='color: red'>Input a name!</span>");
+        return false;
+    }
+    for(int i = 0; i < name.size(); i++){
+        if((name[i].isLower() && i == 0) || (name[i].isLower() && name[i-1] == ' ')){// If first charachter is lower or first character after a space is lower, change the letter to capital
+            name[i] = name[i].toUpper();
+        }
+        else if((name[i] == ' ' && name[i+1] == ' ') || (name[i] == ' ' && i == 0)){// If there are two spaces after each other or the string begins with one or more spaces, remove a space
+            name.remove(i, 1);
+            i--;
+        }
+        else if(!name[i].isLetterOrNumber() && name[i] != '\'' && name[i] != ',' && name[i] != '.' && name[i] != '-' && name[i] != ' '){// If the current character is not a letter nor a number or any of the legal symbols, make user input a new, valid, string
+            ui->error_cs_name->setText("<span style ='color: red'>Name contains invalid symbols!</span>");
+            return false;
+        }
+    }
+    ui->error_cs_name->setText("");
+    return true;
+}
+
+void AddCS::on_input_cs_alive_toggled(bool checked){
+    if(checked){
+        ui->input_cs_yod->setEnabled(false);
+    }
+    else{
+        ui->input_cs_yod->setEnabled(true);
+    }
+}
+
+void AddCS::on_button_cs_add_clicked(){
+    service s;
+    bool ok1 = false;
+    bool ok2 = true;
+    bool ok3 = false;
+    QString name = ui->input_cs_name->text();
+    ok1 = checkName(name);
+    QString gender = ui->input_cs_gender->currentText();
+    if(gender.isEmpty()){
+        ui->error_cs_gender->setText("<span style ='color: red'>Choose a gender!</span>");
+        ok2 = false;
+    }
+    else{
+        ui->error_cs_gender->setText("");
+        ok2 = true;
+    }
+    QString yob = QString::number(ui->input_cs_yob->value());
+    QString yod = QString::number(ui->input_cs_yod->value());
+    if(ui->input_cs_alive->isChecked()){
+        yod = "Alive";
+        ui->error_cs_yod->setText("");
+        ok3 = true;
+    }
+    else{
+        if(ui->input_cs_yob->value() > ui->input_cs_yod->value()){
+            ui->error_cs_yod->setText("<span style ='color: red'>Can't be dead before date of birth!</span>");
+            ok3 = false;
+        }
+        else{
+            ui->error_cs_yod->setText("");
+            ok3 = true;
+        }
+    }
+    if(ok1 && ok2 && ok3){
+        s.addScientist(name, gender, yob, yod);
+        qDebug() << "Scientist added!";
+        this->hide();
+    }
+}
