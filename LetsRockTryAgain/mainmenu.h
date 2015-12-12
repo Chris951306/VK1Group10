@@ -7,13 +7,19 @@ namespace Ui {
 class MainMenu;
 }
 
-class MainMenu : public QMainWindow
-{
+class MainMenu : public QMainWindow{
     Q_OBJECT
 
+
 public:
+    void connClose();
+    bool connOpen();
+
     explicit MainMenu(QWidget *parent = 0);
     ~MainMenu();
+
+private slots:
+    void on_pushAddButton_clicked();
 
 private:
     Ui::MainMenu *ui;
