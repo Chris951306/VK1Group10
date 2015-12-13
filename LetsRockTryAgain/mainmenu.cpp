@@ -27,14 +27,16 @@ void MainMenu::on_pushAddButton_clicked(){
 
 void MainMenu::on_radioButton_toggled(bool checked){
     service s;
+    std::vector<scientist> scientists;
+    s.getAllScientists(scientists);
     ui->pushAddButton->setEnabled(true);
     ui->pushAddButton->setText("Add Scientist");
+    ui->pushEditButton->setText("Edit Scientist");
     if(checked){
-        QSqlQueryModel * modal=new QSqlQueryModel();
-        modal->setQuery(s.returnCSquery());
-        ui->tableView->setModel(modal);
-        qDebug() << (modal->rowCount());
-
+        //displayScientists(scientists);
+        for(int i = 0; i < scientists.size(); i++){
+            qDebug() << (scientists[i].getName());
+        }
     }
 }
 
@@ -42,11 +44,11 @@ void MainMenu::on_radioButton_2_toggled(bool checked){
     service s;
     ui->pushAddButton->setEnabled(true);
     ui->pushAddButton->setText("Add Computer");
+    ui->pushEditButton->setText("Edit Computer");
     if(checked){
         QSqlQueryModel * modal=new QSqlQueryModel();
-        modal->setQuery(s.returnCquery());
-        ui->tableView->setModel(modal);
+        //modal->setQuery(s.returnCquery());
+        //ui->tableWidget->setModel(modal);
         qDebug() << (modal->rowCount());
-
     }
 }

@@ -85,7 +85,8 @@ void AddCS::on_button_cs_add_clicked(){
         }
     }
     if(ok1 && ok2 && ok3){
-        s.addScientist(name, gender, yob, yod);
+        scientist temp(-1, name, gender, yob, yod);
+        s.addScientist(temp);
         qDebug() << "Scientist added!";
         this->hide();
     }

@@ -17,13 +17,17 @@ SOURCES += main.cpp\
     service.cpp \
     database.cpp \
     addcs.cpp \
-    addc.cpp
+    addc.cpp \
+    scientist.cpp \
+    computer.cpp
 
 HEADERS  += mainmenu.h \
     service.h \
     database.h \
     addcs.h \
-    addc.h
+    addc.h \
+    scientist.h \
+    computer.h
 
 FORMS    += mainmenu.ui \
     addcs.ui \

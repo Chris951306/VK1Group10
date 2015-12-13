@@ -4,18 +4,14 @@ void service::start(){
     db.start();
 }
 
-QSqlQuery service::returnCSquery(){
-    return db.returnCSquery();
+void service::addScientist(scientist s){
+    db.addScientist(s);
 }
 
-QSqlQuery service::returnCquery(){
-    return db.returnCquery();
+void service::addComputer(computer c){
+    db.addComputer(c);
 }
 
-void service::addScientist(QString name, QString gender, QString yob, QString yod){
-    db.addScientist(name, gender, yob, yod);
-}
-
-void service::addComputer(QString name, QString year, QString type, QString build){
-    db.addComputer(name, year, type, build);
+void service::getAllScientists(std::vector<scientist>& scientists){
+    db.getAllScientists(scientists);
 }

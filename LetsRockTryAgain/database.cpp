@@ -6,35 +6,36 @@ void database::start(){
     db.open();
 }
 
-QSqlQuery database::returnCSquery(){
-    QSqlQuery* qry=new QSqlQuery(db);
-    qry->prepare("SELECT Name, Gender, Birthyear, Deathyear FROM scientists");
-    qry->exec();
-    return *qry;
-}
-
-QSqlQuery database::returnCquery(){
-    QSqlQuery* qry=new QSqlQuery(db);
-    qry->prepare("SELECT * FROM computers");
-    qry->exec();
-    return *qry;
-}
-void database::addScientist(QString name, QString gender, QString yob, QString yod){
+void database::addScientist(scientist s){
     QSqlQuery qry;
     qry.prepare("INSERT INTO scientists (Name, Gender, Birthyear, Deathyear) VALUES (:name, :gender, :yob, :yod)");
-    qry.bindValue(":name", name);
-    qry.bindValue(":gender", gender);
-    qry.bindValue(":yob", yob);
-    qry.bindValue(":yod", yod);
+    qry.bindValue(":name", s.getName());
+    qry.bindValue(":gender", s.getGender());
+    qry.bindValue(":yob", s.getYob());
+    qry.bindValue(":yod", s.getYod());
     qry.exec();
 }
 
-void database::addComputer(QString name, QString year, QString type, QString build){
+void database::addComputer(computer c){
     QSqlQuery qry;
     qry.prepare("INSERT INTO computers (Name, Year, Type, Buildstatus) VALUES (:name, :year, :type, :build)");
-    qry.bindValue(":name", name);
-    qry.bindValue(":year", year);
-    qry.bindValue(":type", type);
-    qry.bindValue(":build", build);
+    qry.bindValue(":name", c.getName());
+    qry.bindValue(":year", c.getYear());
+    qry.bindValue(":type", c.getType());
+    qry.bindValue(":build", c.getBuilt());
     qry.exec();
+}
+
+void database::getAllScientists(std::vector<scientist>& scientists){
+    QSqlQuery qry;
+    qry.exec("SELECT * FROM scientists");
+    while(qry.next()){
+        int id = qry.value("id").toInt();
+        QString name = qry.value("Name").toString();
+        QString gender = qry.value("Gender").toString();
+        QString yob = qry.value("Birthyear").toString();
+        QString yod = qry.value("Deathyear").toString();
+        scientist temp(id, name, gender, yob, yod);
+        scientists.push_back(temp);
+    }
 }

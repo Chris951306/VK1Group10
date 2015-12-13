@@ -67,7 +67,8 @@ void AddC::on_button_c_add_clicked(){
     }
 
     if(ok1 && ok2 && ok3){
-        s.addComputer(name, year, type, build);
+        computer temp(-1, name, year, type, build);
+        s.addComputer(temp);
         qDebug() << "Computer added!";
         this->hide();
     }
