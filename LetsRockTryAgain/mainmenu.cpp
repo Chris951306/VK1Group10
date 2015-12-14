@@ -1,5 +1,6 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
+#include <QMessageBox>
 
 void MainMenu::displayComputers(std::vector<computer> computers){
     ui->tableWidget->setSortingEnabled(false);
@@ -74,21 +75,14 @@ void MainMenu::displayLinks(std::vector<link> links){
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
     ui->tableWidget->setHorizontalHeaderLabels(QString(" ;Scientist linked to ->; ;Computer").split(";"));
 
-    vector<scientist> scientists;
-    s.getAllScientists(scientists);
-    vector<computer> computers;
-    s.getAllComputers(computers);
-
     for(unsigned int i = 0; i < links.size(); i++){
         link currentLink = links[i];
         int csid = currentLink.returnCSID();
         int cid = currentLink.returnCID();
-        scientist currentScientist = scientists[csid-1];
-        computer currentComputer = computers[cid-1];
         QString csID = QString::number(csid);
-        QString csName = currentScientist.getName();
+        QString csName = s.getCSName(csid);
         QString cID = QString::number(cid);
-        QString cName = currentComputer.getName();
+        QString cName = s.getCName(cid);
 
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(csID));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(csName));
@@ -205,18 +199,27 @@ void MainMenu::on_pushDeleteButton_clicked(){
     if(ui->radioButton->isChecked()){
         QModelIndex currentIndex = ui->tableWidget->currentIndex();
         int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
-        qDebug() << ("Deleted scientist with id: ") << id;
+        int answer = QMessageBox::question(this, "Confirm", "Are you sure?");
+        if (answer != QMessageBox::No){
+            s.deleteScientist(id);
+        }
     }
     else if(ui->radioButton_2->isChecked()){
         QModelIndex currentIndex = ui->tableWidget->currentIndex();
         int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
-        qDebug() << ("Deleted computer with id: ") << id;
+        int answer = QMessageBox::question(this, "Confirm", "Are you sure?");
+        if (answer != QMessageBox::No){
+            s.deleteComputer(id);
+        }
     }
     else if(ui->radioButton_3->isChecked()){
         QModelIndex currentIndex = ui->tableWidget->currentIndex();
         int csid = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
         int cid = ui->tableWidget->item(currentIndex.row(), 2)->text().toInt();
-        s.deleteLink(csid, cid);
+        int answer = QMessageBox::question(this, "Confirm", "Are you sure?");
+        if (answer != QMessageBox::No){
+            s.deleteLink(csid, cid);
+        }
     }
 }
 
