@@ -19,7 +19,12 @@ SOURCES += main.cpp\
     addcs.cpp \
     addc.cpp \
     scientist.cpp \
-    computer.cpp
+    computer.cpp \
+    link.cpp \
+    addl.cpp \
+    deletecs.cpp \
+    deletec.cpp \
+    deletel.cpp
 
 HEADERS  += mainmenu.h \
     service.h \
@@ -27,8 +32,17 @@ HEADERS  += mainmenu.h \
     addcs.h \
     addc.h \
     scientist.h \
-    computer.h
+    computer.h \
+    link.h \
+    addl.h \
+    deletecs.h \
+    deletec.h \
+    deletel.h
 
 FORMS    += mainmenu.ui \
     addcs.ui \
-    addc.ui
+    addc.ui \
+    addl.ui \
+    deletecs.ui \
+    deletec.ui \
+    deletel.ui

@@ -14,7 +14,7 @@ class AddC : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddC(QWidget *parent = 0);
+    explicit AddC(int n, QWidget *parent = 0);
     ~AddC();
     void setMaxYear();
     bool checkName(QString &name);
@@ -24,6 +24,8 @@ private slots:
 
 private:
     Ui::AddC *ui;
+    service s;
+    int id;
 };
 
 #endif // ADDC_H

@@ -16,6 +16,17 @@ void database::addScientist(scientist s){
     qry.exec();
 }
 
+void database::editScientist(scientist s){
+    QSqlQuery qry;
+    qry.prepare("UPDATE scientists set Name = :name, Gender = :gender, Birthyear = :yob, Deathyear = yod WHERE id = :id");
+    qry.bindValue(":id", s.getId());
+    qry.bindValue(":name", s.getName());
+    qry.bindValue(":gender", s.getGender());
+    qry.bindValue(":yob", s.getYob());
+    qry.bindValue(":yod", s.getYod());
+    qry.exec();
+}
+
 void database::addComputer(computer c){
     QSqlQuery qry;
     qry.prepare("INSERT INTO computers (Name, Year, Type, Buildstatus) VALUES (:name, :year, :type, :build)");
@@ -24,6 +35,26 @@ void database::addComputer(computer c){
     qry.bindValue(":type", c.getType());
     qry.bindValue(":build", c.getBuilt());
     qry.exec();
+}
+
+void database::editComputer(computer c){
+    QSqlQuery qry;
+    qry.prepare("UPDATE scientists set Name = :name, Year = :year, Type = :type, Buildstatus = :build WHERE id = :id");
+    qry.bindValue(":id", c.getId());
+    qry.bindValue(":year", c.getYear());
+    qry.bindValue(":type", c.getType());
+    qry.bindValue(":name", c.getName());
+    qry.bindValue(":build", c.getBuilt());
+    qry.exec();
+}
+
+// Adds a link to SQL server
+void database::addLink(int csid, int cid){
+    QSqlQuery query;
+    query.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
+    query.bindValue(":csid", csid);
+    query.bindValue(":cid", cid);
+    query.exec();
 }
 
 void database::getAllScientists(std::vector<scientist>& scientists){
@@ -53,6 +84,18 @@ void database::getAllComputers(std::vector<computer>& computers){
         computers.push_back(temp);
     }
 }
+
+void database::getAllLinks(std::vector<link> &links){
+    QSqlQuery qry;
+    qry.exec("SELECT * FROM link");
+    while(qry.next()){
+        int csid = qry.value("csid").toInt();
+        int cid = qry.value("cid").toInt();
+        link temp(csid, cid);
+        links.push_back(temp);
+    }
+}
+
 
 void database::searchScientist(std::vector<scientist>& scientists, QString string){
     QSqlQuery qry;
@@ -90,4 +133,44 @@ void database::searchComputer(std::vector<computer>& computers, QString string){
         computer temp(id, name, year, type, built);
         computers.push_back(temp);
     }
+}
+
+// Returns true if link already exists
+bool database::isLink(int csid, int cid){
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM link WHERE csid = :csid AND cid = :cid");
+    query.bindValue(":csid", csid);
+    query.bindValue(":cid", cid);
+    query.exec();
+    query.next();
+    unsigned int count = query.value("COUNT(*)").toUInt();
+    if(count != 0){
+        return true;
+    }
+    return false;
+}
+
+int database::countScientists(){
+    std::vector<scientist> scientists;
+    getAllScientists(scientists);
+    return scientists.size();
+}
+
+int database::countComputers(){
+    std::vector<computer> computers;
+    getAllComputers(computers);
+    return computers.size();
+}
+
+int database::countLinks(){
+    std::vector<link> links;
+    getAllLinks(links);
+    return links.size();
+}
+
+void database::deleteLink(int lid){
+    QSqlQuery qry;
+    qry.prepare("Delete from link where rowid = :rowid");
+    qry.bindValue(":rowid", lid);
+    qry.exec();
 }

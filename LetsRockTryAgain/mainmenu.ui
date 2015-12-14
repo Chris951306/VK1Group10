@@ -24,14 +24,21 @@
        <item>
         <widget class="QRadioButton" name="radioButton">
          <property name="text">
-          <string>CS</string>
+          <string>Scientists</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QRadioButton" name="radioButton_2">
          <property name="text">
-          <string>C</string>
+          <string>Computers</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_3">
+         <property name="text">
+          <string>Links</string>
          </property>
         </widget>
        </item>
@@ -75,7 +82,10 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QPushButton" name="pushAddButton">
         <property name="enabled">
@@ -86,17 +96,27 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="pushEditButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Edit in Database</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushDeleteButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Delete in Database</string>
+        </property>
+       </widget>
+      </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushEditButton">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Edit</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
