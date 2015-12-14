@@ -4,9 +4,6 @@
 #include "addcs.h"
 #include "addc.h"
 #include "addl.h"
-#include "deletecs.h"
-#include "deletec.h"
-#include "deletel.h"
 #include <QMainWindow>
 #include <QModelIndex>
 

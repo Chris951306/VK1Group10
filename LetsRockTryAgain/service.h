@@ -18,8 +18,7 @@ public:
     bool isLink(int csid, int cid);
     int countScientists();
     int countComputers();
-    int countLinks();
-    void deleteLink(int lid);
+    void deleteLink(int csid, int cid);
 private:
     database db;
 };

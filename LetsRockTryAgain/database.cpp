@@ -18,7 +18,7 @@ void database::addScientist(scientist s){
 
 void database::editScientist(scientist s){
     QSqlQuery qry;
-    qry.prepare("UPDATE scientists set Name = :name, Gender = :gender, Birthyear = :yob, Deathyear = yod WHERE id = :id");
+    qry.prepare("UPDATE scientists SET Name = :name, Gender = :gender, Birthyear = :yob, Deathyear = :yod WHERE id = :id");
     qry.bindValue(":id", s.getId());
     qry.bindValue(":name", s.getName());
     qry.bindValue(":gender", s.getGender());
@@ -39,7 +39,7 @@ void database::addComputer(computer c){
 
 void database::editComputer(computer c){
     QSqlQuery qry;
-    qry.prepare("UPDATE scientists set Name = :name, Year = :year, Type = :type, Buildstatus = :build WHERE id = :id");
+    qry.prepare("UPDATE scientists SET Name = :name, Year = :year, Type = :type, Buildstatus = :build WHERE id = :id");
     qry.bindValue(":id", c.getId());
     qry.bindValue(":year", c.getYear());
     qry.bindValue(":type", c.getType());
@@ -151,26 +151,24 @@ bool database::isLink(int csid, int cid){
 }
 
 int database::countScientists(){
-    std::vector<scientist> scientists;
-    getAllScientists(scientists);
-    return scientists.size();
+    QSqlQuery qry;
+    qry.exec("SELECT COUNT(id) FROM scientists");
+    qry.next();
+    return qry.value("COUNT(id)").toInt();
 }
 
 int database::countComputers(){
-    std::vector<computer> computers;
-    getAllComputers(computers);
-    return computers.size();
-}
-
-int database::countLinks(){
-    std::vector<link> links;
-    getAllLinks(links);
-    return links.size();
-}
-
-void database::deleteLink(int lid){
     QSqlQuery qry;
-    qry.prepare("Delete from link where rowid = :rowid");
-    qry.bindValue(":rowid", lid);
+    qry.exec("SELECT COUNT(id) FROM computers");
+    qry.next();
+    return qry.value("COUNT(id)").toInt();
+}
+
+void database::deleteLink(int csid, int cid){
+    QSqlQuery qry;
+    qDebug() << csid << " " << cid;
+    qry.prepare("DELETE FROM link WHERE csid = :csid AND cid = :cid");
+    qry.bindValue(":csid", csid);
+    qry.bindValue(":cid", cid);
     qry.exec();
 }

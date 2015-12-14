@@ -22,6 +22,7 @@ private slots:
 
 private:
     Ui::addl *ui;
+    service s;
 };
 
 #endif // ADDL_H

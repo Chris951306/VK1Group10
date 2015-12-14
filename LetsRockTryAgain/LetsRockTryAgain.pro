@@ -21,10 +21,7 @@ SOURCES += main.cpp\
     scientist.cpp \
     computer.cpp \
     link.cpp \
-    addl.cpp \
-    deletecs.cpp \
-    deletec.cpp \
-    deletel.cpp
+    addl.cpp
 
 HEADERS  += mainmenu.h \
     service.h \
@@ -34,15 +31,9 @@ HEADERS  += mainmenu.h \
     scientist.h \
     computer.h \
     link.h \
-    addl.h \
-    deletecs.h \
-    deletec.h \
-    deletel.h
+    addl.h
 
 FORMS    += mainmenu.ui \
     addcs.ui \
     addc.ui \
-    addl.ui \
-    deletecs.ui \
-    deletec.ui \
-    deletel.ui
+    addl.ui

@@ -52,26 +52,22 @@ void addl::displayScientists(std::vector<scientist> scientists){
 
         QString name = currentScientist.getName();
 
-
         ui->tableWidget_2->setItem(i, 0, new QTableWidgetItem(name));
     }
 }
 
 void addl::on_pushButton_clicked(){
-    service s;
-    bool legal = true;
-    QString csidInString = ui->linecsid->text();
-    QString cidInString = ui->linecid->text();
-    int csid = csidInString.toInt();
-    int cid = cidInString.toInt();
+    bool exist = false;
+    int csid = ui->linecsid->text().toInt();
+    int cid = ui->linecid->text().toInt();
     int maxcs = s.countScientists();
     int maxc = s.countComputers();
 
-    if(csid > 0 && csid < maxcs+1 && cid > 0 && cid < maxc+1){
-        legal = s.isLink(csid, cid);
-    }
-    if(!legal){
-        s.addLink(csid,cid);
-        this->hide();
+    if(csid > 0 && csid <= maxcs && cid > 0 && cid <= maxc){
+        exist = s.isLink(csid, cid);
+        if(!exist){
+            s.addLink(csid,cid);
+            this->hide();
+        }
     }
 }

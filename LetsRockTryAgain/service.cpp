@@ -56,10 +56,6 @@ int service::countComputers(){
     return db.countComputers();
 }
 
-int service::countLinks(){
-    return db.countLinks();
-}
-
-void service::deleteLink(int lid){
-    db.deleteLink(lid);
+void service::deleteLink(int csid, int cid){
+    db.deleteLink(csid, cid);
 }
