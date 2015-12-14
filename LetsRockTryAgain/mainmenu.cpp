@@ -241,3 +241,9 @@ void MainMenu::on_tableWidget_clicked(const QModelIndex &index){
     ui->pushEditButton->setEnabled(true);
     ui->pushDeleteButton->setEnabled(true);
 }
+
+void MainMenu::on_button_snoop_clicked(){
+    snoop dogg;
+    dogg.setModal(true);
+    dogg.exec();
+}

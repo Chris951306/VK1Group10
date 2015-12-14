@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     scientist.cpp \
     computer.cpp \
     link.cpp \
-    addl.cpp
+    addl.cpp \
+    snoop.cpp
 
 HEADERS  += mainmenu.h \
     service.h \
@@ -31,9 +32,11 @@ HEADERS  += mainmenu.h \
     scientist.h \
     computer.h \
     link.h \
-    addl.h
+    addl.h \
+    snoop.h
 
 FORMS    += mainmenu.ui \
     addcs.ui \
     addc.ui \
-    addl.ui
+    addl.ui \
+    snoop.ui

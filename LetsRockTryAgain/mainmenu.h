@@ -4,6 +4,7 @@
 #include "addcs.h"
 #include "addc.h"
 #include "addl.h"
+#include "snoop.h"
 #include <QMainWindow>
 #include <QModelIndex>
 
@@ -40,6 +41,8 @@ private slots:
     void on_pushEditButton_clicked();
 
     void on_tableWidget_clicked(const QModelIndex &index);
+
+    void on_button_snoop_clicked();
 
 private:
     Ui::MainMenu *ui;

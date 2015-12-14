@@ -130,6 +130,13 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QPushButton" name="button_snoop">
+      <property name="text">
+       <string>Snoop it!</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
