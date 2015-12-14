@@ -19,3 +19,11 @@ void service::getAllScientists(std::vector<scientist>& scientists){
 void service::getAllComputers(std::vector<computer>& computers){
     db.getAllComputers(computers);
 }
+
+void service::searchScientist(std::vector<scientist> &scientists, QString string){
+    db.searchScientist(scientists, string);
+}
+
+void service::searchComputer(std::vector<computer> &computers, QString string){
+    db.searchComputer(computers, string);
+}

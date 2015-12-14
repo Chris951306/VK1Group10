@@ -28,7 +28,7 @@ private slots:
 
     void on_radioButton_2_toggled(bool checked);
 
-    void on_lineEdit_textChanged(const QString &arg1);
+    void on_searchDatabase_textChanged(const QString &arg1);
 
 private:
     Ui::MainMenu *ui;
