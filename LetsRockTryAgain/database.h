@@ -23,7 +23,11 @@ public:
     bool isLink(int csid, int cid);
     int countScientists();
     int countComputers();
+    void deleteScientist(int id);
+    void deleteComputer(int id);
     void deleteLink(int csid, int cid);
+    QString getCSName(int csid);
+    QString getCName(int cid);
 private:
     QSqlDatabase db;
 };

@@ -164,11 +164,48 @@ int database::countComputers(){
     return qry.value("COUNT(id)").toInt();
 }
 
+void database::deleteScientist(int id){
+    QSqlQuery qry;
+    qry.prepare("DELETE FROM scientists WHERE id = :id");
+    qry.bindValue(":id", id);
+    qry.exec();
+    qry.prepare("DELETE FROM link WHERE csid = :id");
+    qry.bindValue(":id", id);
+    qry.exec();
+}
+
+void database::deleteComputer(int id){
+    QSqlQuery qry;
+    qry.prepare("DELETE FROM computers WHERE id = :id");
+    qry.bindValue(":id", id);
+    qry.exec();
+    qry.prepare("DELETE FROM link WHERE cid = :id");
+    qry.bindValue(":id", id);
+    qry.exec();
+}
+
 void database::deleteLink(int csid, int cid){
     QSqlQuery qry;
-    qDebug() << csid << " " << cid;
     qry.prepare("DELETE FROM link WHERE csid = :csid AND cid = :cid");
     qry.bindValue(":csid", csid);
     qry.bindValue(":cid", cid);
     qry.exec();
+}
+
+QString database::getCSName(int csid){
+    QSqlQuery qry;
+    qry.prepare("SELECT Name FROM scientists WHERE id = :id");
+    qry.bindValue(":id", csid);
+    qry.exec();
+    qry.next();
+    return qry.value("Name").toString();
+}
+
+QString database::getCName(int cid){
+    QSqlQuery qry;
+    qry.prepare("SELECT Name FROM computers WHERE id = :id");
+    qry.bindValue(":id", cid);
+    qry.exec();
+    qry.next();
+    return qry.value("Name").toString();
 }

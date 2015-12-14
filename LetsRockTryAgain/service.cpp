@@ -56,6 +56,22 @@ int service::countComputers(){
     return db.countComputers();
 }
 
+void service::deleteScientist(int id){
+    db.deleteScientist(id);
+}
+
+void service::deleteComputer(int id){
+    db.deleteComputer(id);
+}
+
 void service::deleteLink(int csid, int cid){
     db.deleteLink(csid, cid);
+}
+
+QString service::getCSName(int csid){
+    return db.getCSName(csid);
+}
+
+QString service::getCName(int cid){
+    return db.getCName(cid);
 }
