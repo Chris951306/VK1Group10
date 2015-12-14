@@ -16,7 +16,8 @@ class MainMenu : public QMainWindow{
 public:
     void connClose();
     bool connOpen();
-
+    void displayComputers(std::vector<computer> computers);
+    void displayScientists(std::vector<scientist> scientists);
     explicit MainMenu(QWidget *parent = 0);
     ~MainMenu();
 
@@ -27,8 +28,11 @@ private slots:
 
     void on_radioButton_2_toggled(bool checked);
 
+    void on_lineEdit_textChanged(const QString &arg1);
+
 private:
     Ui::MainMenu *ui;
+    service s;
 };
 
 #endif // MAINMENU_H

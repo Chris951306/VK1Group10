@@ -39,3 +39,17 @@ void database::getAllScientists(std::vector<scientist>& scientists){
         scientists.push_back(temp);
     }
 }
+
+void database::getAllComputers(std::vector<computer>& computers){
+    QSqlQuery qry;
+    qry.exec("SELECT * FROM computers");
+    while(qry.next()){
+        int id = qry.value("id").toInt();
+        QString name = qry.value("Name").toString();
+        QString year = qry.value("Year").toString();
+        QString type = qry.value("Type").toString();
+        QString built = qry.value("Buildstatus").toString();
+        computer temp(id, name, year, type, built);
+        computers.push_back(temp);
+    }
+}

@@ -15,3 +15,7 @@ void service::addComputer(computer c){
 void service::getAllScientists(std::vector<scientist>& scientists){
     db.getAllScientists(scientists);
 }
+
+void service::getAllComputers(std::vector<computer>& computers){
+    db.getAllComputers(computers);
+}
