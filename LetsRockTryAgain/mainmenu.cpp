@@ -2,7 +2,7 @@
 #include "ui_mainmenu.h"
 #include <QMessageBox>
 
-
+//Add all computers in table widget
 void MainMenu::displayComputers(std::vector<computer> computers){
     ui->tableWidget->setSortingEnabled(false);
     ui->tableWidget->setRowCount(computers.size());
@@ -34,6 +34,7 @@ void MainMenu::displayComputers(std::vector<computer> computers){
     ui->tableWidget->setSortingEnabled(true);
 }
 
+//Add all scientist in table widget
 void MainMenu::displayScientists(std::vector<scientist> scientists){
     ui->tableWidget->setSortingEnabled(false);
     ui->tableWidget->setRowCount(scientists.size());
@@ -65,6 +66,7 @@ void MainMenu::displayScientists(std::vector<scientist> scientists){
     ui->tableWidget->setSortingEnabled(true);
 }
 
+//Add links between scientist and computers in table widget
 void MainMenu::displayLinks(std::vector<link> links){
     ui->tableWidget->setSortingEnabled(false);
     ui->tableWidget->setRowCount(links.size());
@@ -93,15 +95,18 @@ void MainMenu::displayLinks(std::vector<link> links){
     ui->tableWidget->setSortingEnabled(true);
 }
 
+//Default constructor for main menu class
 MainMenu::MainMenu(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainMenu){
     ui->setupUi(this);
     s.start();
 }
 
+//Default constructor
 MainMenu::~MainMenu(){
     delete ui;
 }
 
+//Opens an add window
 void MainMenu::on_pushAddButton_clicked(){
     if(ui->radioButton->isChecked()){
         AddCS cs(0);
@@ -123,6 +128,7 @@ void MainMenu::on_pushAddButton_clicked(){
     }
 }
 
+//Set right values to  all buttons and creates the vector scientists
 void MainMenu::on_radioButton_toggled(bool checked){
     if(checked){
         ui->tableWidget->sortByColumn(0, Qt::AscendingOrder);
@@ -141,6 +147,7 @@ void MainMenu::on_radioButton_toggled(bool checked){
     }
 }
 
+//Set right values to  all buttons and creates the vector computers
 void MainMenu::on_radioButton_2_toggled(bool checked){
     if(checked){
         ui->tableWidget->sortByColumn(0, Qt::AscendingOrder);
@@ -159,6 +166,7 @@ void MainMenu::on_radioButton_2_toggled(bool checked){
     }
 }
 
+//Takes in QString from signal and sends it into search database function
 void MainMenu::on_searchDatabase_textChanged(const QString &arg1){
 
     if(ui->radioButton->isChecked()){
@@ -185,6 +193,7 @@ void MainMenu::on_searchDatabase_textChanged(const QString &arg1){
     }
 }
 
+//Set right values to all buttons and creates the vector links
 void MainMenu::on_radioButton_3_toggled(bool checked){
     if(checked){
         ui->tableWidget->sortByColumn(0, Qt::AscendingOrder);
@@ -203,6 +212,7 @@ void MainMenu::on_radioButton_3_toggled(bool checked){
     }
 }
 
+//Deletes the selected item
 void MainMenu::on_pushDeleteButton_clicked(){
     if(ui->radioButton->isChecked()){
         QModelIndex currentIndex = ui->tableWidget->currentIndex();
@@ -231,6 +241,7 @@ void MainMenu::on_pushDeleteButton_clicked(){
     }
 }
 
+//Opens an edit window with the values of selected item
 void MainMenu::on_pushEditButton_clicked(){
     if(ui->radioButton->isChecked()){
         QModelIndex currentIndex = ui->tableWidget->currentIndex();
@@ -260,17 +271,20 @@ void MainMenu::on_pushEditButton_clicked(){
 
 }
 
+//If an item is selected in widget table then enables these buttons
 void MainMenu::on_tableWidget_clicked(const QModelIndex &index){
     ui->pushEditButton->setEnabled(true);
     ui->pushDeleteButton->setEnabled(true);
 }
 
+//D O GG - Snoops the program
 void MainMenu::on_button_snoop_clicked(){
     snoop dogg;
     dogg.setModal(true);
     dogg.exec();
 }
 
+//Refreshes the widget table
 void MainMenu::on_refreshButton_clicked(){
     if(ui->radioButton->isChecked()){
         std::vector<scientist> scientists;
