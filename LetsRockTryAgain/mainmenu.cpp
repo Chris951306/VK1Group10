@@ -2,6 +2,7 @@
 #include "ui_mainmenu.h"
 #include <QMessageBox>
 
+
 void MainMenu::displayComputers(std::vector<computer> computers){
     ui->tableWidget->setSortingEnabled(false);
     ui->tableWidget->setRowCount(computers.size());

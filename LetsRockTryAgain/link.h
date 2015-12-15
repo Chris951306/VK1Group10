@@ -7,11 +7,11 @@ using namespace std;
 class link{
 public:
     link(int a, int b);
-    int returnCSID();
-    int returnCID();
+    int returnCSID();  //Returns current scientist id
+    int returnCID();   //Returns current computer id
 private:
-    int csid;
-    int cid;
+    int csid;  //scientist-id
+    int cid;   //computer-id
 };
 
 #endif // LINK_H
