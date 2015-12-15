@@ -65,7 +65,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../Icons/refresh2.png</normaloff>../Icons/refresh2.png</iconset>
+           <normaloff>refresh2.png</normaloff>refresh2.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -131,7 +131,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../Icons/Add.ico</normaloff>../Icons/Add.ico</iconset>
+          <normaloff>Add.ico</normaloff>Add.ico</iconset>
         </property>
        </widget>
       </item>
@@ -145,7 +145,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../Icons/Edit.png</normaloff>../Icons/Edit.png</iconset>
+          <normaloff>Edit.png</normaloff>Edit.png</iconset>
         </property>
        </widget>
       </item>
@@ -159,7 +159,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../Icons/Trash.png</normaloff>../Icons/Trash.png</iconset>
+          <normaloff>Trash.png</normaloff>Trash.png</iconset>
         </property>
        </widget>
       </item>
@@ -172,7 +172,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../Icons/paw.png</normaloff>../Icons/paw.png</iconset>
+        <normaloff>paw.png</normaloff>paw.png</iconset>
       </property>
      </widget>
     </item>
@@ -184,7 +184,7 @@
      <x>0</x>
      <y>0</y>
      <width>729</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
