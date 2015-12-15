@@ -137,31 +137,18 @@ void database::searchComputer(std::vector<computer>& computers, QString string){
 
 // Returns true if link already exists
 bool database::isLink(int csid, int cid){
-    QSqlQuery query;
-    query.prepare("SELECT COUNT(*) FROM link WHERE csid = :csid AND cid = :cid");
-    query.bindValue(":csid", csid);
-    query.bindValue(":cid", cid);
-    query.exec();
-    query.next();
-    unsigned int count = query.value("COUNT(*)").toUInt();
+    QSqlQuery qry;
+    qry.prepare("SELECT COUNT(*) FROM link WHERE csid = :csid AND cid = :cid");
+    qry.bindValue(":csid", csid);
+    qry.bindValue(":cid", cid);
+    qry.exec();
+    qry.next();
+    unsigned int count = qry.value("COUNT(*)").toUInt();
+    qDebug() << csid << cid << count;
     if(count != 0){
         return true;
     }
     return false;
-}
-
-int database::countScientists(){
-    QSqlQuery qry;
-    qry.exec("SELECT COUNT(id) FROM scientists");
-    qry.next();
-    return qry.value("COUNT(id)").toInt();
-}
-
-int database::countComputers(){
-    QSqlQuery qry;
-    qry.exec("SELECT COUNT(id) FROM computers");
-    qry.next();
-    return qry.value("COUNT(id)").toInt();
 }
 
 void database::deleteScientist(int id){

@@ -17,34 +17,30 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QTableWidget" name="tableWidget_2"/>
-     </item>
-     <item>
-      <widget class="QTableWidget" name="tableWidget_1"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Enter scientist id:</string>
+      <widget class="QTableWidget" name="tableWidget_2">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="linecsid"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Enter computer id:</string>
+      <widget class="QTableWidget" name="tableWidget_1">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="linecid"/>
      </item>
     </layout>
    </item>

@@ -21,8 +21,6 @@ public:
     void searchScientist(std::vector<scientist>& scientists, QString string);
     void searchComputer(std::vector<computer>& computers, QString string);
     bool isLink(int csid, int cid);
-    int countScientists();
-    int countComputers();
     void deleteScientist(int id);
     void deleteComputer(int id);
     void deleteLink(int csid, int cid);

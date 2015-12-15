@@ -48,14 +48,6 @@ bool service::isLink(int csid, int cid){
     return db.isLink(csid, cid);
 }
 
-int service::countScientists(){
-    return db.countScientists();
-}
-
-int service::countComputers(){
-    return db.countComputers();
-}
-
 void service::deleteScientist(int id){
     db.deleteScientist(id);
 }
