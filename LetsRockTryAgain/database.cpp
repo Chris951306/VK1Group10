@@ -1,11 +1,13 @@
 #include "database.h"
 
+//Opens the database
 void database::start(){
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("database");
     db.open();
 }
 
+// Add scientist to database
 void database::addScientist(scientist s){
     QSqlQuery qry;
     qry.prepare("INSERT INTO scientists (Name, Gender, Birthyear, Deathyear) VALUES (:name, :gender, :yob, :yod)");
@@ -16,6 +18,7 @@ void database::addScientist(scientist s){
     qry.exec();
 }
 
+//Edit scientist s in database
 void database::editScientist(scientist s){
     QSqlQuery qry;
     qry.prepare("UPDATE scientists SET Name = :name, Gender = :gender, Birthyear = :yob, Deathyear = :yod WHERE id = :id");
@@ -27,6 +30,7 @@ void database::editScientist(scientist s){
     qry.exec();
 }
 
+//Add computer to database
 void database::addComputer(computer c){
     QSqlQuery qry;
     qry.prepare("INSERT INTO computers (Name, Year, Type, Buildstatus) VALUES (:name, :year, :type, :build)");
@@ -37,6 +41,7 @@ void database::addComputer(computer c){
     qry.exec();
 }
 
+//Edit computer c in database
 void database::editComputer(computer c){
     QSqlQuery qry;
     qry.prepare("UPDATE scientists SET Name = :name, Year = :year, Type = :type, Buildstatus = :build WHERE id = :id");
@@ -48,7 +53,7 @@ void database::editComputer(computer c){
     qry.exec();
 }
 
-// Adds a link to SQL server
+// Adds a link to database
 void database::addLink(int csid, int cid){
     QSqlQuery qry;
     qry.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
@@ -57,6 +62,7 @@ void database::addLink(int csid, int cid){
     qry.exec();
 }
 
+// Edit link in database with the values csid and cid and edit it to newCSID and newCID
 void database::editLink(int newCSID, int newCID, int csid, int cid){
     QSqlQuery qry;
     qry.prepare("UPDATE link SET csid = :newCSID, cid = :newCID WHERE csid = :csid AND cid = :cid");
@@ -67,6 +73,7 @@ void database::editLink(int newCSID, int newCID, int csid, int cid){
     qry.exec();
 }
 
+//Get all scientists  from database and fills the vector scientists of these values
 void database::getAllScientists(std::vector<scientist>& scientists){
     QSqlQuery qry;
     qry.exec("SELECT * FROM scientists");
@@ -81,6 +88,7 @@ void database::getAllScientists(std::vector<scientist>& scientists){
     }
 }
 
+//Get all computers  from database and fills the vector computers of these values
 void database::getAllComputers(std::vector<computer>& computers){
     QSqlQuery qry;
     qry.exec("SELECT * FROM computers");
@@ -95,6 +103,7 @@ void database::getAllComputers(std::vector<computer>& computers){
     }
 }
 
+//Get all links  from database and fills the vector links of these values
 void database::getAllLinks(std::vector<link> &links){
     QSqlQuery qry;
     qry.exec("SELECT * FROM link");
@@ -106,7 +115,7 @@ void database::getAllLinks(std::vector<link> &links){
     }
 }
 
-
+//Searches in database for all scientists that have name, yob or yod in it. If you write male you only get male. Same for female
 void database::searchScientist(std::vector<scientist>& scientists, QString string){
     QSqlQuery qry;
     QString query;
@@ -126,6 +135,7 @@ void database::searchScientist(std::vector<scientist>& scientists, QString strin
     }
 }
 
+//Searches in database for all computers that have name, type or year in it. If you write built you only get built. Same for not built
 void database::searchComputer(std::vector<computer>& computers, QString string){
     QSqlQuery qry;
     QString query;
@@ -161,6 +171,7 @@ bool database::isLink(int csid, int cid){
     return false;
 }
 
+//Deletes scientits with value id and also all links that he is in
 void database::deleteScientist(int id){
     QSqlQuery qry;
     qry.prepare("DELETE FROM scientists WHERE id = :id");
@@ -171,6 +182,7 @@ void database::deleteScientist(int id){
     qry.exec();
 }
 
+//Deletes computer with value id and also all links that the computer is in
 void database::deleteComputer(int id){
     QSqlQuery qry;
     qry.prepare("DELETE FROM computers WHERE id = :id");
@@ -181,6 +193,7 @@ void database::deleteComputer(int id){
     qry.exec();
 }
 
+//Delete link with these values
 void database::deleteLink(int csid, int cid){
     QSqlQuery qry;
     qry.prepare("DELETE FROM link WHERE csid = :csid AND cid = :cid");
@@ -189,6 +202,7 @@ void database::deleteLink(int csid, int cid){
     qry.exec();
 }
 
+// Returns the name of scientist with the id = csid
 QString database::getCSName(int csid){
     QSqlQuery qry;
     qry.prepare("SELECT Name FROM scientists WHERE id = :id");
@@ -198,6 +212,7 @@ QString database::getCSName(int csid){
     return qry.value("Name").toString();
 }
 
+// Returns the name of computer with the id = cid
 QString database::getCName(int cid){
     QSqlQuery qry;
     qry.prepare("SELECT Name FROM computers WHERE id = :id");
