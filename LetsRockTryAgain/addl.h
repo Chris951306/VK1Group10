@@ -16,11 +16,10 @@ public:
     ~addl(); //Default destructor for class
     void displayComputers(std::vector<computer> computers); //Adds all computers to right side table
     void displayScientists(std::vector<scientist> scientists); //Adds all scientists to left side table
+
 private slots:
     void on_pushButton_clicked(); //Signal for add/edit button to be clicked
-
     void on_tableWidget_2_clicked(const QModelIndex &index); //Signal for left side table selected, sets bool cs_cliked to true
-
     void on_tableWidget_1_clicked(const QModelIndex &index); //Signal for right side table selected, sets bool c_cliked to true
 
 private:

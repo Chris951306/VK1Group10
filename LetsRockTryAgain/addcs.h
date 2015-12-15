@@ -19,7 +19,6 @@ public:
 
 private slots:
     void on_input_cs_alive_toggled(bool checked); //Signal to check if 'still alive' checkbox is toggled
-
     void on_button_cs_add_clicked(); //Signal for add/edit button to be clicked
 
 private:

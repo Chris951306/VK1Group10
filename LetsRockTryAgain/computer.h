@@ -10,6 +10,7 @@ public:
     QString getYear();  //Returns the current year
     QString getType();  //Returns the current type
     QString getBuilt(); //Returns the current built status
+
 private:
     int id;   //Computer-id
     QString name, year, type, built; //Computer-name, -year, -type, - build status

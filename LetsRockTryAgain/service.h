@@ -22,6 +22,7 @@ public:
     void deleteLink(int csid, int cid); //Calls function deleteLink from database
     QString getCSName(int csid); //Calls function getCSName from database
     QString getCName(int cid); //Calls function getCName from database
+
 private:
     database db;  //Sql database is set as private so it can be accessed by all the functions
 };

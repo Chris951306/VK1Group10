@@ -37,12 +37,10 @@ void addl::displayComputers(std::vector<computer> computers){
     ui->tableWidget_1->horizontalHeader()->setStretchLastSection(true);
     ui->tableWidget_1->setHorizontalHeaderLabels(QString(" ;Computer name").split(";"));
 
-    for (unsigned int i = 0; i < computers.size(); i++){
+    for(unsigned int i = 0; i < computers.size(); i++){
         computer currentComputer = computers[i];
-
         QString id = QString::number(currentComputer.getId());
         QString name = currentComputer.getName();
-
         ui->tableWidget_1->setItem(i, 0, new QTableWidgetItem(id));
         ui->tableWidget_1->setItem(i, 1, new QTableWidgetItem(name));
     }
@@ -58,12 +56,10 @@ void addl::displayScientists(std::vector<scientist> scientists){
     ui->tableWidget_2->horizontalHeader()->setStretchLastSection(true);
     ui->tableWidget_2->setHorizontalHeaderLabels(QString(" ;Scientist name").split(";"));
 
-    for (unsigned int i = 0; i < scientists.size(); i++){
+    for(unsigned int i = 0; i < scientists.size(); i++){
         scientist currentScientist = scientists[i];
-
         QString id = QString::number(currentScientist.getId());
         QString name = currentScientist.getName();
-
         ui->tableWidget_2->setItem(i, 0, new QTableWidgetItem(id));
         ui->tableWidget_2->setItem(i, 1, new QTableWidgetItem(name));
     }

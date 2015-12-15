@@ -27,6 +27,7 @@ public:
     void deleteLink(int csid, int cid); //Delete link with these values
     QString getCSName(int csid); // Returns the name of scientist with the id = csid
     QString getCName(int cid); // Returns the name of computer with the id = cid
+
 private:
     QSqlDatabase db;
 };

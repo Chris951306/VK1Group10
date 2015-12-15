@@ -31,7 +31,7 @@ AddCS::AddCS(int n, QWidget *parent) : QDialog(parent), ui(new Ui::AddCS){
 
 //Default destructor for class
 AddCS::~AddCS(){
-delete ui;
+    delete ui;
 }
 
 //Sets the maximum year for birth- and death-input equal to current year

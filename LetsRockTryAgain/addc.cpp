@@ -85,7 +85,6 @@ void AddC::on_button_c_add_clicked(){
         ui->error_c_build->setText("");
         ok3 = true;
     }
-
     if(ok1 && ok2 && ok3){
         if(id != 0){
             computer temp(id, name, year, type, build);

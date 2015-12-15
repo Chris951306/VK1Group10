@@ -10,6 +10,7 @@ public:
     QString getGender();  //Returns current gender
     QString getYob();     //Returns current birthyear
     QString getYod();     //Returns current deathyear
+
 private:
     int id; //Scientist-id
     QString name, gender, yob, yod;  //Scientist-name, -gender, -birthyear, -deathyear

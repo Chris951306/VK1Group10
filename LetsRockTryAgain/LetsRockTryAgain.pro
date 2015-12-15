@@ -41,5 +41,4 @@ FORMS    += mainmenu.ui \
     addl.ui \
     snoop.ui
 
-RESOURCES += \
-    icon.qrc
+RESOURCES +=

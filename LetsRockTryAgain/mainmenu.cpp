@@ -2,36 +2,15 @@
 #include "ui_mainmenu.h"
 #include <QMessageBox>
 
-//Add all computers in table widget
-void MainMenu::displayComputers(std::vector<computer> computers){
-    ui->tableWidget->setSortingEnabled(false);
-    ui->tableWidget->setRowCount(computers.size());
-    ui->tableWidget->verticalHeader()->show();
-    ui->tableWidget->setColumnCount(5);
-    ui->tableWidget->setColumnHidden(0, true);
-    ui->tableWidget->setColumnWidth(1, this->width()/3);
-    ui->tableWidget->setColumnHidden(2, false);
-    ui->tableWidget->setColumnWidth(2, this->width()/5);
-    ui->tableWidget->setColumnWidth(3, this->width()/5);
-    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
-    ui->tableWidget->setHorizontalHeaderLabels(QString(" ;Name;Build year;Type;Build status").split(";"));
+//Default constructor for main menu class
+MainMenu::MainMenu(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainMenu){
+    ui->setupUi(this);
+    s.start();
+}
 
-    for(unsigned int i = 0; i < computers.size(); i++){
-        computer currentComputer = computers[i];
-
-        QString id = QString::number(currentComputer.getId());
-        QString name = currentComputer.getName();
-        QString year = currentComputer.getYear();
-        QString type = currentComputer.getType();
-        QString built = currentComputer.getBuilt();
-
-        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(id));
-        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(name));
-        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(year));
-        ui->tableWidget->setItem(i, 3, new QTableWidgetItem(type));
-        ui->tableWidget->setItem(i, 4, new QTableWidgetItem(built));
-    }
-    ui->tableWidget->setSortingEnabled(true);
+//Default constructor
+MainMenu::~MainMenu(){
+    delete ui;
 }
 
 //Add all scientist in table widget
@@ -50,18 +29,46 @@ void MainMenu::displayScientists(std::vector<scientist> scientists){
 
     for(unsigned int i = 0; i < scientists.size(); i++){
         scientist currentScientist = scientists[i];
-
         QString id = QString::number(currentScientist.getId());
         QString name = currentScientist.getName();
         QString gender = currentScientist.getGender();
         QString yob = currentScientist.getYob();
         QString yod = currentScientist.getYod();
-
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(id));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(name));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(gender));
         ui->tableWidget->setItem(i, 3, new QTableWidgetItem(yob));
         ui->tableWidget->setItem(i, 4, new QTableWidgetItem(yod));
+    }
+    ui->tableWidget->setSortingEnabled(true);
+}
+
+//Add all computers in table widget
+void MainMenu::displayComputers(std::vector<computer> computers){
+    ui->tableWidget->setSortingEnabled(false);
+    ui->tableWidget->setRowCount(computers.size());
+    ui->tableWidget->verticalHeader()->show();
+    ui->tableWidget->setColumnCount(5);
+    ui->tableWidget->setColumnHidden(0, true);
+    ui->tableWidget->setColumnWidth(1, this->width()/3);
+    ui->tableWidget->setColumnHidden(2, false);
+    ui->tableWidget->setColumnWidth(2, this->width()/5);
+    ui->tableWidget->setColumnWidth(3, this->width()/5);
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+    ui->tableWidget->setHorizontalHeaderLabels(QString(" ;Name;Build year;Type;Build status").split(";"));
+
+    for(unsigned int i = 0; i < computers.size(); i++){
+        computer currentComputer = computers[i];
+        QString id = QString::number(currentComputer.getId());
+        QString name = currentComputer.getName();
+        QString year = currentComputer.getYear();
+        QString type = currentComputer.getType();
+        QString built = currentComputer.getBuilt();
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(id));
+        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(name));
+        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(year));
+        ui->tableWidget->setItem(i, 3, new QTableWidgetItem(type));
+        ui->tableWidget->setItem(i, 4, new QTableWidgetItem(built));
     }
     ui->tableWidget->setSortingEnabled(true);
 }
@@ -86,46 +93,12 @@ void MainMenu::displayLinks(std::vector<link> links){
         QString csName = s.getCSName(csid);
         QString cID = QString::number(cid);
         QString cName = s.getCName(cid);
-
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(csID));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(csName));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(cID));
         ui->tableWidget->setItem(i, 3, new QTableWidgetItem(cName));
     }
     ui->tableWidget->setSortingEnabled(true);
-}
-
-//Default constructor for main menu class
-MainMenu::MainMenu(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainMenu){
-    ui->setupUi(this);
-    s.start();
-}
-
-//Default constructor
-MainMenu::~MainMenu(){
-    delete ui;
-}
-
-//Opens an add window
-void MainMenu::on_pushAddButton_clicked(){
-    if(ui->radioButton->isChecked()){
-        AddCS cs(0);
-        cs.setModal(true);
-        cs.setWindowTitle("Add scientist");
-        cs.exec();
-    }
-    else if(ui->radioButton_2->isChecked()){
-        AddC c(0);
-        c.setModal(true);
-        c.setWindowTitle("Add computer");
-        c.exec();
-    }
-    else if(ui->radioButton_3->isChecked()){
-        addl l(0, 0);
-        l.setModal(true);
-        l.setWindowTitle("Add link");
-        l.exec();
-    }
 }
 
 //Set right values to  all buttons and creates the vector scientists
@@ -166,33 +139,6 @@ void MainMenu::on_radioButton_2_toggled(bool checked){
     }
 }
 
-//Takes in QString from signal and sends it into search database function
-void MainMenu::on_searchDatabase_textChanged(const QString &arg1){
-
-    if(ui->radioButton->isChecked()){
-        std::vector<scientist> scientists;
-        if(arg1.trimmed() == ""){
-            s.getAllScientists(scientists);
-            displayScientists(scientists);
-        }
-        else{
-            s.searchScientist(scientists, arg1);
-            displayScientists(scientists);
-        }
-    }
-    else if(ui->radioButton_2->isChecked()){
-        std::vector<computer> computers;
-        if(arg1.trimmed() == ""){
-            s.getAllComputers(computers);
-            displayComputers(computers);
-        }
-        else{
-            s.searchComputer(computers, arg1);
-            displayComputers(computers);
-        }
-    }
-}
-
 //Set right values to all buttons and creates the vector links
 void MainMenu::on_radioButton_3_toggled(bool checked){
     if(checked){
@@ -209,6 +155,69 @@ void MainMenu::on_radioButton_3_toggled(bool checked){
         ui->searchDatabase->setText("");
         ui->searchDatabase->setPlaceholderText("Cannot search for links...");
         displayLinks(links);
+    }
+}
+
+//Opens an add window
+void MainMenu::on_pushAddButton_clicked(){
+    if(ui->radioButton->isChecked()){
+        AddCS cs(0);
+        cs.setModal(true);
+        cs.setWindowTitle("Add scientist");
+        QIcon icon("icons/Add.ico");
+        cs.setWindowIcon(icon);
+        cs.exec();
+    }
+    else if(ui->radioButton_2->isChecked()){
+        AddC c(0);
+        c.setModal(true);
+        c.setWindowTitle("Add computer");
+        QIcon icon("icons/Add.ico");
+        c.setWindowIcon(icon);
+        c.exec();
+    }
+    else if(ui->radioButton_3->isChecked()){
+        addl l(0, 0);
+        l.setModal(true);
+        l.setWindowTitle("Add link");
+        QIcon icon("icons/Add.ico");
+        l.setWindowIcon(icon);
+        l.exec();
+    }
+}
+
+//Opens an edit window with the values of selected item
+void MainMenu::on_pushEditButton_clicked(){
+    if(ui->radioButton->isChecked()){
+        QModelIndex currentIndex = ui->tableWidget->currentIndex();
+        int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
+        AddCS cs(id);
+        cs.setModal(true);
+        cs.setWindowTitle("Edit scientist");
+        QIcon icon("icons/Edit.png");
+        cs.setWindowIcon(icon);
+        cs.exec();
+    }
+    else if(ui->radioButton_2->isChecked()){
+        QModelIndex currentIndex = ui->tableWidget->currentIndex();
+        int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
+        AddC c(id);
+        c.setModal(true);
+        c.setWindowTitle("Edit computer");
+        QIcon icon("icons/Edit.png");
+        c.setWindowIcon(icon);
+        c.exec();
+    }
+    else if(ui->radioButton_3->isChecked()){
+        QModelIndex currentIndex = ui->tableWidget->currentIndex();
+        int csid = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
+        int cid = ui->tableWidget->item(currentIndex.row(), 2)->text().toInt();
+        addl l(csid, cid);
+        l.setModal(true);
+        l.setWindowTitle("Edit link");
+        QIcon icon("icons/Edit.png");
+        l.setWindowIcon(icon);
+        l.exec();
     }
 }
 
@@ -241,34 +250,30 @@ void MainMenu::on_pushDeleteButton_clicked(){
     }
 }
 
-//Opens an edit window with the values of selected item
-void MainMenu::on_pushEditButton_clicked(){
+//Takes in QString from signal and sends it into search database function
+void MainMenu::on_searchDatabase_textChanged(const QString &arg1){
     if(ui->radioButton->isChecked()){
-        QModelIndex currentIndex = ui->tableWidget->currentIndex();
-        int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
-        AddCS cs(id);
-        cs.setModal(true);
-        cs.setWindowTitle("Edit scientist");
-        cs.exec();
+        std::vector<scientist> scientists;
+        if(arg1.trimmed() == ""){
+            s.getAllScientists(scientists);
+            displayScientists(scientists);
+        }
+        else{
+            s.searchScientist(scientists, arg1);
+            displayScientists(scientists);
+        }
     }
     else if(ui->radioButton_2->isChecked()){
-        QModelIndex currentIndex = ui->tableWidget->currentIndex();
-        int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
-        AddC c(id);
-        c.setModal(true);
-        c.setWindowTitle("Edit computer");
-        c.exec();
+        std::vector<computer> computers;
+        if(arg1.trimmed() == ""){
+            s.getAllComputers(computers);
+            displayComputers(computers);
+        }
+        else{
+            s.searchComputer(computers, arg1);
+            displayComputers(computers);
+        }
     }
-    else if(ui->radioButton_3->isChecked()){
-        QModelIndex currentIndex = ui->tableWidget->currentIndex();
-        int csid = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
-        int cid = ui->tableWidget->item(currentIndex.row(), 2)->text().toInt();
-        addl l(csid, cid);
-        l.setModal(true);
-        l.setWindowTitle("Edit link");
-        l.exec();
-    }
-
 }
 
 //If an item is selected in widget table then enables these buttons
@@ -281,6 +286,8 @@ void MainMenu::on_tableWidget_clicked(const QModelIndex &index){
 void MainMenu::on_button_snoop_clicked(){
     snoop dogg;
     dogg.setModal(true);
+    QIcon icon("icons/Paw.png");
+    dogg.setWindowIcon(icon);
     dogg.exec();
 }
 
