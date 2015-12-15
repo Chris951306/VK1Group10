@@ -1,13 +1,8 @@
 #include "addl.h"
 #include "ui_addl.h"
 
-addl::addl(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::addl)
-{
+addl::addl(QWidget *parent) : QDialog(parent), ui(new Ui::addl){
     ui->setupUi(this);
-
-    service s;
     std::vector<scientist> scientists;
     std::vector<computer> computers;
     s.getAllScientists(scientists);

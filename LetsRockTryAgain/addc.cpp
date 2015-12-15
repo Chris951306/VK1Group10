@@ -1,9 +1,7 @@
 #include "addc.h"
 #include "ui_addc.h"
 
-AddC::AddC(int n, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AddC){
+AddC::AddC(int n, QWidget *parent) : QDialog(parent), ui(new Ui::AddC){
     ui->setupUi(this);
     setMaxYear();
     id = n;

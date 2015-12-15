@@ -101,7 +101,7 @@ void database::searchScientist(std::vector<scientist>& scientists, QString strin
     QSqlQuery qry;
     QString query;
     query = "SELECT * FROM scientists WHERE Name LIKE '%" + string + "%' or ";
-    query += "Gender LIKE '" + string + "' or ";
+    query += "Gender LIKE '" + string + "%' or ";
     query += "Birthyear LIKE '%" + string + "%' or ";
     query += "Deathyear LIKE '%" + string + "%'";
     qry.exec(query);
@@ -122,7 +122,7 @@ void database::searchComputer(std::vector<computer>& computers, QString string){
     query = "SELECT * FROM computers WHERE Name LIKE '%" + string + "%' or ";
     query += "Year LIKE '%" + string + "%' or ";
     query += "Type LIKE '%" + string + "%' or ";
-    query += "Buildstatus LIKE '" + string + "'";
+    query += "Buildstatus LIKE '" + string + "%'";
     qry.exec(query);
     while(qry.next()){
         int id = qry.value("id").toInt();

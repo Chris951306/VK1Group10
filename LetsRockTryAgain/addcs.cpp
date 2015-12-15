@@ -2,9 +2,7 @@
 #include "ui_addcs.h"
 
 
-AddCS::AddCS(int n, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AddCS){
+AddCS::AddCS(int n, QWidget *parent) : QDialog(parent), ui(new Ui::AddCS){
     ui->setupUi(this);
     setMaxYear();
     id = n;

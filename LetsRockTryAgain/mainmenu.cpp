@@ -105,16 +105,19 @@ void MainMenu::on_pushAddButton_clicked(){
     if(ui->radioButton->isChecked()){
         AddCS cs(0);
         cs.setModal(true);
+        cs.setWindowTitle("Add scientist");
         cs.exec();
     }
     else if(ui->radioButton_2->isChecked()){
         AddC c(0);
         c.setModal(true);
+        c.setWindowTitle("Add computer");
         c.exec();
     }
     else if(ui->radioButton_3->isChecked()){
         addl l;
         l.setModal(true);
+        l.setWindowTitle("Add link");
         l.exec();
     }
 }
@@ -190,6 +193,7 @@ void MainMenu::on_radioButton_3_toggled(bool checked){
         ui->pushDeleteButton->setText("Delete Link");
         ui->pushDeleteButton->setEnabled(false);
         ui->searchDatabase->setEnabled(false);
+        ui->searchDatabase->setText("");
         ui->searchDatabase->setPlaceholderText("Cannot search for links...");
         displayLinks(links);
     }
@@ -229,6 +233,7 @@ void MainMenu::on_pushEditButton_clicked(){
         int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
         AddCS cs(id);
         cs.setModal(true);
+        cs.setWindowTitle("Edit scientist");
         cs.exec();
     }
     else if(ui->radioButton_2->isChecked()){
@@ -236,6 +241,7 @@ void MainMenu::on_pushEditButton_clicked(){
         int id = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
         AddC c(id);
         c.setModal(true);
+        c.setWindowTitle("Edit computer");
         c.exec();
     }
 }
