@@ -54,71 +54,44 @@ bool AddC::checkName(QString &name){
     ui->error_c_name->setText("");
     return true;
 }
-void AddC::on_button_c_add_clicked(){
-    if(id != 0){
-        bool ok1 = false;
-        bool ok2 = true;
-        bool ok3 = false;
-        QString name = ui->input_c_name->text();
-        ok1 = checkName(name);
-        QString year = QString::number(ui->input_c_year->value());
-        QString type = ui->input_c_type->currentText();
-        if(type.isEmpty()){
-            ui->error_c_type->setText("<span style ='color: red'>Choose a type!</span>");
-            ok2 = false;
-        }
-        else{
-            ui->error_c_type->setText("");
-            ok2 = true;
-        }
-        QString build = ui->input_c_build->currentText();
-        if(build.isEmpty()){
-            ui->error_c_build->setText("<span style ='color: red'>Choose a build status!</span>");
-            ok3 = false;
-        }
-        else{
-            ui->error_c_build->setText("");
-            ok3 = true;
-        }
 
-        if(ok1 && ok2 && ok3){
-            computer temp(id, name, year, type, build);
-            s.editComputer(temp);
-            qDebug() << "Computer edited!";
-            this->hide();
-        }
+void AddC::on_button_c_add_clicked(){
+    bool ok1 = false;
+    bool ok2 = true;
+    bool ok3 = false;
+    QString name = ui->input_c_name->text();
+    ok1 = checkName(name);
+    QString year = QString::number(ui->input_c_year->value());
+    QString type = ui->input_c_type->currentText();
+    if(type.isEmpty()){
+        ui->error_c_type->setText("<span style ='color: red'>Choose a type!</span>");
+        ok2 = false;
     }
     else{
-        bool ok1 = false;
-        bool ok2 = true;
-        bool ok3 = false;
-        QString name = ui->input_c_name->text();
-        ok1 = checkName(name);
-        QString year = QString::number(ui->input_c_year->value());
-        QString type = ui->input_c_type->currentText();
-        if(type.isEmpty()){
-            ui->error_c_type->setText("<span style ='color: red'>Choose a type!</span>");
-            ok2 = false;
-        }
-        else{
-            ui->error_c_type->setText("");
-            ok2 = true;
-        }
-        QString build = ui->input_c_build->currentText();
-        if(build.isEmpty()){
-            ui->error_c_build->setText("<span style ='color: red'>Choose a build status!</span>");
-            ok3 = false;
-        }
-        else{
-            ui->error_c_build->setText("");
-            ok3 = true;
-        }
+        ui->error_c_type->setText("");
+        ok2 = true;
+    }
+    QString build = ui->input_c_build->currentText();
+    if(build.isEmpty()){
+        ui->error_c_build->setText("<span style ='color: red'>Choose a build status!</span>");
+        ok3 = false;
+    }
+    else{
+        ui->error_c_build->setText("");
+        ok3 = true;
+    }
 
-        if(ok1 && ok2 && ok3){
+    if(ok1 && ok2 && ok3){
+        if(id != 0){
             computer temp(-1, name, year, type, build);
             s.addComputer(temp);
             qDebug() << "Computer added!";
-            this->hide();
         }
+        else{
+            computer temp(id, name, year, type, build);
+            s.editComputer(temp);
+            qDebug() << "Computer edited!";
+        }
+        this->hide();
     }
 }

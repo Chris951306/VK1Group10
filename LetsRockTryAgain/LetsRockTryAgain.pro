@@ -40,3 +40,6 @@ FORMS    += mainmenu.ui \
     addc.ui \
     addl.ui \
     snoop.ui
+
+RESOURCES += \
+    icon.qrc

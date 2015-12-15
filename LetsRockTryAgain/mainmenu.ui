@@ -57,8 +57,24 @@
        </item>
        <item>
         <widget class="QPushButton" name="refreshButton">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
          <property name="text">
-          <string>Refresh</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../Icons/refresh2.png</normaloff>../Icons/refresh2.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -111,7 +127,11 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Add to Database</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../Icons/Add.ico</normaloff>../Icons/Add.ico</iconset>
         </property>
        </widget>
       </item>
@@ -121,7 +141,11 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Edit in Database</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../Icons/Edit.png</normaloff>../Icons/Edit.png</iconset>
         </property>
        </widget>
       </item>
@@ -131,7 +155,11 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Delete in Database</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../Icons/Trash.png</normaloff>../Icons/Trash.png</iconset>
         </property>
        </widget>
       </item>
@@ -141,6 +169,10 @@
      <widget class="QPushButton" name="button_snoop">
       <property name="text">
        <string>Snoop it!</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../Icons/paw.png</normaloff>../Icons/paw.png</iconset>
       </property>
      </widget>
     </item>
