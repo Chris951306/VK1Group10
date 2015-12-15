@@ -49,6 +49,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QLabel" name="error">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="pushButton">
      <property name="text">
       <string>Add Link</string>

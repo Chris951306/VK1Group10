@@ -44,6 +44,8 @@ private slots:
 
     void on_button_snoop_clicked();
 
+    void on_refreshButton_clicked();
+
 private:
     Ui::MainMenu *ui;
     service s;

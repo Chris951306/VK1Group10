@@ -256,3 +256,21 @@ void MainMenu::on_button_snoop_clicked(){
     dogg.setModal(true);
     dogg.exec();
 }
+
+void MainMenu::on_refreshButton_clicked(){
+    if(ui->radioButton->isChecked()){
+        std::vector<scientist> scientists;
+        s.getAllScientists(scientists);
+        displayScientists(scientists);
+    }
+    else if(ui->radioButton_2->isChecked()){
+        std::vector<computer> computers;
+        s.getAllComputers(computers);
+        displayComputers(computers);
+    }
+    else if(ui->radioButton_3->isChecked()){
+        std::vector<link> links;
+        s.getAllLinks(links);
+        displayLinks(links);
+    }
+}

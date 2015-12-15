@@ -52,6 +52,7 @@ void addl::displayScientists(std::vector<scientist> scientists){
 }
 
 void addl::on_pushButton_clicked(){
+
     bool exist = false;
     int csid = ui->linecsid->text().toInt();
     int cid = ui->linecid->text().toInt();
@@ -60,9 +61,23 @@ void addl::on_pushButton_clicked(){
 
     if(csid > 0 && csid <= maxcs && cid > 0 && cid <= maxc){
         exist = s.isLink(csid, cid);
-        if(!exist){
+        if(exist){
+            ui->error->setText("This link already exist!");
+        }
+        else{
             s.addLink(csid,cid);
             this->hide();
+            ui->error->hide();
         }
     }
+    else if((csid <= 0 || csid > maxcs) && ( cid <= 0 || cid > maxc)){
+        ui->error->setText("Invalid scientist and invalid computer!");
+    }
+    else if(csid <= 0 || csid > maxcs){
+        ui->error->setText("Invalid scientist!");
+    }
+    else if( cid <= 0 || cid > maxc){
+        ui->error->setText("Invalid computer!");
+    }
+
 }
