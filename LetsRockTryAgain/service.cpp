@@ -24,6 +24,10 @@ void service::addLink(int csid, int cid){
     db.addLink(csid, cid);
 }
 
+void service::editLink(int newCSID, int newCID, int csid, int cid){
+    db.editLink(newCSID, newCID, csid, cid);
+}
+
 void service::getAllScientists(std::vector<scientist>& scientists){
     db.getAllScientists(scientists);
 }

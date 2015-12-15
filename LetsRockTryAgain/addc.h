@@ -9,8 +9,7 @@ namespace Ui {
 class AddC;
 }
 
-class AddC : public QDialog
-{
+class AddC : public QDialog{
     Q_OBJECT
 
 public:

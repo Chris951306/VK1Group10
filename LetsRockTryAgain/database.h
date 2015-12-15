@@ -15,6 +15,7 @@ public:
     void addComputer(computer c);
     void editComputer(computer c);
     void addLink(int csid, int cid);
+    void editLink(int newCSID, int newCID, int csid, int cid);
     void getAllScientists(std::vector<scientist>& scientists);
     void getAllComputers(std::vector<computer>& computers);
     void getAllLinks(std::vector<link>& links);

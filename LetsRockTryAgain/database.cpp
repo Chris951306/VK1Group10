@@ -50,11 +50,21 @@ void database::editComputer(computer c){
 
 // Adds a link to SQL server
 void database::addLink(int csid, int cid){
-    QSqlQuery query;
-    query.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
-    query.bindValue(":csid", csid);
-    query.bindValue(":cid", cid);
-    query.exec();
+    QSqlQuery qry;
+    qry.prepare("INSERT INTO link (csid, cid) VALUES (:csid, :cid)");
+    qry.bindValue(":csid", csid);
+    qry.bindValue(":cid", cid);
+    qry.exec();
+}
+
+void database::editLink(int newCSID, int newCID, int csid, int cid){
+    QSqlQuery qry;
+    qry.prepare("UPDATE link SET csid = :newCSID, cid = :newCID WHERE csid = :csid AND cid = :cid");
+    qry.bindValue(":newCSID", newCSID);
+    qry.bindValue(":newCID", newCID);
+    qry.bindValue(":csid", csid);
+    qry.bindValue(":cid", cid);
+    qry.exec();
 }
 
 void database::getAllScientists(std::vector<scientist>& scientists){

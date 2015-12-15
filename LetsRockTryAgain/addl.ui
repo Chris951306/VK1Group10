@@ -53,8 +53,11 @@
    </item>
    <item>
     <widget class="QPushButton" name="pushButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
-      <string>Add Link</string>
+      <string>Add link</string>
      </property>
     </widget>
    </item>

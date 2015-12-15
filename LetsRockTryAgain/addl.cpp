@@ -1,12 +1,22 @@
 #include "addl.h"
 #include "ui_addl.h"
 
-addl::addl(QWidget *parent) : QDialog(parent), ui(new Ui::addl){
+addl::addl(int n, int m, QWidget *parent) : QDialog(parent), ui(new Ui::addl){
     ui->setupUi(this);
+    cs_clicked = false;
+    c_clicked = false;
     std::vector<scientist> scientists;
     std::vector<computer> computers;
     s.getAllScientists(scientists);
     s.getAllComputers(computers);
+    csid = n;
+    cid = m;
+    if(csid != 0 && cid != 0){
+        ui->pushButton->setText("Edit link");
+    }
+    else{
+        ui->pushButton->setText("Add link");
+    }
     displayScientists(scientists);
     displayComputers(computers);
 }
@@ -57,17 +67,37 @@ void addl::displayScientists(std::vector<scientist> scientists){
 
 void addl::on_pushButton_clicked(){
     QModelIndex currentIndexC = ui->tableWidget_1->currentIndex();
-    int cid = ui->tableWidget_1->item(currentIndexC.row(), 0)->text().toInt();
+    int newCID = ui->tableWidget_1->item(currentIndexC.row(), 0)->text().toInt();
     QModelIndex currentIndexCS = ui->tableWidget_2->currentIndex();
-    int csid = ui->tableWidget_2->item(currentIndexCS.row(), 0)->text().toInt();
-    qDebug() << csid << cid;
-    bool exist = s.isLink(csid, cid);
+    int newCSID = ui->tableWidget_2->item(currentIndexCS.row(), 0)->text().toInt();
+    bool exist = s.isLink(newCSID, newCID);
     if(exist){
         ui->error->setText("<span style ='color: red'>This link already exist!</span>");
     }
     else{
-        s.addLink(csid,cid);
-        ui->error->hide();
-        this->hide();
+        if(csid != 0 && cid != 0){
+            s.editLink(newCSID, newCID, csid, cid);
+            ui->error->hide();
+            this->hide();
+        }
+        else{
+            s.addLink(newCSID,newCID);
+            ui->error->hide();
+            this->hide();
+        }
+    }
+}
+
+void addl::on_tableWidget_2_clicked(const QModelIndex &index){
+    cs_clicked = true;
+    if(cs_clicked && c_clicked){
+        ui->pushButton->setEnabled(true);
+    }
+}
+
+void addl::on_tableWidget_1_clicked(const QModelIndex &index){
+    c_clicked = true;
+    if(cs_clicked && c_clicked){
+        ui->pushButton->setEnabled(true);
     }
 }

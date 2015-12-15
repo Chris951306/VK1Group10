@@ -115,7 +115,7 @@ void MainMenu::on_pushAddButton_clicked(){
         c.exec();
     }
     else if(ui->radioButton_3->isChecked()){
-        addl l;
+        addl l(0, 0);
         l.setModal(true);
         l.setWindowTitle("Add link");
         l.exec();
@@ -124,6 +124,7 @@ void MainMenu::on_pushAddButton_clicked(){
 
 void MainMenu::on_radioButton_toggled(bool checked){
     if(checked){
+        ui->tableWidget->sortByColumn(0, Qt::AscendingOrder);
         ui->tableWidget->clearContents();
         std::vector<scientist> scientists;
         s.getAllScientists(scientists);
@@ -141,6 +142,7 @@ void MainMenu::on_radioButton_toggled(bool checked){
 
 void MainMenu::on_radioButton_2_toggled(bool checked){
     if(checked){
+        ui->tableWidget->sortByColumn(0, Qt::AscendingOrder);
         ui->tableWidget->clearContents();
         std::vector<computer> computers;
         s.getAllComputers(computers);
@@ -184,6 +186,7 @@ void MainMenu::on_searchDatabase_textChanged(const QString &arg1){
 
 void MainMenu::on_radioButton_3_toggled(bool checked){
     if(checked){
+        ui->tableWidget->sortByColumn(0, Qt::AscendingOrder);
         ui->tableWidget->clearContents();
         std::vector<link> links;
         s.getAllLinks(links);
@@ -244,6 +247,16 @@ void MainMenu::on_pushEditButton_clicked(){
         c.setWindowTitle("Edit computer");
         c.exec();
     }
+    else if(ui->radioButton_3->isChecked()){
+        QModelIndex currentIndex = ui->tableWidget->currentIndex();
+        int csid = ui->tableWidget->item(currentIndex.row(), 0)->text().toInt();
+        int cid = ui->tableWidget->item(currentIndex.row(), 2)->text().toInt();
+        addl l(csid, cid);
+        l.setModal(true);
+        l.setWindowTitle("Edit link");
+        l.exec();
+    }
+
 }
 
 void MainMenu::on_tableWidget_clicked(const QModelIndex &index){
