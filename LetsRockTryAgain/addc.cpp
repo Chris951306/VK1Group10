@@ -1,11 +1,12 @@
 #include "addc.h"
 #include "ui_addc.h"
 
+//Default constructor for class. Takes an optional id for edit
 AddC::AddC(int n, QWidget *parent) : QDialog(parent), ui(new Ui::AddC){
     ui->setupUi(this);
     setMaxYear();
     id = n;
-    if(id != 0){
+    if(id != 0){ //If id is not 0, we fill the fields with current selection
         ui->button_c_add->setText("Edit computer");
         std::vector<computer> computers;
         s.getAllComputers(computers);
@@ -23,16 +24,19 @@ AddC::AddC(int n, QWidget *parent) : QDialog(parent), ui(new Ui::AddC){
     }
 }
 
+//Default destructor for class
 AddC::~AddC(){
     delete ui;
 }
 
+//Sets the maximum year for build year equal to current year
 void AddC::setMaxYear(){
     QDate today = QDate::currentDate();
     int year = today.year();
     ui->input_c_year->setMaximum(year);
 }
 
+//Checks the name-input for errors and formats it accorded to set standard
 bool AddC::checkName(QString &name){
     if(name.isEmpty()){// If the input string is empy, user is told to input at least(!) something
         ui->error_c_name->setText("<span style ='color: red'>Input a name!</span>");
@@ -55,10 +59,11 @@ bool AddC::checkName(QString &name){
     return true;
 }
 
+//Signal for add/edit button to be clicked
 void AddC::on_button_c_add_clicked(){
-    bool ok1 = false;
-    bool ok2 = true;
-    bool ok3 = false;
+    bool ok1 = false; //Name-check
+    bool ok2 = true; //Type-check
+    bool ok3 = false; //Built-check
     QString name = ui->input_c_name->text();
     ok1 = checkName(name);
     QString year = QString::number(ui->input_c_year->value());
@@ -83,14 +88,15 @@ void AddC::on_button_c_add_clicked(){
 
     if(ok1 && ok2 && ok3){
         if(id != 0){
-            computer temp(-1, name, year, type, build);
-            s.addComputer(temp);
-            qDebug() << "Computer added!";
-        }
-        else{
             computer temp(id, name, year, type, build);
             s.editComputer(temp);
             qDebug() << "Computer edited!";
+        }
+        else{
+            //Sets the value to -1 as a placeholder. Value is not used by addComputer
+            computer temp(-1, name, year, type, build);
+            s.addComputer(temp);
+            qDebug() << "Computer added!";
         }
         this->hide();
     }

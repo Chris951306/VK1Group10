@@ -1,6 +1,7 @@
 #include "addl.h"
 #include "ui_addl.h"
 
+//Default constructor for class. Takes two integers for current csid and cid values
 addl::addl(int n, int m, QWidget *parent) : QDialog(parent), ui(new Ui::addl){
     ui->setupUi(this);
     cs_clicked = false;
@@ -21,10 +22,12 @@ addl::addl(int n, int m, QWidget *parent) : QDialog(parent), ui(new Ui::addl){
     displayComputers(computers);
 }
 
+//Default destructor for class
 addl::~addl(){
     delete ui;
 }
 
+//Adds all computers to right side table
 void addl::displayComputers(std::vector<computer> computers){
     ui->tableWidget_1->clearContents();
     ui->tableWidget_1->setRowCount(computers.size());
@@ -45,6 +48,7 @@ void addl::displayComputers(std::vector<computer> computers){
     }
 }
 
+//Adds all scientists to left side table
 void addl::displayScientists(std::vector<scientist> scientists){
     ui->tableWidget_2->clearContents();
     ui->tableWidget_2->setRowCount(scientists.size());
@@ -65,6 +69,7 @@ void addl::displayScientists(std::vector<scientist> scientists){
     }
 }
 
+//Signal for add/edit button to be clicked
 void addl::on_pushButton_clicked(){
     QModelIndex currentIndexC = ui->tableWidget_1->currentIndex();
     int newCID = ui->tableWidget_1->item(currentIndexC.row(), 0)->text().toInt();
@@ -88,16 +93,18 @@ void addl::on_pushButton_clicked(){
     }
 }
 
+//Signal for left side table selected, sets bool cs_cliked to true
 void addl::on_tableWidget_2_clicked(const QModelIndex &index){
     cs_clicked = true;
-    if(cs_clicked && c_clicked){
+    if(cs_clicked && c_clicked){ //If both have been clicked, enable add/edit button
         ui->pushButton->setEnabled(true);
     }
 }
 
+//Signal for right side table selected, sets bool c_cliked to true
 void addl::on_tableWidget_1_clicked(const QModelIndex &index){
     c_clicked = true;
-    if(cs_clicked && c_clicked){
+    if(cs_clicked && c_clicked){ //If both have been clicked, enable add/edit button
         ui->pushButton->setEnabled(true);
     }
 }

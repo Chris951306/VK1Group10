@@ -1,12 +1,12 @@
 #include "addcs.h"
 #include "ui_addcs.h"
 
-
+//Default constructor for class. Takes an optional id for edit
 AddCS::AddCS(int n, QWidget *parent) : QDialog(parent), ui(new Ui::AddCS){
     ui->setupUi(this);
     setMaxYear();
     id = n;
-    if(id != 0){
+    if(id != 0){ //If id is not 0, we fill the fields with current selection
         ui->button_cs_add->setText("Edit scientist");
         std::vector<scientist> scientists;
         s.getAllScientists(scientists);
@@ -29,10 +29,12 @@ AddCS::AddCS(int n, QWidget *parent) : QDialog(parent), ui(new Ui::AddCS){
     }
 }
 
+//Default destructor for class
 AddCS::~AddCS(){
 delete ui;
 }
 
+//Sets the maximum year for birth- and death-input equal to current year
 void AddCS::setMaxYear(){
     QDate today = QDate::currentDate();
     int year = today.year();
@@ -40,6 +42,7 @@ void AddCS::setMaxYear(){
     ui->input_cs_yod->setMaximum(year);
 }
 
+//Checks the name-input for errors and formats it accorded to set standard
 bool AddCS::checkName(QString &name){
     if(name.isEmpty()){// If the input string is empy, user is told to input at least(!) something
         ui->error_cs_name->setText("<span style ='color: red'>Input a name!</span>");
@@ -62,6 +65,7 @@ bool AddCS::checkName(QString &name){
     return true;
 }
 
+//Signal to check if 'still alive' checkbox is toggled
 void AddCS::on_input_cs_alive_toggled(bool checked){
     if(checked){
         ui->input_cs_yod->setEnabled(false);
@@ -71,10 +75,11 @@ void AddCS::on_input_cs_alive_toggled(bool checked){
     }
 }
 
+//Signal for add/edit button to be clicked
 void AddCS::on_button_cs_add_clicked(){
-    bool ok1 = false;
-    bool ok2 = true;
-    bool ok3 = false;
+    bool ok1 = false; //Name-check
+    bool ok2 = true; //Gender-check
+    bool ok3 = false; //Death-check
     QString name = ui->input_cs_name->text();
     ok1 = checkName(name);
     QString gender = ui->input_cs_gender->currentText();
@@ -110,6 +115,7 @@ void AddCS::on_button_cs_add_clicked(){
             qDebug() << "Scientist edited!";
         }
         else{
+            //Sets the value to -1 as a placeholder. Value is not used by addScientist
             scientist temp(-1, name, gender, yob, yod);
             s.addScientist(temp);
             qDebug() << "Scientist added!";
